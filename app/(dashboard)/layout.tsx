@@ -15,6 +15,7 @@ import { emailConfigured } from "@/server/email/send";
 import { countUnreadNotifications } from "@/server/services/notifications.service";
 import { getExamInterests } from "@/server/services/exam-interests.service";
 import { ChooseExamsBanner } from "@/components/exam-interests/ChooseExamsBanner";
+import { ActiveExamBar } from "@/components/exams/subsite/ActiveExamBar";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const user = await getAuthContext();
@@ -39,6 +40,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const freeBookAccess = user.role === "STUDENT" && Boolean(await db.userEbookSelection.findFirst({ where: { userId: user.id }, select: { userId: true } }));
   return (
     <DashboardShell role={user.role} examFamily={examFamily} unreadCount={unreadCount}>
+      {user.role === "STUDENT" && goal ? <ActiveExamBar examTypeId={goal.examTypeId} wrapperClassName="-mx-4 -mt-4 mb-6 sm:-mx-6 sm:-mt-6 lg:-mx-8 lg:-mt-8" /> : null}
       {showVerify ? <VerifyEmailBanner email={user.email} /> : null}
       {needsExams ? <ChooseExamsBanner /> : null}
       {children}

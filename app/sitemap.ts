@@ -39,7 +39,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Every English headword has its own "… ne demek?" page.
   const dictionaryRoutes: MetadataRoute.Sitemap = allHeadwords().map((w) => ({ url: `${base}/sozluk/${encodeURIComponent(termSlug(w))}` }));
 
-  const examRoutes: MetadataRoute.Sitemap = examTypes.map((exam) => ({ url: `${base}/exams/${exam.slug}` }));
+  // Each exam is its own subsite; its public sections are listed too (İlerleme is personal and noindex).
+  const examRoutes: MetadataRoute.Sitemap = examTypes.flatMap((exam) =>
+    ["", "/konular", "/pratik", "/denemeler", "/kaynaklar", "/canli-dersler"].map((path) => ({ url: `${base}/exams/${exam.slug}${path}` })),
+  );
 
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
     url: `${base}${product.category === "BOOK" ? "/books/" : "/packages/"}${product.slug}`,
@@ -51,5 +54,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: post.updatedAt ?? post.publishedAt ?? undefined,
   }));
 
+  examRoutes.push({ url: `${base}/exams/yokdil` });
   return [...staticRoutes, ...examRoutes, ...productRoutes, ...blogRoutes, ...dictionaryRoutes];
 }

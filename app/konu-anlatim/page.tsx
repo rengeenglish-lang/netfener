@@ -15,6 +15,7 @@ import { getPlanAccess } from "@/server/services/plans.service";
 import { KonuAnlatimDashboard } from "@/components/topics/KonuAnlatimDashboard";
 import { ArrowRight, Lock } from "lucide-react";
 import { viewerExamAccess } from "@/server/services/exam-access";
+import { ActiveExamBar } from "@/components/exams/subsite/ActiveExamBar";
 import { canOpenExam } from "@/lib/exam-interests";
 import { OutsideInterestsNotice } from "@/components/exam-interests/OutsideInterestsNotice";
 
@@ -121,6 +122,8 @@ export default async function TopicsIndexPage({ searchParams }: Props) {
   );
 
   return (
+    <>
+    <ActiveExamBar slug={examSlug} />
     <main className="inner-page mx-auto w-full max-w-[1680px] px-4 py-14 sm:px-6 lg:px-8">
       <PageHero>
         <p className="eyebrow">
@@ -237,5 +240,6 @@ export default async function TopicsIndexPage({ searchParams }: Props) {
         </>
       )}
     </main>
+    </>
   );
 }
