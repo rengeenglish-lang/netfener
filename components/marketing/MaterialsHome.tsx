@@ -9,6 +9,7 @@ import { findNetfenerEdition } from "@/lib/netfener-ebook-editions";
 import { ebookFreePromoEndLabel, isEbookFreePromoActive } from "@/lib/netfener-ebook-promo";
 import { lessonDate, lessonTime } from "@/lib/availability";
 import { StudySample } from "./StudySample";
+import { HomeFaq } from "@/components/marketing/HomeFaq";
 import { SiteReviewsSection } from "@/components/site-reviews/SiteReviewsSection";
 import type { PublicReview } from "@/components/site-reviews/SiteReviewCard";
 import { AvailabilityHome } from "@/components/availability/AvailabilityHome";
@@ -176,6 +177,8 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
     </section> : null}
 
     <SiteReviewsSection reviews={reviews} className="py-16" />
+
+    <HomeFaq />
 
     <section className={styles.section} aria-labelledby="next-step-title">
       <div className={styles.closing}>
