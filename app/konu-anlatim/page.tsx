@@ -15,7 +15,8 @@ import { getPlanAccess } from "@/server/services/plans.service";
 import { KonuAnlatimDashboard } from "@/components/topics/KonuAnlatimDashboard";
 import { ArrowRight, Lock } from "lucide-react";
 import { viewerExamAccess } from "@/server/services/exam-access";
-import { ActiveExamBar } from "@/components/exams/subsite/ActiveExamBar";
+import { ExamFrame } from "@/components/exams/subsite/ExamFrame";
+import { ExamPickerDropdown } from "@/components/topics/ExamPickerDropdown";
 import { canOpenExam } from "@/lib/exam-interests";
 import { OutsideInterestsNotice } from "@/components/exam-interests/OutsideInterestsNotice";
 
@@ -122,8 +123,7 @@ export default async function TopicsIndexPage({ searchParams }: Props) {
   );
 
   return (
-    <>
-    <ActiveExamBar slug={examSlug} />
+    <ExamFrame slug={examSlug} contentClassName="">
     <main className="inner-page mx-auto w-full max-w-[1680px] px-4 py-14 sm:px-6 lg:px-8">
       <PageHero>
         <p className="eyebrow">
@@ -137,21 +137,13 @@ export default async function TopicsIndexPage({ searchParams }: Props) {
           dersleri sırayla tamamla.
         </p>
       </PageHero>
-      <div className="mt-6 flex flex-wrap items-center gap-2">
-        <Link href="/konu-anlatim" className="rounded-full px-3 py-2 text-sm font-bold text-slate-500 hover:text-blue-700">← Tüm sınavlar</Link>
-        {exams.filter((item) => canOpenExam(allowed, item.slug)).map((item) => (
-          <Link
-            key={item.id}
-            href={`/konu-anlatim?exam=${item.slug}`}
-            className={`rounded-full border px-4 py-2 text-sm font-bold transition ${
-              examSlug === item.slug
-                ? "border-blue-900 bg-blue-900 text-white"
-                : "border-slate-200 bg-white text-slate-600 hover:border-blue-300"
-            }`}
-          >
-            {item.name}
-          </Link>
-        ))}
+      <div className="mt-5 flex justify-end">
+        <ExamPickerDropdown
+          current={{ slug: examSlug, name: activeExam?.name ?? examSlug }}
+          exams={exams.filter((item) => canOpenExam(allowed, item.slug)).map((item) => ({ slug: item.slug, name: item.name }))}
+          hrefFor={(slug) => `/konu-anlatim?exam=${slug}`}
+          allHref="/konu-anlatim"
+        />
       </div>
 
       {topics.length === 0 ? (
@@ -240,6 +232,6 @@ export default async function TopicsIndexPage({ searchParams }: Props) {
         </>
       )}
     </main>
-    </>
+    </ExamFrame>
   );
 }
