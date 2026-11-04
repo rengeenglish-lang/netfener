@@ -1,48 +1,51 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 import { db } from "@/server/db";
-import { ArrowRight, BookOpenCheck } from "lucide-react";
 import { EXAM_META } from "@/lib/exam-types";
-import { ExamSectionMenu } from "@/components/exams/ExamSectionMenu";
+import { PLATFORM_EXAMS } from "@/lib/platform";
+import { TRACK_LABELS, YOKDIL_CODES, subsiteHref, featureGradient } from "@/lib/exam-subsite";
+import { ExamSubsiteBar } from "@/components/exams/subsite/ExamSubsiteBar";
+import { SubsiteHeader } from "@/components/exams/subsite/SubsiteUi";
 
-export const metadata: Metadata = { title: "YÖKDİL" };
+export const metadata: Metadata = {
+  title: "YÖKDİL Hazırlık",
+  description: "YÖKDİL Sosyal, Sağlık ve Fen Bilimleri için alanına özel konu anlatımı, pratik sorular ve deneme sınavları.",
+  alternates: { canonical: "/exams/yokdil" },
+};
 
-const BRANCHES = ["YOKDIL_SOSYAL", "YOKDIL_SAGLIK", "YOKDIL_FEN"] as const;
-
+/** YÖKDİL is one subsite with three tracks; this hub only asks which track to open. */
 export default async function YokdilHubPage() {
-  const branches = await db.examType.findMany({
-    where: { code: { in: [...BRANCHES] } },
-    orderBy: { displayOrder: "asc" },
-  });
-
+  const branches = await db.examType.findMany({ where: { code: { in: [...YOKDIL_CODES] }, active: true }, orderBy: { displayOrder: "asc" } });
+  const color = PLATFORM_EXAMS.find((e) => e.slug === "yokdil")?.color ?? "#5b4fe0";
   return (
-    <div className="lg:grid lg:grid-cols-[260px_minmax(0,1fr)]">
-      <ExamSectionMenu examName="YÖKDİL" slug="yokdil" examFamily="TRANSLATION_GRAMMAR" />
-      <main className="min-w-0 bg-white">
-      <section className="relative overflow-hidden bg-[#071b34] text-white"><div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_30%,rgb(var(--glow-rgb)/.3),transparent_38%)]" /><div className="relative mx-auto w-full max-w-[1320px] px-4 py-20 sm:px-6 lg:px-8"><span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-widest text-blue-100">Üç alan · Tek hedef</span><h1 className="mt-6 max-w-4xl text-4xl font-black tracking-[-.03em] sm:text-6xl">YÖKDİL alanını seç, hazırlığını özelleştir.</h1><p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">Sosyal, Sağlık ve Fen Bilimleri için farklılaşan terminoloji ve metin yapılarıyla yalnızca kendi sınavına odaklan.</p></div></section>
-      <section id="exam-sections" className="mx-auto w-full max-w-[1320px] scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8"><div className="mb-8"><p className="eyebrow">YÖKDİL branşları</p><h2 className="mt-2 text-3xl font-black">Hazırlanacağın alanı seç</h2></div><div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-        {branches.map((branch) => (
-          <Link
-            key={branch.id}
-            href={`/exams/${branch.slug}`}
-            className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_12px_35px_rgb(var(--shadow-rgb)/.08)] transition hover:-translate-y-1"
-          >
-            <span className="grid size-12 place-items-center rounded-2xl text-white" style={{ background: EXAM_META[branch.code].solid }}><BookOpenCheck /></span>
-            <h2 className="text-xl font-black text-[color:var(--foreground)]">
-              {branch.name}
-            </h2>
-            {branch.shortDescription ? (
-              <p className="mt-2 text-sm leading-6 text-slate-600">
-                {branch.shortDescription}
-              </p>
-            ) : null}
-            <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold" style={{ color: EXAM_META[branch.code].solid }}>
-              Sınav sayfasını aç <ArrowRight size={17} className="transition group-hover:translate-x-1" />
-            </span>
-          </Link>
-        ))}
-      </div></section>
-      </main>
+    <div className="exam-subsite min-h-[70vh] bg-[color:var(--canvas)]">
+      <ExamSubsiteBar
+        exam={{ slug: "yokdil", name: "YÖKDİL", color }}
+        exams={PLATFORM_EXAMS.map((e) => ({ slug: e.slug, name: e.name, color: e.color }))}
+        tracks={branches.map((b) => ({ slug: b.slug, label: TRACK_LABELS[b.code as keyof typeof TRACK_LABELS] }))}
+        hideSections
+      />
+      <div className="mx-auto w-full max-w-[1100px] px-4 pb-20 pt-8">
+        <SubsiteHeader eyebrow="YÖKDİL" title="Alanını seç" copy="YÖKDİL’in üç alanı ayrı terminoloji ve metin türleri kullanır. Alanını seç; konular, pratik ve denemeler yalnızca o alana göre gelsin." />
+        <ul className="grid gap-3 sm:grid-cols-3">
+          {branches.map((b) => {
+            const c = EXAM_META[b.code]?.solid ?? color;
+            return (
+              <li key={b.id}>
+                <Link href={subsiteHref(b.slug)} className="group flex h-full min-h-44 flex-col justify-between rounded-2xl p-6 text-white shadow-[0_18px_36px_-22px_rgb(0_0_0/.6)] transition hover:-translate-y-0.5" style={{ background: featureGradient(c) }}>
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-[.14em] text-white/75">YÖKDİL</p>
+                    <h2 className="mt-1 text-xl font-extrabold">{TRACK_LABELS[b.code as keyof typeof TRACK_LABELS]}</h2>
+                    {b.shortDescription ? <p className="mt-1.5 text-sm leading-6 text-white/85">{b.shortDescription}</p> : null}
+                  </div>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold">Bu alanla çalış <ArrowRight size={15} aria-hidden="true" className="transition group-hover:translate-x-1" /></span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
