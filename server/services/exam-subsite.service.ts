@@ -4,7 +4,7 @@ import { db } from "@/server/db";
 import { EXAM_META } from "@/lib/exam-types";
 import { EXAM_LANDING_CONTENT } from "@/lib/exam-landing";
 import { examFamilyForCode } from "@/lib/diagnostics/exam-family";
-import { skillCards, topicMatchesSkill } from "@/lib/exam-subsite";
+import { skillCards, subsiteHref, topicMatchesSkill } from "@/lib/exam-subsite";
 
 /** The exam behind /exams/{slug}, with its family, colour and landing copy. Null when unknown or inactive. */
 export const getSubsiteExam = cache(async (slug: string) => {
@@ -54,4 +54,10 @@ export async function countExamPractice(exam: SubsiteExam) {
     db.diagnosticQuestion.findMany({ where: { ...scope, mockSetNumber: { not: null } }, distinct: ["mockSetNumber"], select: { mockSetNumber: true } }),
   ]);
   return { practice, mockSets: mockSets.length };
+}
+
+/** Where a student lands after signing in: their active exam's subsite, or the dashboard to pick one. */
+export async function studentLandingPath(userId: string) {
+  const goal = await db.examGoal.findFirst({ where: { userId, isActive: true }, orderBy: { createdAt: "desc" }, select: { examType: { select: { slug: true, active: true } } } });
+  return goal?.examType.active ? subsiteHref(goal.examType.slug) : "/dashboard";
 }

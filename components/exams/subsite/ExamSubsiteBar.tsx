@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BarChart3, BookOpen, ChevronDown, ClipboardList, Home, Library, Timer, Users, type LucideIcon } from "lucide-react";
-import { SUBSITE_SECTIONS, subsiteHref, type SubsiteSectionKey } from "@/lib/exam-subsite";
+import { SUBSITE_SECTIONS, sectionForPath, subsiteHref, type SubsiteSectionKey } from "@/lib/exam-subsite";
 
 const ICONS: Record<SubsiteSectionKey, LucideIcon> = {
   home: Home,
@@ -17,10 +17,12 @@ const ICONS: Record<SubsiteSectionKey, LucideIcon> = {
 type Exam = { slug: string; name: string; color: string };
 
 /** Sticky subsite bar: exam switcher, YÖKDİL track switch and section navigation (active = solid pill). */
-export function ExamSubsiteBar({ exam, exams, tracks, hideSections = false }: { exam: Exam; exams: Exam[]; tracks: { slug: string; label: string }[]; hideSections?: boolean }) {
+export function ExamSubsiteBar({ exam, exams, tracks, hideSections = false, sharedOnly = false, wrapperClassName }: { exam: Exam; exams: Exam[]; tracks: { slug: string; label: string }[]; hideSections?: boolean; sharedOnly?: boolean; wrapperClassName?: string }) {
   const pathname = usePathname();
-  const active = (href: string, isHome: boolean) => (isHome ? pathname === href : pathname === href || pathname.startsWith(href + "/"));
-  return (
+  const current = sectionForPath(pathname, exam.slug);
+  // On shared pages (dashboard, lesson reader) the bar only appears where the page belongs to an exam section.
+  if (sharedOnly && !current) return null;
+  const bar = (
     <div className="exam-subsite-bar sticky top-[76px] z-30 border-b border-[color:var(--border)] bg-[color:var(--surface)]/85 backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-[1100px] items-center gap-3 px-4 py-2.5">
         <details className="group relative shrink-0">
@@ -44,7 +46,7 @@ export function ExamSubsiteBar({ exam, exams, tracks, hideSections = false }: { 
         {hideSections ? <p className="text-sm text-[color:var(--muted)]">Çalışmak istediğin alanı seç</p> : <nav aria-label={`${exam.name} bölümleri`} className="-mx-1 flex min-w-0 flex-1 gap-1 overflow-x-auto px-1 [scrollbar-width:none]">
           {SUBSITE_SECTIONS.map((s) => {
             const href = subsiteHref(exam.slug, s.key);
-            const on = active(href, s.key === "home");
+            const on = current === s.key;
             const Icon = ICONS[s.key];
             return (
               <Link
@@ -65,7 +67,7 @@ export function ExamSubsiteBar({ exam, exams, tracks, hideSections = false }: { 
           <span className="text-xs font-bold uppercase tracking-wider text-[color:var(--muted)]">Alan</span>
           {tracks.map((t) => {
             const on = t.slug === exam.slug;
-            const section = SUBSITE_SECTIONS.find((s) => s.key !== "home" && pathname.startsWith(subsiteHref(exam.slug, s.key)))?.key ?? "home";
+            const section = current ?? "home";
             return (
               <Link key={t.slug} href={subsiteHref(t.slug, section)} aria-current={on ? "page" : undefined} className={`rounded-full border px-3 py-1 text-xs font-bold transition ${on ? "border-[color:var(--accent)] bg-[color:var(--accent)] text-[color:var(--on-accent)]" : "border-[color:var(--border)] text-[color:var(--muted)] hover:text-[color:var(--foreground)]"}`}>
                 {t.label}
@@ -76,4 +78,5 @@ export function ExamSubsiteBar({ exam, exams, tracks, hideSections = false }: { 
       ) : null}
     </div>
   );
+  return wrapperClassName ? <div className={wrapperClassName}>{bar}</div> : bar;
 }

@@ -44,11 +44,33 @@ export function skillCards(family: ExamFamily): SkillCard[] {
 
 type TopicLike = { name: string; category: string | null; skillsTested: string | null; slug: string };
 export function topicMatchesSkill(topic: TopicLike, skill: SkillCard) {
-  const hay = `${topic.name} ${topic.category ?? ""} ${topic.skillsTested ?? ""} ${topic.slug}`.toLocaleLowerCase("tr-TR");
+  const raw = `${topic.name} ${topic.category ?? ""} ${topic.skillsTested ?? ""} ${topic.slug}`;
+  // English labels ("READING") need plain lowercasing; Turkish ones ("Çeviri", "İngilizce") need Turkish rules.
+  const hay = `${raw.toLowerCase()} ${raw.toLocaleLowerCase("tr-TR")}`;
   return skill.keywords.some((k) => hay.includes(k));
 }
 
 /** Darkened gradient from an exam colour so white text stays readable on feature cards. */
 export function featureGradient(color: string) {
   return `linear-gradient(115deg, color-mix(in srgb, ${color} 72%, #000) 0%, ${color} 100%)`;
+}
+
+/** Shared learning pages that belong to the active exam's subsite, mapped to the section they highlight. */
+export const SHARED_SECTION_PATHS: [string, SubsiteSectionKey][] = [
+  ["/dashboard/practice", "pratik"],
+  ["/dashboard/mock-exam", "denemeler"],
+  ["/dashboard/yds-denemeleri", "denemeler"],
+  ["/dashboard/progress", "ilerleme"],
+  ["/dashboard/konu-anlatimi", "konular"],
+  ["/dashboard/speaking-practice", "pratik"],
+  ["/konu-anlatim", "konular"],
+];
+
+/** Which section of the exam's subsite a path belongs to (null when it is not an exam page). */
+export function sectionForPath(pathname: string, slug: string): SubsiteSectionKey | null {
+  const base = `/exams/${slug}`;
+  if (pathname === base) return "home";
+  for (const s of SUBSITE_SECTIONS) if (s.path && (pathname === base + s.path || pathname.startsWith(base + s.path + "/"))) return s.key;
+  for (const [prefix, key] of SHARED_SECTION_PATHS) if (pathname === prefix || pathname.startsWith(prefix + "/")) return key;
+  return null;
 }
