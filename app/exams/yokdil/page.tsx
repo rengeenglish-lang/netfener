@@ -5,7 +5,7 @@ import { db } from "@/server/db";
 import { EXAM_META } from "@/lib/exam-types";
 import { PLATFORM_EXAMS } from "@/lib/platform";
 import { TRACK_LABELS, YOKDIL_CODES, subsiteHref, featureGradient } from "@/lib/exam-subsite";
-import { ExamSubsiteBar } from "@/components/exams/subsite/ExamSubsiteBar";
+import { ExamFrame } from "@/components/exams/subsite/ExamFrame";
 import { SubsiteHeader } from "@/components/exams/subsite/SubsiteUi";
 
 export const metadata: Metadata = {
@@ -19,14 +19,7 @@ export default async function YokdilHubPage() {
   const branches = await db.examType.findMany({ where: { code: { in: [...YOKDIL_CODES] }, active: true }, orderBy: { displayOrder: "asc" } });
   const color = PLATFORM_EXAMS.find((e) => e.slug === "yokdil")?.color ?? "#5b4fe0";
   return (
-    <div className="exam-subsite min-h-[70vh] bg-[color:var(--canvas)]">
-      <ExamSubsiteBar
-        exam={{ slug: "yokdil", name: "YÖKDİL", color }}
-        exams={PLATFORM_EXAMS.map((e) => ({ slug: e.slug, name: e.name, color: e.color }))}
-        tracks={branches.map((b) => ({ slug: b.slug, label: TRACK_LABELS[b.code as keyof typeof TRACK_LABELS] }))}
-        hideSections
-      />
-      <div className="mx-auto w-full max-w-[1100px] px-4 pb-20 pt-8">
+    <ExamFrame slug="yokdil">
         <SubsiteHeader eyebrow="YÖKDİL" title="Alanını seç" copy="YÖKDİL’in üç alanı ayrı terminoloji ve metin türleri kullanır. Alanını seç; konular, pratik ve denemeler yalnızca o alana göre gelsin." />
         <ul className="grid gap-3 sm:grid-cols-3">
           {branches.map((b) => {
@@ -45,7 +38,6 @@ export default async function YokdilHubPage() {
             );
           })}
         </ul>
-      </div>
-    </div>
+    </ExamFrame>
   );
 }
