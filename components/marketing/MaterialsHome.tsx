@@ -11,6 +11,9 @@ import { lessonDate, lessonTime } from "@/lib/availability";
 import { StudySample } from "./StudySample";
 import { SiteReviewsSection } from "@/components/site-reviews/SiteReviewsSection";
 import type { PublicReview } from "@/components/site-reviews/SiteReviewCard";
+import { HomeStats } from "./HomeStats";
+import { WhyNetfener } from "./WhyNetfener";
+import type { HomeStatsInput } from "@/lib/home-stats";
 import { AvailabilityHome } from "@/components/availability/AvailabilityHome";
 import styles from "./MaterialsHome.module.css";
 
@@ -91,7 +94,7 @@ function GroupCard({ product }: { product: HomeGroup }) {
   </article>;
 }
 
-export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn = false }: { products: HomeProduct[]; groups?: HomeGroup[]; reviews?: PublicReview[]; isSignedIn?: boolean }) {
+export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn = false, stats }: { products: HomeProduct[]; groups?: HomeGroup[]; reviews?: PublicReview[]; isSignedIn?: boolean; stats?: HomeStatsInput }) {
   const levelTestHref = memberHref("/seviye-tespit", isSignedIn);
   return <main id="main-content" className={styles.home}>
 
@@ -99,7 +102,7 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_35%,rgb(var(--glow-rgb)/.32),transparent_32%)]" />
       <div className="relative mx-auto grid w-full max-w-[1320px] items-center gap-12 px-4 py-14 sm:px-6 lg:min-h-[650px] lg:grid-cols-[1.1fr_.9fr] lg:px-8 lg:py-24">
         <div>
-          <p className="text-xs font-extrabold uppercase tracking-[.18em] text-blue-200">{PLATFORM_EXAMS.map((exam) => exam.name).join(" • ")}</p>
+          <p className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-[.18em] text-blue-100">{PLATFORM_EXAMS.map((exam) => exam.name).join(" • ")}</p>
           <h1 className="mt-6 max-w-4xl text-5xl font-black leading-[1.04] tracking-[-.03em] sm:text-7xl">Sınavına hazırlan.<br/><span className="text-blue-300">Hedefine ulaş.</span></h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">Konu anlatımları, deneme sınavları, canlı grup dersleri ve çalışma materyalleri tek platformda.</p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -122,6 +125,8 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
         <Link href="/kocluk" className={styles.trustItem}><Users size={18} aria-hidden="true" />Ücretsiz öğrenci koçluğu</Link>
       </div>
     </div>
+
+    {stats ? <HomeStats stats={stats} /> : null}
 
     <section id="sinavini-sec" className={`${styles.section} scroll-mt-24`} aria-labelledby="exam-choice-title">
       <p className={styles.eyebrow}>Beş sınav · tek platform</p>
@@ -157,6 +162,8 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
     </section>
 
     <AvailabilityHome />
+    <WhyNetfener levelTestHref={levelTestHref} memberHref={(href) => memberHref(href, isSignedIn)} />
+
     {groups.length ? <section className={styles.section} aria-labelledby="group-plans-title">
       <div className={styles.sectionHeader}>
         <div><p className={styles.eyebrow}>Programlı, canlı öğrenme</p><h2 id="group-plans-title" className={styles.heading}>Sana uygun programı bul.</h2><p className={styles.copy}>Ders takvimini, eğitmeni ve kapsamı karşılaştır; hazırlığına uygun grubu seç.</p></div>
