@@ -13,7 +13,7 @@ export function HomeFaq() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(faqJsonLd(items)) }} />
       <div className={styles.faqIntro}>
         <p className={styles.eyebrow}>Sık sorulanlar</p>
-        <h2 id="home-faq-title" className={styles.heading}>Başlamadan önce merak edilenler.</h2>
+        <h2 id="home-faq-title" className={styles.heading}>Başlamadan önce <span className={styles.accent}>merak edilenler.</span></h2>
         <p className={styles.copy}>Üyelik, ödeme ve iade hakkında kısa yanıtlar. Aradığını bulamazsan Yardım Masası’ndan bize yaz.</p>
         <Link href="/yardim" className="secondary-button mt-6 inline-flex">Tüm sorular ve canlı destek</Link>
       </div>

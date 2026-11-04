@@ -12,6 +12,9 @@ import { StudySample } from "./StudySample";
 import { HomeFaq } from "@/components/marketing/HomeFaq";
 import { SiteReviewsSection } from "@/components/site-reviews/SiteReviewsSection";
 import type { PublicReview } from "@/components/site-reviews/SiteReviewCard";
+import { HomeStats } from "./HomeStats";
+import { WhyNetfener } from "./WhyNetfener";
+import type { HomeStatsInput } from "@/lib/home-stats";
 import { AvailabilityHome } from "@/components/availability/AvailabilityHome";
 import styles from "./MaterialsHome.module.css";
 
@@ -92,7 +95,7 @@ function GroupCard({ product }: { product: HomeGroup }) {
   </article>;
 }
 
-export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn = false }: { products: HomeProduct[]; groups?: HomeGroup[]; reviews?: PublicReview[]; isSignedIn?: boolean }) {
+export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn = false, stats }: { products: HomeProduct[]; groups?: HomeGroup[]; reviews?: PublicReview[]; isSignedIn?: boolean; stats?: HomeStatsInput }) {
   const levelTestHref = memberHref("/seviye-tespit", isSignedIn);
   return <main id="main-content" className={styles.home}>
 
@@ -100,7 +103,7 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_35%,rgb(var(--glow-rgb)/.32),transparent_32%)]" />
       <div className="relative mx-auto grid w-full max-w-[1320px] items-center gap-12 px-4 py-14 sm:px-6 lg:min-h-[650px] lg:grid-cols-[1.1fr_.9fr] lg:px-8 lg:py-24">
         <div>
-          <p className="text-xs font-extrabold uppercase tracking-[.18em] text-blue-200">{PLATFORM_EXAMS.map((exam) => exam.name).join(" • ")}</p>
+          <p className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-[.18em] text-blue-100">{PLATFORM_EXAMS.map((exam) => exam.name).join(" • ")}</p>
           <h1 className="mt-6 max-w-4xl text-5xl font-black leading-[1.04] tracking-[-.03em] sm:text-7xl">Sınavına hazırlan.<br/><span className="text-blue-300">Hedefine ulaş.</span></h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">Konu anlatımları, deneme sınavları, canlı grup dersleri ve çalışma materyalleri tek platformda.</p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -124,9 +127,11 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
       </div>
     </div>
 
+    {stats ? <HomeStats stats={stats} /> : null}
+
     <section id="sinavini-sec" className={`${styles.section} scroll-mt-24`} aria-labelledby="exam-choice-title">
       <p className={styles.eyebrow}>Beş sınav · tek platform</p>
-      <h2 id="exam-choice-title" className={styles.heading}>Hazırlık yolunu sınavına göre seç.</h2>
+      <h2 id="exam-choice-title" className={styles.heading}>Hazırlık yolunu <span className={styles.accent}>sınavına göre</span> seç.</h2>
       <p className={styles.copy}>Konu anlatımları, sınav pratiği ve kaynaklar. İhtiyacın olan her şeye kendi sınav alanından ulaş.</p>
       <div className={styles.examGrid}>
         {PLATFORM_EXAMS.map(({ slug, name, description, icon: Icon }) => <Link key={slug} href={`/exams/${slug}`} className={styles.examCard}>
@@ -141,7 +146,7 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
       <div className={`${styles.section} ${styles.practice}`}>
         <div>
           <p className={styles.eyebrow}>Önce deneyimle</p>
-          <h2 id="practice-title" className={styles.heading}>Bir soruyla başla.<br />Nasıl öğrendiğini keşfet.</h2>
+          <h2 id="practice-title" className={styles.heading}>Bir soruyla başla.<br />Nasıl <span className={styles.accent}>öğrendiğini</span> keşfet.</h2>
           <p className={styles.copy}>Örnek soruyu hemen çöz, açıklamasını incele. Konu anlatımları ve sınav pratiğiyle çalışmana devam et.</p>
           <ol className={styles.steps}>
             <li className={styles.step}><span>1</span><div><h3>Konuyu öğren</h3><p>Her sınavın ilk konu anlatımı ücretsiz.</p></div></li>
@@ -158,9 +163,11 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
     </section>
 
     <AvailabilityHome />
+    <WhyNetfener levelTestHref={levelTestHref} memberHref={(href) => memberHref(href, isSignedIn)} />
+
     {groups.length ? <section className={styles.section} aria-labelledby="group-plans-title">
       <div className={styles.sectionHeader}>
-        <div><p className={styles.eyebrow}>Programlı, canlı öğrenme</p><h2 id="group-plans-title" className={styles.heading}>Sana uygun programı bul.</h2><p className={styles.copy}>Ders takvimini, eğitmeni ve kapsamı karşılaştır; hazırlığına uygun grubu seç.</p></div>
+        <div><p className={styles.eyebrow}>Programlı, canlı öğrenme</p><h2 id="group-plans-title" className={styles.heading}>Sana uygun <span className={styles.accent}>programı</span> bul.</h2><p className={styles.copy}>Ders takvimini, eğitmeni ve kapsamı karşılaştır; hazırlığına uygun grubu seç.</p></div>
         <Link href="/group-lessons" className="secondary-button">Tüm grup dersleri <ArrowRight size={16} aria-hidden="true" /></Link>
       </div>
       <div className={styles.grid}>{groups.map(product => <GroupCard key={product.id} product={product} />)}</div>
@@ -169,7 +176,7 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
     {products.length ? <section className={styles.tinted} aria-labelledby="resources-title">
       <div className={styles.section}>
         <div className={styles.sectionHeader}>
-          <div><p className={styles.eyebrow}>Netfener kütüphanesi</p><h2 id="resources-title" className={styles.heading}>İçeriğini gör. Kaynağını seç.</h2><p className={styles.copy}>Kitap kapaklarının ötesine geç: örnek sayfaları ve açıklamalı uygulamaları incele, ihtiyacına uygun kaynakla devam et.</p></div>
+          <div><p className={styles.eyebrow}>Netfener kütüphanesi</p><h2 id="resources-title" className={styles.heading}>İçeriğini gör. <span className={styles.accent}>Kaynağını</span> seç.</h2><p className={styles.copy}>Kitap kapaklarının ötesine geç: örnek sayfaları ve açıklamalı uygulamaları incele, ihtiyacına uygun kaynakla devam et.</p></div>
           <Link href="/kaynaklar" className="secondary-button">Tüm kaynaklar <ArrowRight size={16} aria-hidden="true" /></Link>
         </div>
         <div className={styles.grid}>{products.map(product => <ResourceCard key={product.id} product={product} />)}</div>
@@ -182,7 +189,7 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
 
     <section className={styles.section} aria-labelledby="next-step-title">
       <div className={styles.closing}>
-        <div><p className={styles.eyebrow}>Sıradaki adım senin</p><h2 id="next-step-title" className={styles.heading}>Hazırlığa nereden başlayacağını öğren.</h2><p className={styles.copy}>Seviyeni gör, hedeflerine uygun çalışma yolunu seç.</p></div>
+        <div><p className={styles.eyebrow}>Sıradaki adım senin</p><h2 id="next-step-title" className={styles.heading}>Hazırlığa <span className={styles.accent}>nereden başlayacağını</span> öğren.</h2><p className={styles.copy}>Seviyeni gör, hedeflerine uygun çalışma yolunu seç.</p></div>
         <div className={styles.actions}><Link href={levelTestHref} className="primary-button">Ücretsiz seviye tespiti <ArrowRight size={16} aria-hidden="true" /></Link><Link href="/planlar" className="secondary-button">Planları incele</Link></div>
       </div>
     </section>
