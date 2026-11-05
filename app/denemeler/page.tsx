@@ -54,6 +54,15 @@ export default async function DenemelerHubPage() {
           );
         })}
       </div>
+
+      <section className="panel mt-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="eyebrow">IELTS</p>
+          <h2 className="mt-2 text-xl font-black text-[color:var(--foreground)]">IELTS test kütüphanesi</h2>
+          <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">Bilgisayarda yapılan IELTS ekranının düzeninde Listening, Reading ve Writing testleri.</p>
+        </div>
+        <Link href="/ielts/testler" className="primary-button"><Timer size={16} aria-hidden="true" /> Kütüphaneyi aç</Link>
+      </section>
     </main>
   );
 }
