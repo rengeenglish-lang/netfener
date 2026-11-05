@@ -18,6 +18,7 @@ import { ResourcesMenu } from "@/components/nav/ResourcesMenu";
 
 const NAV_LINKS = [
   { href: "/exams", label: "Sınavlar" },
+  { href: "/denemeler", label: "Denemeler" },
   { href: "/group-lessons", label: "Grup Dersleri" },
   { href: "/planlar", label: "Planlar" },
   { href: "/kocluk", label: "Koçluk" },
@@ -64,6 +65,7 @@ export async function Navbar() {
                   <div className="mt-3 space-y-1 text-xs font-medium text-slate-600">
                     <Link className="block rounded-lg px-2 py-2 hover:bg-white/80" href={examLearningHref(exam.slug)}>Konu anlatımları</Link>
                     <Link className="block rounded-lg px-2 py-2 hover:bg-white/80" href="/dashboard/practice">Pratik</Link>
+                    {exam.slug === "yds" || exam.slug === "yokdil" ? <Link className="block rounded-lg px-2 py-2 hover:bg-white/80" href={exam.slug === "yds" ? "/exams/yds/denemeler" : "/denemeler#yokdil"}>Denemeler</Link> : null}
                     <Link className="block rounded-lg px-2 py-2 hover:bg-white/80" href={examGroupHref(exam.slug)}>Grup dersleri</Link>
                     <Link className="block rounded-lg px-2 py-2 hover:bg-white/80" href={examMaterialHref(exam.slug)}>Paketler</Link>
                   </div>

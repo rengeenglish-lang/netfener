@@ -1,18 +1,39 @@
 import "server-only";
 import { DENEME_LOADERS } from "@/content/yds-denemeler/registry";
-import { printed } from "@/content/yds-denemeler/paper";
-import { SECTIONS, type Deneme } from "@/content/yds-denemeler/types";
+import { printed, type Printed } from "@/content/yds-denemeler/paper";
+import { SECTIONS } from "@/content/yds-denemeler/types";
+import { YOKDIL_LOADERS } from "@/content/yokdil-denemeler/registry";
+import { printedYokdil } from "@/content/yokdil-denemeler/paper";
+import { YOKDIL_SECTIONS } from "@/content/yokdil-denemeler/types";
 import { packBooklet } from "./booklet";
-import type { Paper, PaperPassage, PaperQuestion } from "./types";
+import { denemeTitle, splitDenemeNo } from "./tracks";
+import type { Paper, PaperPassage, PaperQuestion, PaperSection } from "./types";
 
 export type KeyedQuestion = PaperQuestion & { answer: number; why: string };
 
-/** The full test with answers and explanations. Server only: never pass this to a client component. */
-export async function loadKeyedDeneme(no: number): Promise<{ deneme: Deneme; questions: KeyedQuestion[]; passages: PaperPassage[] } | null> {
-  const load = DENEME_LOADERS[no];
+type Source = { rows: Printed[]; clozeText: (i: number) => string; readingText: (i: number) => string; sections: readonly PaperSection[] };
+
+/** Loads a test of any track as printed rows plus its passage texts and section list. */
+async function loadSource(no: number): Promise<Source | null> {
+  const split = splitDenemeNo(no);
+  if (!split) return null;
+  if (split.track.family === "yds") {
+    const load = DENEME_LOADERS[split.local];
+    if (!load) return null;
+    const d = await load();
+    return { rows: printed(d), clozeText: (i) => d.cloze[i].text, readingText: (i) => d.reading[i].text, sections: SECTIONS };
+  }
+  const load = YOKDIL_LOADERS[split.track.field!][split.local];
   if (!load) return null;
-  const deneme = await load();
-  const rows = printed(deneme);
+  const d = await load();
+  return { rows: printedYokdil(d, no), clozeText: (i) => d.cloze[i].text, readingText: (i) => d.reading[i].text, sections: YOKDIL_SECTIONS };
+}
+
+/** The full test with answers and explanations. Server only: never pass this to a client component. */
+export async function loadKeyedDeneme(no: number): Promise<{ questions: KeyedQuestion[]; passages: PaperPassage[]; sections: PaperSection[] } | null> {
+  const source = await loadSource(no);
+  if (!source) return null;
+  const rows = source.rows;
 
   const passages: PaperPassage[] = [];
   const passageIndex = new Map<string, number>();
@@ -26,8 +47,8 @@ export async function loadKeyedDeneme(no: number): Promise<{ deneme: Deneme; que
     }
     const text =
       r.section === "cloze"
-        ? deneme.cloze[r.passage].text.replace(/\{(\d)\}/g, (_, k) => `(${r.n + Number(k) - 1}) ----`)
-        : deneme.reading[r.passage].text;
+        ? source.clozeText(r.passage).replace(/\{(\d)\}/g, (_, k) => `(${r.n + Number(k) - 1}) ----`)
+        : source.readingText(r.passage);
     passageIndex.set(key, passages.length);
     passages.push({ kind: r.section, text, from: r.n, to: r.n });
   }
@@ -42,7 +63,8 @@ export async function loadKeyedDeneme(no: number): Promise<{ deneme: Deneme; que
     answer: r.answer,
     why: r.why,
   }));
-  return { deneme, questions, passages };
+  const sections = source.sections.map((x) => ({ key: x.key, from: x.from, to: x.to, title: x.title, instruction: x.instruction }));
+  return { questions, passages, sections };
 }
 
 /** The answer-free paper sent to the browser for a sitting. */
@@ -56,10 +78,11 @@ export async function loadPaper(no: number): Promise<Paper | null> {
     return item;
   });
   return {
-    no,
+    no: splitDenemeNo(no)?.local ?? no,
+    title: denemeTitle(no),
     questions,
     passages: keyed.passages,
-    sections: SECTIONS.map((s) => ({ key: s.key, from: s.from, to: s.to, title: s.title, instruction: s.instruction })),
+    sections: keyed.sections,
     pages: packBooklet(questions, keyed.passages),
   };
 }

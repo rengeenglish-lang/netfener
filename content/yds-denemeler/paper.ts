@@ -30,7 +30,7 @@ function rng(seed: number) {
  * Which letter is correct for each of the 75 shuffled questions: together with the five fixed
  * anlam bütünlüğü answers every letter is correct exactly 16 times, and never 3 times in a row.
  */
-function answerPlan(no: number, fixed: number[]) {
+export function answerPlan(no: number, fixed: number[]) {
   const need = [16, 16, 16, 16, 16];
   for (const f of fixed) need[f]--;
   const pool = need.flatMap((c, l) => Array<number>(c).fill(l));
@@ -49,7 +49,7 @@ function answerPlan(no: number, fixed: number[]) {
 }
 
 /** Place the correct option (written first) at `target`, keeping the distractors' written order. */
-function place(q: Q, target: number) {
+export function place(q: Q, target: number) {
   const [correct, ...rest] = q[1];
   const options = [...rest];
   options.splice(target, 0, correct);

@@ -14,7 +14,7 @@ import {
   settleAttempt,
   type SaveResult,
 } from "@/server/services/online-deneme.service";
-import { DENEME_LOADERS } from "@/content/yds-denemeler/registry";
+import { hasDeneme } from "@/lib/online-denemeler/catalog";
 import { logEvent } from "@/lib/diagnostics/analytics";
 import type { SavedAnswer } from "@/lib/online-denemeler/types";
 
@@ -26,7 +26,7 @@ export async function startOnlineDenemeAction(formData: FormData) {
   const mode = formData.get("mode") === "OPTIK" ? "OPTIK" : "KLASIK";
   const user = await getAuthContext();
   if (!user) redirect(`/sign-in?next=${encodeURIComponent(`${BASE}/${no}`)}`);
-  if (!DENEME_LOADERS[no]) redirect(BASE);
+  if (!hasDeneme(no)) redirect(BASE);
 
   const access = await getPlanAccess(user);
   if (!access.can("MOCK_EXAMS")) redirect("/dashboard/mock-exam#planlar");

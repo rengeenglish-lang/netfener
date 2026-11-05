@@ -5,7 +5,8 @@ import { getAuthContext } from "@/server/auth/context";
 import { getPlanAccess, remainingMockExamStarts } from "@/server/services/plans.service";
 import { findOpenAttempt } from "@/server/services/online-deneme.service";
 import { startOnlineDenemeAction } from "@/app/actions/online-deneme";
-import { DENEME_LOADERS, PLANNED_DENEME_COUNT } from "@/content/yds-denemeler/registry";
+import { hasDeneme, releasedCount } from "@/lib/online-denemeler/catalog";
+import { denemeTitle, listHref, splitDenemeNo } from "@/lib/online-denemeler/tracks";
 import { ModePicker } from "@/components/online-deneme/ModePicker";
 
 function minutesUntil(deadline: Date) {
@@ -14,13 +15,15 @@ function minutesUntil(deadline: Date) {
 
 export async function generateMetadata({ params }: { params: Promise<{ no: string }> }): Promise<Metadata> {
   const { no } = await params;
-  return { title: `YDS Denemesi ${Number(no) || ""}` };
+  return { title: denemeTitle(Number(no) || 0) };
 }
 
 export default async function DenemeStartPage({ params }: { params: Promise<{ no: string }> }) {
   const { no: raw } = await params;
   const no = Number(raw);
-  if (!Number.isInteger(no) || !DENEME_LOADERS[no]) notFound();
+  const split = splitDenemeNo(no);
+  if (!split || !hasDeneme(no)) notFound();
+  const { track, local } = split;
   const user = await getAuthContext();
   if (!user) return null;
 
@@ -32,14 +35,14 @@ export default async function DenemeStartPage({ params }: { params: Promise<{ no
   return (
     <main className="mx-auto w-full max-w-5xl space-y-7 px-4 py-10 sm:px-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <Link href="/dashboard/yds-denemeleri" className="text-sm font-bold text-[color:var(--accent-strong)]">← Deneme listesi</Link>
-        <span className="text-sm font-bold text-[color:var(--muted)]">Online YDS Denemesi · {no} / {PLANNED_DENEME_COUNT}</span>
+        <Link href={listHref(track)} className="text-sm font-bold text-[color:var(--accent-strong)]">← Deneme listesi</Link>
+        <span className="text-sm font-bold text-[color:var(--muted)]">Online {track.name} Denemesi · {local} / {releasedCount(track)}</span>
       </div>
 
       <section className="flex flex-wrap items-end justify-between gap-6 rounded-3xl bg-[color:var(--night)] p-8 text-white sm:p-10">
         <div className="min-w-0">
-          <p className="text-xs font-extrabold tracking-[0.22em] text-white/70">YDS · TAM DENEME</p>
-          <h1 className="mt-2 font-serif text-5xl font-semibold">Deneme {no}</h1>
+          <p className="text-xs font-extrabold tracking-[0.22em] text-white/70">{track.short.toLocaleUpperCase("tr")} · TAM DENEME</p>
+          <h1 className="mt-2 font-serif text-5xl font-semibold">Deneme {local}</h1>
           <p className="mt-2 text-white/80">80 soru · 180 dakika · Her doğru 1,25 puan, yanlış götürmez</p>
         </div>
         <div className="flex flex-wrap gap-3">

@@ -6,6 +6,8 @@ import { getActiveGoal } from "@/server/services/diagnostic-goals.service";
 import { getPlanAccess } from "@/server/services/plans.service";
 import { db } from "@/server/db";
 import { examFamilyForCode } from "@/lib/diagnostics/exam-family";
+import { DenemeCallout } from "@/components/online-deneme/DenemeCallout";
+import { trackByCode } from "@/lib/online-denemeler/tracks";
 import { startPracticeAction } from "@/app/actions/diagnostic-attempt";
 import { PRACTICE_SECTIONS, isPracticeSection, practiceSectionForTopic, type PracticeSectionKey } from "@/lib/practice-sections";
 import { PLAN_NAMES, minimumTierFor } from "@/lib/plans";
@@ -77,6 +79,7 @@ export default async function PracticePage({ searchParams }: { searchParams: Pro
       <p className="eyebrow">{goal.examType.name}</p>
       <h1 className="page-title">Pratik Bankası</h1>
       <p className="page-copy">{singleList ? "Çalışmak istediğin soru tipini seç ya da karma sorularla pratik yap." : "Bir beceri seç, ardından çalışmak istediğin konuyu seçerek pratik yap."}</p>
+      {trackByCode(goal.examType.code) ? <DenemeCallout track={trackByCode(goal.examType.code)!} signedIn /> : null}
 
       {singleList ? null : <nav aria-label="Beceri" className="mt-6 grid grid-cols-2 gap-2 rounded-2xl border border-[color:var(--border)] bg-white p-2 shadow-sm sm:grid-cols-5">
         {PRACTICE_SECTIONS.map((s) => {

@@ -8,6 +8,8 @@ import { getSubsiteExam, countExamPractice } from "@/server/services/exam-subsit
 import { subsiteHref } from "@/lib/exam-subsite";
 import { EmptyState, FeatureCard, SubsiteCard, SubsiteHeader } from "@/components/exams/subsite/SubsiteUi";
 import { SwitchExamButton } from "@/components/exams/subsite/ExamContextBanner";
+import { DenemeCallout } from "@/components/online-deneme/DenemeCallout";
+import { trackByCode } from "@/lib/online-denemeler/tracks";
 
 type Props = { params: Promise<{ examSlug: string }> };
 
@@ -23,6 +25,7 @@ export default async function ExamPracticePage({ params }: Props) {
   const [{ practice }, goal] = await Promise.all([countExamPractice(exam), user ? getActiveGoal(user.id) : null]);
   const goalMatches = goal?.examTypeId === exam.id;
   const nf = new Intl.NumberFormat("tr-TR");
+  const track = trackByCode(exam.code);
 
   return (
     <>
@@ -51,6 +54,7 @@ export default async function ExamPracticePage({ params }: Props) {
       ) : (
         <EmptyState icon={ClipboardList} title={`${exam.name} pratik soruları hazırlanıyor`} copy="Bu sınav için soru havuzu henüz yayında değil. Konu anlatımlarıyla başlayabilirsin." action={<Link href={subsiteHref(exam.slug, "konular")} className="secondary-button">Konu anlatımı</Link>} />
       )}
+      {track ? <DenemeCallout track={track} signedIn={Boolean(user)} /> : null}
     </>
   );
 }

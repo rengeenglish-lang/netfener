@@ -5,7 +5,7 @@ import { getOwnAttempt, savedAnswers, settleAttempt } from "@/server/services/on
 import { loadPaper } from "@/lib/online-denemeler/paper";
 import { DenemeRunner } from "@/components/online-deneme/DenemeRunner";
 
-export const metadata: Metadata = { title: "YDS Denemesi" };
+export const metadata: Metadata = { title: "Online Deneme" };
 
 export default async function DenemeSessionPage({ params }: { params: Promise<{ attemptId: string }> }) {
   const { attemptId } = await params;
