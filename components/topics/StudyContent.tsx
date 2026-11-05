@@ -1,7 +1,26 @@
+"use client";
+
+import { isKeyPoint, tokenizeKeyTerms, useEmphasis } from "@/components/topics/emphasis";
+
 /** Present lesson prose as readable study points without changing its wording. */
 const sentences = new Intl.Segmenter("tr", { granularity: "sentence" });
 
+/** Strong emphasis (YDS/YÖKDİL): key terms get a marker highlight, quoted sentences turn bold. */
+function MarkedText({ text }: { text: string }) {
+  return tokenizeKeyTerms(text).map((token, index) =>
+    token.kind === "term" ? (
+      <mark key={index} className="key-term">{token.value}</mark>
+    ) : token.kind === "quote" ? (
+      <strong key={index} className="font-bold text-[color:var(--foreground)]">{token.value}</strong>
+    ) : (
+      token.value
+    ),
+  );
+}
+
 export function HighlightedText({ text }: { text: string }) {
+  const emphasis = useEmphasis();
+  if (emphasis === "strong") return <MarkedText text={text} />;
   // Only short quoted terms and explicit rule phrases receive emphasis.
   // Apostrophes within Turkish suffixes and English contractions stay untouched.
   const parts = text.split(/("[^"\n]{1,65}"|“[^”\n]{1,65}”|tamamen farklı bir anlam|nesne almaz|mutlaka bir nesne ister|her zaman particle'dan sonra|bir formül değildir|ortalama \d+ soru)/g);
@@ -33,6 +52,7 @@ function EmphasizedText({ text }: { text: string }) {
 }
 
 function GlossaryEntry({ text }: { text: string }) {
+  const strong = useEmphasis() === "strong";
   // Glossary headwords may contain parentheses and use a colon or a spaced dash.
   // Match only the first line so examples keep their existing formatting.
   const heading = /^([^\n]+?)(:|[ \t]+[–—-])(?=\s|$)/.exec(text);
@@ -41,9 +61,13 @@ function GlossaryEntry({ text }: { text: string }) {
   }
   return (
     <>
-      <strong className="font-bold text-slate-950">
-        {heading[1]}
-      </strong>
+      {strong ? (
+        <mark className="key-term key-term-head">{heading[1]}</mark>
+      ) : (
+        <strong className="font-bold text-slate-950">
+          {heading[1]}
+        </strong>
+      )}
       {heading[2]}
       <EmphasizedText text={text.slice(heading[0].length)} />
     </>
@@ -51,6 +75,7 @@ function GlossaryEntry({ text }: { text: string }) {
 }
 
 export function StudyContent({ text, glossary = false }: { text: string; glossary?: boolean }) {
+  const strong = useEmphasis() === "strong";
   // Keep glossary entries and their examples together; sentence bullets are for explanations.
   const blocks = text.split(/\n\s*\n/).filter((block) => block.trim());
   return (
@@ -68,7 +93,7 @@ export function StudyContent({ text, glossary = false }: { text: string; glossar
         return (
           <ul key={blockIndex} className="list-disc space-y-3 pl-6 marker:text-slate-500">
             {points.map((point, index) => (
-              <li key={index} className="pl-1.5"><EmphasizedText text={point} /></li>
+              <li key={index} className={strong && isKeyPoint(point) ? "key-point pl-1.5" : "pl-1.5"}><EmphasizedText text={point} /></li>
             ))}
           </ul>
         );

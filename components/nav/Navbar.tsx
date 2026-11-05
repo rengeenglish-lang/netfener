@@ -18,15 +18,14 @@ import { ResourcesMenu } from "@/components/nav/ResourcesMenu";
 
 const NAV_LINKS = [
   { href: "/exams", label: "Sınavlar" },
-  { href: "/konu-anlatim", label: "Konu Anlatımları" },
   { href: "/group-lessons", label: "Grup Dersleri" },
   { href: "/planlar", label: "Planlar" },
-  { href: "/kocluk", label: "Ücretsiz Koçluk" },
+  { href: "/kocluk", label: "Koçluk" },
 ];
 
 const RESOURCE_LINKS = [
   { href: "/kaynaklar", label: "Tüm kaynaklar" },
-  { href: "/kaynaklar/e-kitaplar", label: "E-kitaplar ve önizlemeler" },
+  { href: "/kaynaklar/e-kitaplar", label: "E-kitaplar" },
   { href: "/sozluk", label: "Sözlük" },
   { href: "/thesaurus", label: "Thesaurus" },
   { href: "/tools/free-resources", label: "Ücretsiz kaynaklar" },

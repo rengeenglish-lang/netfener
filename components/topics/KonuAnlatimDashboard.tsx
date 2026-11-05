@@ -6,7 +6,9 @@ import Link from "next/link";
 import {
   toggleTopicLessonProgressAction,
   saveTopicNoteAction,
+  getLessonEnglishAction,
 } from "@/app/actions/topics";
+import { EmphasisProvider, emphasisForExam } from "@/components/topics/emphasis";
 import { parseExampleBlocks } from "@/components/topics/parseExampleBlock";
 import { parseAccordionSections } from "@/components/topics/parseAccordionSections";
 import { hasStrategyBoxes } from "@/components/topics/parseStrategyBoxes";
@@ -53,8 +55,8 @@ const CATEGORY_LABEL: Record<string, string> = {
   LISTENING: "Dinleme",
 };
 
-/** Exams whose lessons get the "Read in English" switch (uses the stored translation). */
-const ENGLISH_TOGGLE_EXAMS = new Set(["toefl", "ielts"]);
+/** Exams whose lessons get the "Read in English" switch (keep in step with ENGLISH_TOGGLE_EXAM_SLUGS). */
+const ENGLISH_TOGGLE_EXAMS = new Set(["toefl", "ielts", "pte"]);
 
 const CARD = "relative overflow-hidden rounded-lg border border-slate-200 bg-white px-6 py-6 sm:px-8 sm:py-7";
 
@@ -104,6 +106,9 @@ export function KonuAnlatimDashboard({
   const [pending, startTransition] = useTransition();
   // "Read in English" for TOEFL/IELTS: shows the stored translation of the lesson.
   const [language, setLanguage] = useState<"tr" | "en">("tr");
+  // English fetched on demand for lessons the offline batch hasn't translated yet (by lesson id).
+  const [fetchedEnglish, setFetchedEnglish] = useState<Record<string, string>>({});
+  const [englishStatus, setEnglishStatus] = useState<{ loading: boolean; error: string | null }>({ loading: false, error: null });
   const [navOpen, setNavOpen] = useState(true);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   // Every lesson in reading order; a topic without lessons is one step of its own.
@@ -131,7 +136,7 @@ export function KonuAnlatimDashboard({
     selectedTopic?.lessons[0];
 
   const showEnglishToggle = isSignedIn && ENGLISH_TOGGLE_EXAMS.has(examSlug);
-  const englishText = selectedLesson?.contentBodyEn ?? null;
+  const englishText = selectedLesson ? (selectedLesson.contentBodyEn ?? fetchedEnglish[selectedLesson.id] ?? null) : null;
   const englishView = language === "en" && showEnglishToggle && englishText ? englishText : null;
 
   const isExampleLesson = selectedLesson
@@ -228,16 +233,34 @@ export function KonuAnlatimDashboard({
   };
   const isLockedTopic = locked.has(selectedTopic.id);
   const englishToggle =
-    showEnglishToggle && selectedLesson && !isLockedTopic && selectedLesson.contentBodyEn ? (
-      <button
-        type="button"
-        onClick={() => setLanguage(language === "en" ? "tr" : "en")}
-        aria-pressed={language === "en"}
-        className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--accent)] px-4 py-1 text-sm font-extrabold text-white shadow-[0_6px_18px_rgb(var(--shadow-rgb)/.2)] transition hover:bg-[color:var(--accent-strong)]"
-      >
-        <Languages size={16} aria-hidden="true" />
-        {language === "en" ? "Türkçe içeriğe dön" : "Read in English"}
-      </button>
+    showEnglishToggle && selectedLesson && !isLockedTopic && selectedLesson.contentBody ? (
+      <span className="inline-flex flex-col items-start gap-1">
+        <button
+          type="button"
+          disabled={englishStatus.loading}
+          onClick={async () => {
+            if (englishView) return setLanguage("tr");
+            setLanguage("en");
+            if (englishText) return;
+            const lessonId = selectedLesson.id;
+            setEnglishStatus({ loading: true, error: null });
+            const result = await getLessonEnglishAction(lessonId);
+            if (result.status === "success") {
+              setFetchedEnglish((prev) => ({ ...prev, [lessonId]: result.text }));
+              setEnglishStatus({ loading: false, error: null });
+            } else {
+              setLanguage("tr");
+              setEnglishStatus({ loading: false, error: result.message });
+            }
+          }}
+          aria-pressed={!!englishView}
+          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--accent)] px-4 py-1 text-sm font-extrabold text-white shadow-[0_6px_18px_rgb(var(--shadow-rgb)/.2)] transition hover:bg-[color:var(--accent-strong)] disabled:opacity-70"
+        >
+          <Languages size={16} aria-hidden="true" />
+          {englishStatus.loading ? "Çevriliyor…" : englishView ? "Türkçe içeriğe dön" : "Read in English"}
+        </button>
+        {englishStatus.error ? <span role="alert" className="text-xs font-semibold text-red-600">{englishStatus.error}</span> : null}
+      </span>
     ) : null;
   const heading = isLockedTopic || !selectedLesson ? selectedTopic.name : stepLabel(selectedLesson.title, selectedTopic.name);
 
@@ -259,6 +282,7 @@ export function KonuAnlatimDashboard({
   );
 
   return (
+    <EmphasisProvider value={emphasisForExam(examSlug)}>
     <div className={`course-layout ${navOpen ? "" : "course-layout-collapsed"}`}>
       {navOpen ? <aside className="course-sidebar hidden lg:block">{nav}</aside> : null}
 
@@ -459,5 +483,6 @@ export function KonuAnlatimDashboard({
         </article>
       </div>
     </div>
+    </EmphasisProvider>
   );
 }

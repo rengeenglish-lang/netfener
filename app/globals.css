@@ -1354,6 +1354,13 @@ a {
 /* Konu anlatımı prose, after FutureLearn's step pages: regular-weight body text at a calm reading size. */
 .study-prose { font-size: 1.125rem; font-weight: 400; line-height: 1.7; color: #1f2937; }
 @media (min-width: 640px) { .study-prose { font-size: 1.1875rem; } }
+/* YDS/YÖKDİL strong emphasis: marker-pen key terms and highlighted key-point sentences. */
+:root { --key-mark: #fde047; --key-mark-ink: #1f1a00; --key-point-bg: #fffbeb; --key-point-edge: #f59e0b; }
+:root[data-theme="dark"] { --key-mark: rgb(250 204 21 / .32); --key-mark-ink: #fff7cc; --key-point-bg: rgb(245 158 11 / .1); --key-point-edge: #fbbf24; }
+.key-term { background: linear-gradient(transparent 12%, var(--key-mark) 12%, var(--key-mark) 92%, transparent 92%); color: var(--key-mark-ink); font-weight: 800; padding: 0 .2em; border-radius: .2em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.key-term-head { font-size: 1.05em; }
+.study-prose li.key-point { list-style: none; margin-left: -1.5rem; padding: .75rem 1rem .75rem 1.1rem !important; border-left: 4px solid var(--key-point-edge); border-radius: .5rem; background: var(--key-point-bg); font-weight: 600; }
+.study-prose li.key-point::before { content: "Önemli"; display: block; margin-bottom: .2rem; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--key-point-edge); }
 .course-nav section:last-child { border-bottom: 0; }
 
 /* Shared photo panel for sign-in, registration and account recovery. */
