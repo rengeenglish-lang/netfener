@@ -6,6 +6,7 @@ on:
       - 'app/blog/**'
       - 'app/exams/**'
       - 'lib/exam-subsite.ts'
+      - 'tests/exam-subsites.test.ts'
       - 'server/services/exam-subsite.service.ts'
       - 'components/exams/**'
       - 'components/marketing/**'
