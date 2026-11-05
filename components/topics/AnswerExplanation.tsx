@@ -1,7 +1,12 @@
+"use client";
+
 import { CheckCircle2, BookOpen } from "lucide-react";
+import { HighlightedText } from "@/components/topics/StudyContent";
+import { useEmphasis } from "@/components/topics/emphasis";
 import type { ParsedOption } from "@/components/topics/parseExampleBlock";
 
 export function AnswerExplanation({ correctOption, explanation }: { correctOption: ParsedOption; explanation: string }) {
+  const strong = useEmphasis() === "strong";
   return (
     <div className="mt-5 rounded-2xl border border-[color:var(--success)]/30 bg-[color:var(--success-soft)] p-6">
       <div className="flex items-center gap-3">
@@ -16,7 +21,7 @@ export function AnswerExplanation({ correctOption, explanation }: { correctOptio
         <BookOpen className="size-4 shrink-0" />
         Açıklama
       </p>
-      <p className="mt-1 whitespace-pre-line text-lg font-semibold leading-8 text-slate-900">{explanation}</p>
+      <p className="mt-1 whitespace-pre-line text-lg font-semibold leading-8 text-slate-900">{strong ? <HighlightedText text={explanation} /> : explanation}</p>
     </div>
   );
 }
