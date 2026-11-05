@@ -24,7 +24,7 @@ export async function getExamTopicsWithProgress(examTypeId: string, userId?: str
   const topics = await db.examTopic.findMany({
     where: { examTypeId },
     orderBy: { displayOrder: "asc" },
-    select: { id: true, slug: true, name: true, category: true, skillsTested: true, description: true, questionCount: true, lessons: { select: { id: true } } },
+    select: { id: true, slug: true, name: true, category: true, skillsTested: true, description: true, questionCount: true, lessons: { select: { id: true, title: true }, orderBy: { position: "asc" } } },
   });
   const done = userId
     ? new Set(
@@ -34,7 +34,12 @@ export async function getExamTopicsWithProgress(examTypeId: string, userId?: str
         })).map((p) => p.topicLessonId),
       )
     : new Set<string>();
-  return topics.map((t) => ({ ...t, lessonCount: t.lessons.length, completed: t.lessons.filter((l) => done.has(l.id)).length }));
+  return topics.map((t) => ({
+    ...t,
+    lessons: t.lessons.map((l) => ({ ...l, done: done.has(l.id) })),
+    lessonCount: t.lessons.length,
+    completed: t.lessons.filter((l) => done.has(l.id)).length,
+  }));
 }
 
 /** Real per-skill numbers for the exam home: topics, lessons and (signed in) completed lessons. */
