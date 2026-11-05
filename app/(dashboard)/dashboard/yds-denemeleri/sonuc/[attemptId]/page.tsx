@@ -6,8 +6,8 @@ import { getAuthContext } from "@/server/auth/context";
 import { finishedScores, getOwnAttempt, savedAnswers, settleAttempt } from "@/server/services/online-deneme.service";
 import { loadKeyedDeneme } from "@/lib/online-denemeler/paper";
 import { gradeDeneme } from "@/lib/online-denemeler/grading";
-import { SECTIONS } from "@/content/yds-denemeler/types";
-import { RELEASED_DENEME_COUNT } from "@/content/yds-denemeler/registry";
+import { nextDeneme } from "@/lib/online-denemeler/catalog";
+import { denemeTitle, listHref, splitDenemeNo, startHref } from "@/lib/online-denemeler/tracks";
 import { ReviewList, type ReviewItem } from "@/components/online-deneme/ReviewList";
 
 export const metadata: Metadata = { title: "Deneme Sonucu" };
@@ -29,8 +29,12 @@ export default async function DenemeResultPage({ params }: { params: Promise<{ a
   // Answers and explanations are only shown once the sitting is closed.
   if (attempt.status === "IN_PROGRESS") redirect(`/dashboard/yds-denemeleri/oturum/${attempt.id}`);
 
-  const [keyed, answers, trend] = await Promise.all([loadKeyedDeneme(attempt.denemeNo), savedAnswers(attempt.id), finishedScores(user.id)]);
-  if (!keyed) notFound();
+  const split = splitDenemeNo(attempt.denemeNo);
+  const [keyed, answers, allTrend] = await Promise.all([loadKeyedDeneme(attempt.denemeNo), savedAnswers(attempt.id), finishedScores(user.id, 30)]);
+  if (!keyed || !split) notFound();
+  // The trend compares sittings of the same exam only.
+  const trend = allTrend.filter((t) => splitDenemeNo(t.denemeNo)?.track.slug === split.track.slug).slice(-6);
+  const SECTIONS = keyed.sections;
   const choices = new Map(Object.entries(answers).map(([n, a]) => [Number(n), a.choice]));
   const grade = gradeDeneme(keyed.questions, choices);
   const used = (attempt.completedAt ?? attempt.deadlineAt).getTime() - attempt.startedAt.getTime();
@@ -55,7 +59,7 @@ export default async function DenemeResultPage({ params }: { params: Promise<{ a
   }));
 
   const maxTrend = 100;
-  const next = attempt.denemeNo < RELEASED_DENEME_COUNT ? attempt.denemeNo + 1 : null;
+  const next = nextDeneme(attempt.denemeNo);
 
   return (
     <main className="mx-auto w-full max-w-6xl space-y-6 px-4 py-10 sm:px-6">
@@ -67,7 +71,7 @@ export default async function DenemeResultPage({ params }: { params: Promise<{ a
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <section className="flex flex-col gap-3 rounded-3xl bg-[color:var(--night)] p-8 text-white">
-          <p className="text-xs font-extrabold tracking-[0.22em] text-white/70">DENEME {attempt.denemeNo} · SONUÇ</p>
+          <p className="text-xs font-extrabold tracking-[0.22em] text-white/70">{denemeTitle(attempt.denemeNo).toLocaleUpperCase("tr")} · SONUÇ</p>
           <p className="flex flex-wrap items-baseline gap-3">
             <span className="font-serif text-7xl font-semibold leading-none">{fmt(grade.score)}</span>
             <span className="text-lg text-white/80">/ 100 puan</span>
@@ -89,13 +93,13 @@ export default async function DenemeResultPage({ params }: { params: Promise<{ a
                 {trend.map((t) => {
                   const current = t.id === attempt.id;
                   return (
-                    <div key={t.id} className="flex min-w-0 flex-1 flex-col items-center gap-1.5" title={`Deneme ${t.denemeNo}: ${fmt(t.score)} puan`}>
+                    <div key={t.id} className="flex min-w-0 flex-1 flex-col items-center gap-1.5" title={`${denemeTitle(t.denemeNo)}: ${fmt(t.score)} puan`}>
                       <span className={`text-xs tabular-nums ${current ? "font-black" : "font-semibold"} text-[color:var(--foreground)]`}>{fmt(t.score)}</span>
                       <div
                         className={`w-full max-w-12 rounded-t ${current ? "bg-[color:var(--accent)]" : "bg-[color:var(--accent-soft)]"}`}
                         style={{ height: `${Math.max(4, (t.score / maxTrend) * 110)}px` }}
                       />
-                      <span className={`text-[0.7rem] ${current ? "font-bold text-[color:var(--foreground)]" : "text-[color:var(--muted)]"}`}>D{t.denemeNo}</span>
+                      <span className={`text-[0.7rem] ${current ? "font-bold text-[color:var(--foreground)]" : "text-[color:var(--muted)]"}`}>D{splitDenemeNo(t.denemeNo)?.local ?? t.denemeNo}</span>
                     </div>
                   );
                 })}
@@ -154,10 +158,10 @@ export default async function DenemeResultPage({ params }: { params: Promise<{ a
 
       <div className="flex flex-wrap gap-3">
         {next ? (
-          <Link href={`/dashboard/yds-denemeleri/${next}`} className="primary-button">Sıradaki deneme: Deneme {next}</Link>
+          <Link href={startHref(next)} className="primary-button">Sıradaki deneme: {denemeTitle(next)}</Link>
         ) : null}
-        <Link href={`/dashboard/yds-denemeleri/${attempt.denemeNo}`} className="secondary-button">Bu denemeyi tekrar çöz</Link>
-        <Link href="/dashboard/yds-denemeleri" className="ghost-button">Tüm denemeler</Link>
+        <Link href={startHref(attempt.denemeNo)} className="secondary-button">Bu denemeyi tekrar çöz</Link>
+        <Link href={listHref(split.track)} className="ghost-button">Tüm denemeler</Link>
       </div>
     </main>
   );

@@ -31,7 +31,10 @@ export type PaperSection = { key: SectionKey; from: number; to: number; title: s
 export type BookletPage = { from: number; to: number };
 
 export type Paper = {
+  /** Number within its track (Deneme 3). */
   no: number;
+  /** "YÖKDİL Sağlık Denemesi 3" */
+  title: string;
   questions: PaperQuestion[];
   passages: PaperPassage[];
   sections: PaperSection[];

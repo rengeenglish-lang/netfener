@@ -192,10 +192,12 @@ export function DenemeRunner({
 
   return (
     <div className="mx-auto w-full max-w-[1500px]">
-      <header className="sticky top-[76px] z-30 -mx-4 mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-[color:var(--border)] bg-[color:var(--surface)] px-4 py-3 sm:-mx-6 sm:px-6">
+      {/* e-sınav style bar: exam name on the left, a large "Kalan Süre" clock in the middle, actions on the right. */}
+      <header className="sticky top-[76px] z-30 -mx-4 mb-5 grid grid-cols-1 items-center gap-3 border-b-4 border-[color:var(--accent)] bg-[color:var(--night)] px-4 py-3 text-white sm:-mx-6 sm:grid-cols-[1fr_auto_1fr] sm:px-6">
         <div className="min-w-0">
-          <p className="text-base font-extrabold text-[color:var(--foreground)]">YDS Denemesi {paper.no}</p>
-          <p className="text-xs font-semibold text-[color:var(--muted)]">
+          <p className="text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-white/60">Elektronik sınav görünümü</p>
+          <p className="truncate text-base font-extrabold">{paper.title}</p>
+          <p className="text-xs font-semibold text-white/70">
             {answered}/80 cevaplandı{flagged ? ` · ${flagged} işaretli` : ""} ·{" "}
             <span aria-live="polite">{saveState === "saving" ? "Kaydediliyor…" : saveState === "error" ? "Kaydedilemedi, bağlantını kontrol et" : "Kaydedildi"}</span>
           </p>
@@ -203,24 +205,26 @@ export function DenemeRunner({
         <div
           role="timer"
           aria-label="Kalan süre"
-          className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xl font-black tabular-nums ${
-            urgent ? "bg-[color:var(--danger-soft)] text-[color:var(--danger)]" : warning ? "bg-[color:var(--gold-soft)] text-[color:var(--foreground)]" : "bg-[color:var(--brand-soft)] text-[color:var(--foreground)]"
+          className={`flex flex-col items-center rounded-lg border-2 px-5 py-1.5 ${
+            urgent ? "animate-pulse border-[color:var(--danger)] bg-[color:var(--danger)] text-white" : warning ? "border-amber-300 bg-amber-300 text-black" : "border-white/30 bg-black/30 text-white"
           }`}
         >
-          {locked ? <Lock size={18} aria-hidden="true" /> : <Timer size={18} aria-hidden="true" />}
-          {formatClock(locked ? 0 : remaining)}
+          <span className="flex items-center gap-1.5 text-[0.65rem] font-extrabold uppercase tracking-[0.2em] opacity-80">
+            {locked ? <Lock size={12} aria-hidden="true" /> : <Timer size={12} aria-hidden="true" />} Kalan süre
+          </span>
+          <span className="font-mono text-3xl font-black tabular-nums leading-none tracking-wider">{formatClock(locked ? 0 : remaining)}</span>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
           <button
             type="button"
-            className="secondary-button text-xs"
+            className="rounded-lg border border-white/40 px-3 py-2 text-xs font-bold text-white transition hover:bg-white/10 disabled:opacity-50"
             onClick={() => switchMode(mode === "KLASIK" ? "OPTIK" : "KLASIK")}
             disabled={locked}
           >
-            {mode === "KLASIK" ? "ÖSYM cevap kâğıdına geç" : "Klasik görünüme geç"}
+            {mode === "KLASIK" ? "Cevap kâğıdına geç" : "Soru ekranına geç"}
           </button>
-          <button type="button" className="primary-button text-xs" onClick={() => setConfirming(true)} disabled={locked}>
-            Testi bitir
+          <button type="button" className="rounded-lg bg-[color:var(--danger)] px-4 py-2 text-xs font-extrabold text-white transition hover:opacity-90 disabled:opacity-50" onClick={() => setConfirming(true)} disabled={locked}>
+            Sınavı bitir
           </button>
         </div>
       </header>
@@ -520,7 +524,7 @@ function OptikView({ paper, answers, current, setCurrent, choose, locked }: View
       <section ref={bookletRef} aria-label="Soru kitapçığı" className="min-w-0 scroll-mt-[180px]">
         <div className="rounded-md border border-[color:var(--border)] bg-[color:var(--surface-raised,var(--surface))] p-5 text-[color:var(--foreground)] shadow-sm sm:p-8">
           <div className="mb-4 flex items-center justify-between border-b-2 border-[color:var(--foreground)] pb-2 text-xs font-bold">
-            <span>YDS · DENEME {paper.no}</span>
+            <span>{paper.title.toLocaleUpperCase("tr")}</span>
             <span>
               Sayfa {page + 1} / {paper.pages.length} · Soru {range.from}–{range.to}
             </span>
