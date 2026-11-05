@@ -40,6 +40,10 @@ test("every YÖKDİL deneme is a well-formed 80-question test", async () => {
       }
       assert.deepEqual(letters, [16, 16, 16, 16, 16], `${tag}: answer letters`);
       for (const c of d.cloze) for (let k = 1; k <= 5; k++) assert.ok(c.text.includes(`{${k}}`), `${tag}: cloze gap ${k}`);
+      // The correct option must not give itself away by being clearly the longest too often (YDS rule: ≤ 20).
+      const written = [...d.vocab, ...d.grammar, ...d.cloze.flatMap((c) => c.blanks), ...d.completion, ...d.enTr, ...d.trEn, ...d.reading.flatMap((r) => r.questions), ...d.paragraph];
+      const longest = written.filter(([, o]) => o[0].length > Math.max(...o.slice(1).map((x) => x.length)) + 8).length;
+      assert.ok(longest <= 20, `${tag}: correct option clearly longest in ${longest}/74`);
       total++;
     }
   }
