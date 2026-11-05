@@ -2,7 +2,7 @@ import { test, after } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { db } from "../server/db";
-import { sectionForPath, skillCards, subsiteHref, topicMatchesSkill } from "../lib/exam-subsite";
+import { buildSkills, sectionForPath, subsiteHref } from "../lib/exam-subsite";
 import { reactivateGoalForExam } from "../server/services/diagnostic-goals.service";
 import { studentLandingPath } from "../server/services/exam-subsite.service";
 
@@ -26,11 +26,40 @@ test("paths map to the right subsite section, and only exam pages get one", () =
   assert.equal(sectionForPath("/dashboard", "yds"), null);
 });
 
-test("skill cards match topics by name, category or slug, per exam family", () => {
-  const [reading] = skillCards("ACADEMIC_SKILLS");
-  assert.equal(topicMatchesSkill({ name: "Matching Headings", category: "READING", skillsTested: null, slug: "x" }, reading), true);
-  assert.equal(topicMatchesSkill({ name: "Task 2", category: "WRITING", skillsTested: null, slug: "y" }, reading), false);
-  assert.deepEqual(skillCards("TRANSLATION_GRAMMAR").map((s) => s.key), ["kelime", "gramer", "ceviri", "paragraf"]);
+const t = (id: string, name: string, category: string | null = null) => ({ id, name, category, slug: id });
+
+test("YDS topics become their real question-type sections, in exam order", () => {
+  const yds = [
+    t("a", "Kelime – Phrasal Verb Soruları"), t("b", "Tense (Zaman) Soruları"), t("c", "Preposition (Edat) Soruları"),
+    t("d", "Cloze Test Soruları"), t("e", "Cümle Tamamlama Soruları"), t("f", "Çeviri Soruları"), t("g", "Paragraf Soruları"),
+    t("h", "Diyalog Tamamlama Soruları"), t("i", "Yakın Anlamlı Cümle Soruları"), t("j", "Paragraf Tamamlama Soruları"),
+    t("k", "Anlatım Bütünlüğünü Bozan Cümle Soruları"), t("l", "YDS Stratejileri"),
+  ];
+  const skills = buildSkills(yds);
+  assert.deepEqual(skills.map((s) => s.key), ["kelime", "dil-bilgisi", "cloze-test", "cumle-tamamlama", "ceviri", "paragraf", "paragraf-tamamlama", "diyalog", "yakin-anlam", "anlam-butunlugu", "strateji"]);
+  assert.deepEqual(skills.find((s) => s.key === "dil-bilgisi")!.topicIds, ["b", "c"]);
+  assert.deepEqual(skills.find((s) => s.key === "paragraf")!.topicIds, ["g"]);
+  assert.deepEqual(skills.find((s) => s.key === "paragraf-tamamlama")!.topicIds, ["j"]);
+  assert.equal(skills.flatMap((s) => s.topicIds).length, yds.length); // every topic placed exactly once
+});
+
+test("YÖKDİL grammar subtopics group under Dil bilgisi; unknown topics keep their own card", () => {
+  const yokdil = [
+    t("a", "Kelime Bilgisi (Vocabulary)"), t("b", "Modality (Kiplik Fiiller)"), t("c", "Adjective Clauses (Sıfat Cümlecikleri)"),
+    t("d", "Conjunctions & Adverbial Clauses & Inversions (Bağlaçlar, Zarf Cümlecikleri ve Devrik Yapılar)"), t("e", "Quantifiers (Miktar Belirteçleri)"),
+    t("f", "Cloze Test (Boşluk Doldurma)"), t("g", "Cümle Tamamlama (Sentence Completion)"), t("h", "Çeviri (İngilizce↔Türkçe Translation)"),
+    t("i", "Paragraf Okuma Anlama (Reading Comprehension)"), t("j", "Anlam Bütünlüğünü Bozan Cümle"), t("k", "YÖKDİL Sağlık Stratejileri"), t("z", "Tıbbi Terminoloji Atölyesi"),
+  ];
+  const skills = buildSkills(yokdil);
+  assert.deepEqual(skills.find((s) => s.key === "dil-bilgisi")!.topicIds, ["b", "c", "d", "e"]);
+  assert.deepEqual(skills.find((s) => s.key === "paragraf")!.topicIds, ["i"]);
+  assert.equal(skills.at(-1)!.title, "Tıbbi Terminoloji Atölyesi");
+  assert.equal(skills.flatMap((s) => s.topicIds).length, yokdil.length);
+});
+
+test("exams with topic categories keep category skills (IELTS, TOEFL, PTE)", () => {
+  const skills = buildSkills([t("a", "Matching", "READING"), t("b", "Task 1", "WRITING"), t("c", "Gap fill", "READING"), t("d", "Part 2", "SPEAKING")]);
+  assert.deepEqual(skills.map((s) => [s.key, s.title, s.topicIds.length]), [["reading", "Reading", 2], ["writing", "Writing", 1], ["speaking", "Speaking", 1]]);
 });
 
 test("switching exam reuses the student's own earlier goal and never invents one", async () => {
@@ -58,9 +87,7 @@ test("switching exam reuses the student's own earlier goal and never invents one
   }
 });
 
-test("uppercase English and Turkish labels both match", () => {
-  const [reading] = skillCards("ACADEMIC_SKILLS");
-  const ceviri = skillCards("TRANSLATION_GRAMMAR")[2];
-  assert.equal(topicMatchesSkill({ name: "X", category: "READING", skillsTested: null, slug: "a" }, reading), true);
-  assert.equal(topicMatchesSkill({ name: "İngilizce-Türkçe ÇEVİRİ", category: null, skillsTested: null, slug: "b" }, ceviri), true);
+test("uppercase Turkish names still match their question type", () => {
+  assert.equal(buildSkills([t("a", "İNGİLİZCE-TÜRKÇE ÇEVİRİ")])[0].key, "ceviri");
+  assert.equal(buildSkills([t("a", "KELİME BİLGİSİ")])[0].key, "kelime");
 });

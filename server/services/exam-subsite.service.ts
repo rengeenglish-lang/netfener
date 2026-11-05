@@ -4,7 +4,7 @@ import { db } from "@/server/db";
 import { EXAM_META } from "@/lib/exam-types";
 import { EXAM_LANDING_CONTENT } from "@/lib/exam-landing";
 import { examFamilyForCode } from "@/lib/diagnostics/exam-family";
-import { skillCards, subsiteHref, topicMatchesSkill } from "@/lib/exam-subsite";
+import { buildSkills, subsiteHref } from "@/lib/exam-subsite";
 
 /** The exam behind /exams/{slug}, with its family, colour and landing copy. Null when unknown or inactive. */
 export const getSubsiteExam = cache(async (slug: string) => {
@@ -38,9 +38,9 @@ export async function getExamTopicsWithProgress(examTypeId: string, userId?: str
 }
 
 /** Real per-skill numbers for the exam home: topics, lessons and (signed in) completed lessons. */
-export function skillProgress(exam: SubsiteExam, topics: Awaited<ReturnType<typeof getExamTopicsWithProgress>>) {
-  return skillCards(exam.family).map((skill) => {
-    const matched = topics.filter((t) => topicMatchesSkill(t, skill));
+export function skillProgress(topics: Awaited<ReturnType<typeof getExamTopicsWithProgress>>) {
+  return buildSkills(topics).map((skill) => {
+    const matched = topics.filter((t) => skill.topicIds.includes(t.id));
     const lessons = matched.reduce((n, t) => n + t.lessonCount, 0);
     const completed = matched.reduce((n, t) => n + t.completed, 0);
     return { ...skill, topics: matched.length, lessons, completed, percent: lessons ? Math.round((completed / lessons) * 100) : 0 };

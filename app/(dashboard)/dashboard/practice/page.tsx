@@ -67,16 +67,18 @@ export default async function PracticePage({ searchParams }: { searchParams: Pro
   const firstWithTopics = PRACTICE_SECTIONS.find((s) => bySection.get(s.key)?.length)?.key ?? "grammar";
   const active: PracticeSectionKey = isPracticeSection(bolum) ? bolum : firstWithTopics;
   const section = PRACTICE_SECTIONS.find((s) => s.key === active)!;
-  const sectionTopics = bySection.get(active) ?? [];
+  // YDS and YÖKDİL have no Listening/Speaking/Writing: one list of their question types, no skill tabs.
+  const singleList = examFamily === "TRANSLATION_GRAMMAR";
+  const sectionTopics = singleList ? leaves : bySection.get(active) ?? [];
   const external = EXTERNAL_PRACTICE[active];
 
   return (
     <main className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6">
       <p className="eyebrow">{goal.examType.name}</p>
       <h1 className="page-title">Pratik Bankası</h1>
-      <p className="page-copy">Bir beceri seç, ardından çalışmak istediğin konuyu seçerek pratik yap.</p>
+      <p className="page-copy">{singleList ? "Çalışmak istediğin soru tipini seç ya da karma sorularla pratik yap." : "Bir beceri seç, ardından çalışmak istediğin konuyu seçerek pratik yap."}</p>
 
-      <nav aria-label="Beceri" className="mt-6 grid grid-cols-2 gap-2 rounded-2xl border border-[color:var(--border)] bg-white p-2 shadow-sm sm:grid-cols-5">
+      {singleList ? null : <nav aria-label="Beceri" className="mt-6 grid grid-cols-2 gap-2 rounded-2xl border border-[color:var(--border)] bg-white p-2 shadow-sm sm:grid-cols-5">
         {PRACTICE_SECTIONS.map((s) => {
           const count = bySection.get(s.key)?.length ?? 0;
           return (
@@ -93,11 +95,11 @@ export default async function PracticePage({ searchParams }: { searchParams: Pro
             </Link>
           );
         })}
-      </nav>
+      </nav>}
 
       <section className="mt-8" aria-labelledby="section-title">
-        <h2 id="section-title" className="section-title !text-lg">{section.label}</h2>
-        <p className="mt-1 text-sm text-[color:var(--muted)]">{section.description}</p>
+        <h2 id="section-title" className="section-title !text-lg">{singleList ? "Soru tipleri" : section.label}</h2>
+        <p className="mt-1 text-sm text-[color:var(--muted)]">{singleList ? `${goal.examType.name} sınavındaki tüm soru tipleri.` : section.description}</p>
 
         {sectionTopics.length ? (
           <>
@@ -125,7 +127,7 @@ export default async function PracticePage({ searchParams }: { searchParams: Pro
           </>
         ) : (
           <div className="learning-empty mt-5">
-            <p className="font-bold">{goal.examType.name} için {section.label} pratik soruları hazırlanıyor.</p>
+            <p className="font-bold">{goal.examType.name} için {singleList ? "" : `${section.label} `}pratik soruları hazırlanıyor.</p>
             <p className="mx-auto mt-2 max-w-lg text-sm text-[color:var(--muted)]">
               {external?.copy ?? "Bu bölüm eklendiğinde burada görünecek. Bu sırada diğer becerilerde pratik yapabilirsin."}
             </p>
