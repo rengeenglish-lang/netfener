@@ -295,3 +295,14 @@ export async function seedYdsCurriculum(db: Db, ydsExamTypeId: string) {
   }
   return { topics: topics.length, lessons };
 }
+
+/** The YDS core list (verbs, nouns, adjectives, adverbs) resolved to meanings and examples — the free "YDS Önemli Kelimeler" list. */
+export function ydsCoreWordList(): { pos: "v" | "n" | "adj" | "adv"; entries: { word: string; tr: string; en?: string; trEx?: string }[] }[] {
+  return (["v", "n", "adj", "adv"] as const).map((pos) => ({
+    pos,
+    entries: YDS_CORE_HEADWORDS[pos].flatMap((word) => {
+      const hit = resolveCoreWord(word, pos) ?? resolveCoreWord(word, "");
+      return hit ? [{ word, tr: hit.tr, en: hit.en, trEx: hit.trEx }] : [];
+    }),
+  }));
+}

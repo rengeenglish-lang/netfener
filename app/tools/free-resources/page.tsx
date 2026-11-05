@@ -34,11 +34,10 @@ export default async function FreeResourcesPage() {
             {/^(https?:\/\/|\/(?!\/))/.test(resource.fileUrl) ? (
               <a
                 href={resource.fileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(resource.fileUrl.startsWith("/") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
                 className="secondary-button mt-4 w-full justify-center"
               >
-                Kaynağı aç ↗
+                {resource.fileUrl.startsWith("/") ? "Kaynağı aç →" : "Kaynağı aç ↗"}
               </a>
             ) : (
               <p className="mt-4 text-sm text-[color:var(--muted)]">
