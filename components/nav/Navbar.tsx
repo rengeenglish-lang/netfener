@@ -6,7 +6,7 @@ import { favoriteProductIds } from "@/server/services/favorites.service";
 import { recordVisit } from "@/server/services/visits.service";
 import { MobileNavToggle } from "@/components/nav/MobileNavToggle";
 import { signOutAction } from "@/app/actions/sign-out";
-import { ChevronDown, Heart, ShoppingCart } from "lucide-react";
+import { ChevronDown, Heart, Search, ShoppingCart } from "lucide-react";
 import { PLATFORM_EXAMS, examGroupHref, examLearningHref, examMaterialHref } from "@/lib/platform";
 import { Logo } from "@/components/brand/Logo";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
@@ -87,6 +87,9 @@ export async function Navbar() {
         <div className="hidden shrink-0 items-center gap-2 xl:flex">
           <PaletteSwitcher />
           <ThemeToggle />
+          <Link href="/ara" className="ghost-button px-2.5" aria-label="Sitede ara">
+            <Search size={18} aria-hidden="true" />
+          </Link>
           <Link
             href="/dashboard/favoriler"
             className="ghost-button relative gap-2 whitespace-nowrap px-2.5"
@@ -144,6 +147,9 @@ export async function Navbar() {
           )}
         </div>
         <div className="flex items-center gap-1 xl:hidden">
+          <Link href="/ara" className="ghost-button px-2" aria-label="Sitede ara">
+            <Search size={18} aria-hidden="true" />
+          </Link>
           <PaletteSwitcher />
           <ThemeToggle />
           <MobileNavToggle
