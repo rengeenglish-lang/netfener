@@ -6,7 +6,7 @@ import { getPlanAccess, remainingMockExamStarts } from "@/server/services/plans.
 import { findOpenAttempt } from "@/server/services/online-deneme.service";
 import { startOnlineDenemeAction } from "@/app/actions/online-deneme";
 import { hasDeneme, releasedCount } from "@/lib/online-denemeler/catalog";
-import { denemeTitle, listHref, splitDenemeNo } from "@/lib/online-denemeler/tracks";
+import { denemeTitle, isFreeDeneme, listHref, splitDenemeNo } from "@/lib/online-denemeler/tracks";
 import { ModePicker } from "@/components/online-deneme/ModePicker";
 
 function minutesUntil(deadline: Date) {
@@ -28,9 +28,10 @@ export default async function DenemeStartPage({ params }: { params: Promise<{ no
   if (!user) return null;
 
   const access = await getPlanAccess(user);
-  const [open, remaining] = await Promise.all([findOpenAttempt(user.id, no), access.can("MOCK_EXAMS") ? remainingMockExamStarts(user.id, access) : Promise.resolve(0)]);
+  const free = isFreeDeneme(no);
+  const [open, remaining] = await Promise.all([findOpenAttempt(user.id, no), free ? Promise.resolve(null) : access.can("MOCK_EXAMS") ? remainingMockExamStarts(user.id, access) : Promise.resolve(0)]);
   const minutesLeft = open ? minutesUntil(open.deadlineAt) : null;
-  const blocked = !access.can("MOCK_EXAMS") || (!open && remaining !== null && remaining <= 0);
+  const blocked = !free && (!access.can("MOCK_EXAMS") || (!open && remaining !== null && remaining <= 0));
 
   return (
     <main className="mx-auto w-full max-w-5xl space-y-7 px-4 py-10 sm:px-6">
@@ -75,7 +76,7 @@ export default async function DenemeStartPage({ params }: { params: Promise<{ no
         {blocked ? (
           <div className="dashboard-panel flex flex-wrap items-center justify-between gap-4">
             <p className="page-copy">
-              {access.can("MOCK_EXAMS") ? "Bu plan dönemindeki deneme hakkının tamamını kullandın." : "Online denemeler tüm Deneme Sınavı planlarına dahildir."}
+              {access.can("MOCK_EXAMS") ? "Bu plan dönemindeki deneme hakkının tamamını kullandın." : "İlk 5 YDS denemesi ücretsiz; diğer denemeler Deneme Sınavı planlarına dahildir."}
             </p>
             <Link href="/dashboard/mock-exam#planlar" className="primary-button">Planları gör</Link>
           </div>

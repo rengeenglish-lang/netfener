@@ -4,7 +4,7 @@ import { Clock, ListChecks, Timer } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { getAuthContext } from "@/server/auth/context";
 import { releasedCount } from "@/lib/online-denemeler/catalog";
-import { listHref, TRACKS } from "@/lib/online-denemeler/tracks";
+import { FREE_YDS_DENEME_COUNT, listHref, TRACKS } from "@/lib/online-denemeler/tracks";
 
 export const metadata: Metadata = {
   title: "YDS ve YÖKDİL Online Denemeler",
@@ -38,6 +38,7 @@ export default async function DenemelerHubPage() {
                 <h2 className="mt-2 text-xl font-black text-[color:var(--foreground)]">{track.name} Denemeleri</h2>
                 <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">
                   {count ? `${count} tam deneme yayında.` : "İlk denemeler hazırlanıyor."}{" "}
+                  {track.slug === "yds" ? `İlk ${FREE_YDS_DENEME_COUNT} deneme üyelere ücretsiz; diğerleri planla açılır. ` : "Planla açılır. "}
                   {track.family === "yds"
                     ? "Kelime, dil bilgisi, cloze, çeviri, okuma, diyalog ve paragraf soruları."
                     : "Okuma ve cloze metinleri bu alanın akademik konularından seçilir."}

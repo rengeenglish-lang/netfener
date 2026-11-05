@@ -15,6 +15,7 @@ import {
   type SaveResult,
 } from "@/server/services/online-deneme.service";
 import { hasDeneme } from "@/lib/online-denemeler/catalog";
+import { isFreeDeneme } from "@/lib/online-denemeler/tracks";
 import { logEvent } from "@/lib/diagnostics/analytics";
 import type { SavedAnswer } from "@/lib/online-denemeler/types";
 
@@ -29,7 +30,8 @@ export async function startOnlineDenemeAction(formData: FormData) {
   if (!hasDeneme(no)) redirect(BASE);
 
   const access = await getPlanAccess(user);
-  if (!access.can("MOCK_EXAMS")) redirect("/dashboard/mock-exam#planlar");
+  const free = isFreeDeneme(no);
+  if (!free && !access.can("MOCK_EXAMS")) redirect("/dashboard/mock-exam#planlar");
 
   const open = await findOpenAttempt(user.id, no);
   if (open) {
@@ -38,7 +40,7 @@ export async function startOnlineDenemeAction(formData: FormData) {
     redirect(`${BASE}/oturum/${open.id}`);
   }
 
-  const remaining = await remainingMockExamStarts(user.id, access);
+  const remaining = free ? null : await remainingMockExamStarts(user.id, access);
   if (remaining !== null && remaining <= 0) redirect("/dashboard/mock-exam?limit=1#planlar");
 
   const attempt = await createAttempt(user.id, no, mode);

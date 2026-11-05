@@ -58,3 +58,10 @@ test("YÖKDİL papers load through the shared runner path", async () => {
     assert.deepEqual(covered, Array.from({ length: 80 }, (_, i) => i + 1));
   }
 });
+
+test("only YDS Deneme 1–5 are free", async () => {
+  const { isFreeDeneme } = await import("@/lib/online-denemeler/tracks");
+  assert.ok(isFreeDeneme(1) && isFreeDeneme(5));
+  assert.ok(!isFreeDeneme(6));
+  assert.ok(!isFreeDeneme(1001) && !isFreeDeneme(2001) && !isFreeDeneme(3001));
+});

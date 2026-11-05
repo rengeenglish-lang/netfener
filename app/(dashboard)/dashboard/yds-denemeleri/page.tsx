@@ -5,7 +5,7 @@ import { getAuthContext } from "@/server/auth/context";
 import { getPlanAccess } from "@/server/services/plans.service";
 import { denemeOverview } from "@/server/services/online-deneme.service";
 import { releasedNumbers } from "@/lib/online-denemeler/catalog";
-import { denemeNo, listHref, startHref, trackBySlug, TRACKS } from "@/lib/online-denemeler/tracks";
+import { denemeNo, FREE_YDS_DENEME_COUNT, isFreeDeneme, listHref, startHref, trackBySlug, TRACKS } from "@/lib/online-denemeler/tracks";
 
 export const metadata: Metadata = { title: "Online Denemeler" };
 
@@ -53,7 +53,7 @@ export default async function OnlineDenemelerPage({ searchParams }: { searchPara
 
       {!access.can("MOCK_EXAMS") ? (
         <div className="dashboard-panel flex flex-wrap items-center justify-between gap-4">
-          <p className="page-copy">Online denemeler tüm Deneme Sınavı planlarına dahildir. Başlamak için bir plan seç.</p>
+          <p className="page-copy">{track.slug === "yds" ? `İlk ${FREE_YDS_DENEME_COUNT} YDS denemesi ücretsiz. Diğer denemeler Deneme Sınavı planlarına dahildir.` : "Online denemeler tüm Deneme Sınavı planlarına dahildir. Başlamak için bir plan seç."}</p>
           <Link href="/dashboard/mock-exam#planlar" className="primary-button">Planları gör</Link>
         </div>
       ) : null}
@@ -86,7 +86,14 @@ export default async function OnlineDenemelerPage({ searchParams }: { searchPara
                     href={startHref(denemeNo(track, no))}
                     className="group flex flex-col gap-1 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-4 transition hover:border-[color:var(--accent)] hover:shadow-md"
                   >
-                    <span className="font-extrabold text-[color:var(--foreground)]">Deneme {no}</span>
+                    <span className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 font-extrabold text-[color:var(--foreground)]">
+                      <span className="whitespace-nowrap">Deneme {no}</span>
+                      {isFreeDeneme(denemeNo(track, no)) ? (
+                        <span className="rounded-full bg-[color:var(--success-soft)] px-2 py-0.5 text-[0.65rem] font-extrabold uppercase tracking-wide text-[color:var(--success)]">Ücretsiz</span>
+                      ) : !access.can("MOCK_EXAMS") ? (
+                        <Lock size={14} className="text-[color:var(--muted)]" aria-label="Plan gerekli" />
+                      ) : null}
+                    </span>
                     {e?.openId ? (
                       <span className="inline-flex items-center gap-1 text-xs font-bold text-[color:var(--accent-strong)]">
                         <Timer size={12} aria-hidden="true" /> Devam ediyor

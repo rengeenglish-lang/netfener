@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Timer } from "lucide-react";
 import { releasedCount } from "@/lib/online-denemeler/catalog";
-import { listHref, type Track } from "@/lib/online-denemeler/tracks";
+import { FREE_YDS_DENEME_COUNT, listHref, type Track } from "@/lib/online-denemeler/tracks";
 
 /** "Denemeler" block shown under Pratik for YDS and YÖKDİL: full 80-question tests with a live timer. */
 export function DenemeCallout({ track, signedIn }: { track: Track; signedIn: boolean }) {
@@ -19,7 +19,7 @@ export function DenemeCallout({ track, signedIn }: { track: Track; signedIn: boo
           <h2 id={`denemeler-${track.slug}`} className="mt-0.5 text-lg font-extrabold text-[color:var(--foreground)]">
             {count ? `${count} tam ${track.name} denemesi` : `${track.name} denemeleri hazırlanıyor`}
           </h2>
-          <p className="mt-1 text-sm text-[color:var(--muted)]">80 soru, 180 dakika, e-sınav ekranına benzer geri sayım. Bitirince puanın ve tüm çözümler açılır.</p>
+          <p className="mt-1 text-sm text-[color:var(--muted)]">80 soru, 180 dakika, e-sınav ekranına benzer geri sayım. Bitirince puanın ve tüm çözümler açılır.{track.slug === "yds" ? ` İlk ${FREE_YDS_DENEME_COUNT} deneme üyelere ücretsiz.` : ""}</p>
         </div>
       </div>
       {count ? (
