@@ -65,8 +65,17 @@ test("exams with topic categories keep category skills (IELTS, TOEFL, PTE)", () 
 test("switching exam reuses the student's own earlier goal and never invents one", async () => {
   const stamp = randomUUID();
   const user = await db.user.create({ data: { name: "Switch student", email: `switch-${stamp}@example.test` } });
-  const [a, b] = await db.examType.findMany({ where: { active: true }, orderBy: { displayOrder: "asc" }, take: 2 });
-  assert.ok(a && b, "seeded exam types required");
+  // CI starts from an empty database: use the seeded IELTS/TOEFL rows when present, else create them for this test.
+  const created: string[] = [];
+  const ensure = async (code: "IELTS" | "TOEFL") => {
+    const found = await db.examType.findUnique({ where: { code } });
+    if (found) return found;
+    const row = await db.examType.create({ data: { code, slug: `${code.toLowerCase()}-${stamp}`, name: code } });
+    created.push(row.id);
+    return row;
+  };
+  const a = await ensure("IELTS");
+  const b = await ensure("TOEFL");
   try {
     assert.equal(await studentLandingPath(user.id), "/dashboard"); // no goal yet
     assert.equal(await reactivateGoalForExam(user.id, a.id), false); // nothing to reuse
@@ -84,6 +93,7 @@ test("switching exam reuses the student's own earlier goal and never invents one
   } finally {
     await db.examGoal.deleteMany({ where: { userId: user.id } });
     await db.user.deleteMany({ where: { id: user.id } });
+    if (created.length) await db.examType.deleteMany({ where: { id: { in: created } } });
   }
 });
 
