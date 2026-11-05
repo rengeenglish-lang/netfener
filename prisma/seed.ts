@@ -495,8 +495,8 @@ async function main() {
   }
 
   const resourceDefs = [
-    { slug: "yds-onemli-kelimeler", title: "YDS Önemli Kelimeler", description: "En sık çıkan 200 kelimelik liste.", examCode: "YDS", fileUrl: "https://example.com/placeholder.pdf", kind: "E_BOOK" as const },
-    { slug: "yokdil-saglik-kelimeleri", title: "YÖKDİL Sağlık Kelimeleri", description: "Sağlık bilimleri terminoloji listesi.", examCode: "YOKDIL_SAGLIK", fileUrl: "https://example.com/placeholder.pdf", kind: "E_BOOK" as const },
+    { slug: "yds-onemli-kelimeler", title: "YDS Önemli Kelimeler", description: "En sık çıkan 318 akademik kelime: anlamları ve örnek cümleleriyle.", examCode: "YDS", fileUrl: "/kaynaklar/ucretsiz/yds-onemli-kelimeler", kind: "E_BOOK" as const },
+    { slug: "yokdil-saglik-kelimeleri", title: "YÖKDİL Sağlık Kelimeleri", description: "214 tıp ve sağlık terimi: araştırma dili ve A–Z tıbbi terminoloji, örnek cümleleriyle.", examCode: "YOKDIL_SAGLIK", fileUrl: "/kaynaklar/ucretsiz/yokdil-saglik-kelimeleri", kind: "E_BOOK" as const },
   ];
   for (const def of resourceDefs) {
     await db.freeResource.upsert({

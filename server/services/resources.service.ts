@@ -36,7 +36,7 @@ const DIGITAL_FORMATS = ["PDF", "PRINT_AND_PDF"] as const;
 const isSafeUrl = (url: string) => /^(https?:\/\/|\/(?!\/))/.test(url);
 
 function freeResourceItem(r: { id: string; title: string; description: string | null; fileUrl: string }): ResourceItem {
-  return { id: `free-${r.id}`, title: r.title, description: r.description, badge: "ÜCRETSİZ", href: isSafeUrl(r.fileUrl) ? r.fileUrl : "#", cta: "Ücretsiz indir", external: true };
+  return { id: `free-${r.id}`, title: r.title, description: r.description, badge: "ÜCRETSİZ", href: isSafeUrl(r.fileUrl) ? r.fileUrl : "#", cta: r.fileUrl.startsWith("/") ? "Ücretsiz aç" : "Ücretsiz indir", external: !r.fileUrl.startsWith("/") };
 }
 
 async function ownedBookIds(userId: string | null) {
