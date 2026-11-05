@@ -4,6 +4,7 @@ import { promisify } from "node:util";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../lib/generated/prisma/client";
 import { seedDiagnosticJourney } from "./seed-diagnostics";
+import { seedYdsCurriculum } from "../lib/yds-curriculum";
 
 const scrypt = promisify(scryptCallback);
 
@@ -2999,6 +3000,8 @@ async function main() {
       }
     }
   }
+  // Kelime + Dil bilgisi curriculum (lib/yds-curriculum.ts): new topics, renames and final topic order.
+  await seedYdsCurriculum(db as never, examTypes.YDS.id);
 
   const yokdilAltTestDefs = [
     {

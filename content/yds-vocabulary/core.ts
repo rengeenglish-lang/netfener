@@ -1,0 +1,90 @@
+import type { LexiconEntry } from "@/content/vocabulary/types";
+
+/**
+ * Netfener's own YDS core vocabulary: the academic verbs, nouns, adjectives and adverbs that
+ * YDS "kelime" questions and reading passages use most. Headwords are resolved against the main
+ * lexicon first (content/vocabulary, content/dictionary); YDS_CORE_EXTRA holds the entries written
+ * for this list that the lexicon does not have yet.
+ */
+export const YDS_CORE_HEADWORDS: Record<"v" | "n" | "adj" | "adv", string[]> = {
+  v: ["abandon", "accelerate", "accommodate", "accumulate", "acknowledge", "acquire", "adhere", "advocate", "affect", "allocate", "alleviate", "alter", "anticipate", "ascertain", "assert", "assess", "attain", "attribute", "augment", "bolster", "cease", "coincide", "compel", "compensate", "comply", "comprise", "conceal", "concede", "conduct", "confine", "confront", "constitute", "contradict", "convey", "curb", "deem", "defer", "deplete", "deprive", "derive", "deteriorate", "devise", "diminish", "discern", "disclose", "disrupt", "dissipate", "distort", "diverge", "eliminate", "elicit", "embrace", "emerge", "encompass", "endorse", "endure", "enhance", "ensure", "entail", "eradicate", "evaluate", "evoke", "exacerbate", "exceed", "exert", "exploit", "facilitate", "foster", "hamper", "hinder", "impair", "impede", "impose", "induce", "infer", "inhibit", "initiate", "integrate", "jeopardize", "maintain", "mitigate", "modify", "neglect", "nurture", "obtain", "offset", "persist", "precede", "preclude", "prevail", "prohibit", "promote", "provoke", "pursue", "refute", "reinforce", "relinquish", "render", "resemble", "restore", "retain", "reveal", "scrutinize", "simulate", "stimulate", "subside", "substantiate", "sustain", "undergo", "undermine", "utilize", "verify", "withstand"],
+  n: ["abundance", "acquisition", "adversity", "affluence", "ambiguity", "anomaly", "assumption", "attribute", "barrier", "breakthrough", "burden", "capacity", "catastrophe", "circumstance", "coherence", "compatibility", "compliance", "component", "consensus", "consequence", "constraint", "controversy", "criterion", "decline", "deficiency", "deficit", "dilemma", "discrepancy", "disparity", "diversity", "drawback", "emergence", "emphasis", "endeavor", "estimate", "extent", "feasibility", "fluctuation", "framework", "hazard", "hypothesis", "implication", "incentive", "incidence", "inequality", "inference", "insight", "integrity", "intervention", "magnitude", "misconception", "notion", "obstacle", "outbreak", "outcome", "perception", "phenomenon", "precaution", "premise", "prerequisite", "prevalence", "proficiency", "prospect", "provision", "rationale", "refuge", "reluctance", "scarcity", "setback", "significance", "speculation", "stability", "subsidy", "surplus", "susceptibility", "tendency", "threshold", "trait", "transition", "vulnerability"],
+  adj: ["abundant", "accurate", "adequate", "adverse", "ambiguous", "apparent", "arbitrary", "comprehensive", "considerable", "consistent", "conspicuous", "contemporary", "controversial", "crucial", "detrimental", "distinct", "diverse", "dominant", "dormant", "eligible", "eminent", "essential", "evident", "excessive", "explicit", "feasible", "fragile", "hostile", "identical", "imminent", "implicit", "indispensable", "inevitable", "inherent", "intricate", "intrinsic", "irrelevant", "lucrative", "marginal", "mandatory", "negligible", "notorious", "novel", "obsolete", "plausible", "predominant", "preliminary", "prevalent", "profound", "prominent", "prone", "reluctant", "remarkable", "resilient", "rigorous", "robust", "scarce", "severe", "significant", "sophisticated", "spontaneous", "subsequent", "substantial", "subtle", "sufficient", "susceptible", "tentative", "tremendous", "ubiquitous", "unprecedented", "viable", "vital", "vulnerable", "widespread"],
+  adv: ["accordingly", "adequately", "allegedly", "apparently", "arguably", "barely", "consequently", "considerably", "conversely", "deliberately", "drastically", "eventually", "exclusively", "explicitly", "gradually", "hardly", "hence", "inadvertently", "increasingly", "inevitably", "initially", "invariably", "largely", "likewise", "markedly", "merely", "moreover", "nevertheless", "notably", "nonetheless", "predominantly", "presumably", "primarily", "profoundly", "readily", "relatively", "roughly", "scarcely", "seemingly", "severely", "significantly", "simultaneously", "solely", "steadily", "subsequently", "substantially", "thereby", "thoroughly", "ultimately", "virtually", "widely"],
+};
+
+export const YDS_CORE_EXTRA: LexiconEntry[] = [
+  // Verbs
+  ["attribute", "v", "(bir nedene) bağlamak, atfetmek (attribute A to B)", "Researchers attribute the decline in bee populations to pesticide use.", "Araştırmacılar arı popülasyonundaki düşüşü pestisit kullanımına bağlıyor."],
+  ["coincide", "v", "aynı zamana denk gelmek; örtüşmek (coincide with)", "The protest coincided with the president's visit to the city.", "Protesto, cumhurbaşkanının şehre ziyaretine denk geldi."],
+  ["curb", "v", "dizginlemek, sınırlamak", "The government introduced new taxes to curb inflation.", "Hükümet enflasyonu dizginlemek için yeni vergiler getirdi."],
+  ["deem", "v", "saymak, addetmek, kabul etmek", "The bridge was deemed unsafe after the earthquake.", "Köprü depremden sonra güvensiz kabul edildi."],
+  ["defer", "v", "ertelemek; (defer to) birinin görüşüne uymak", "The committee deferred its decision until more data was available.", "Komite, daha fazla veri elde edilene kadar kararını erteledi."],
+  ["deprive", "v", "mahrum bırakmak (deprive sb of sth)", "Long working hours deprive many employees of sleep.", "Uzun çalışma saatleri birçok çalışanı uykudan mahrum bırakıyor."],
+  ["devise", "v", "tasarlamak, geliştirmek (plan, yöntem)", "Engineers devised a cheaper way to purify drinking water.", "Mühendisler içme suyunu arıtmanın daha ucuz bir yolunu geliştirdi."],
+  ["dissipate", "v", "dağılmak, yok olmak; boşa harcamak", "The fog dissipated as the sun rose.", "Güneş yükseldikçe sis dağıldı."],
+  ["embrace", "v", "benimsemek, kabul etmek; kucaklamak", "Many schools have embraced online learning since the pandemic.", "Pandemiden bu yana birçok okul çevrim içi öğrenmeyi benimsedi."],
+  ["impair", "v", "zayıflatmak, bozmak, işlevini azaltmak", "Lack of sleep can seriously impair concentration.", "Uykusuzluk konsantrasyonu ciddi biçimde bozabilir."],
+  ["precede", "v", "-den önce gelmek, öncesinde olmak", "A period of heavy rain preceded the landslide.", "Toprak kaymasından önce şiddetli bir yağmur dönemi yaşandı."],
+  ["subside", "v", "azalmak, dinmek, yatışmak", "The swelling usually subsides within a few days.", "Şişlik genellikle birkaç gün içinde iner."],
+  // Nouns
+  ["affluence", "n", "bolluk, zenginlik, refah", "Rising affluence has changed people's eating habits.", "Artan refah, insanların beslenme alışkanlıklarını değiştirdi."],
+  ["catastrophe", "n", "felaket, büyük yıkım", "Scientists warn that the drought could become a humanitarian catastrophe.", "Bilim insanları kuraklığın insani bir felakete dönüşebileceği konusunda uyarıyor."],
+  ["coherence", "n", "tutarlılık, bütünlük", "A good essay needs coherence between its paragraphs.", "İyi bir kompozisyonun paragrafları arasında tutarlılık olmalıdır."],
+  ["decline", "n", "düşüş, azalma, gerileme (decline in)", "There has been a sharp decline in the birth rate.", "Doğum oranında keskin bir düşüş yaşandı."],
+  ["emergence", "n", "ortaya çıkış, beliriş", "The emergence of smartphones transformed the media industry.", "Akıllı telefonların ortaya çıkışı medya sektörünü dönüştürdü."],
+  ["endeavor", "n", "çaba, girişim, uğraş", "Space exploration is an expensive and risky endeavor.", "Uzay araştırmaları pahalı ve riskli bir uğraştır."],
+  ["feasibility", "n", "uygulanabilirlik, fizibilite", "The company is studying the feasibility of a new factory.", "Şirket yeni bir fabrikanın uygulanabilirliğini inceliyor."],
+  ["inference", "n", "çıkarım, sonuç çıkarma", "The inference drawn from the data was later questioned.", "Verilerden çıkarılan sonuç daha sonra sorgulandı."],
+  ["prospect", "n", "olasılık, ihtimal; (çoğ.) gelecek beklentisi", "There is little prospect of an agreement this year.", "Bu yıl bir anlaşma olasılığı çok düşük."],
+  ["provision", "n", "sağlama, tedarik; (yasa) hüküm, madde", "The provision of clean water is a basic public service.", "Temiz su sağlanması temel bir kamu hizmetidir."],
+  ["refuge", "n", "sığınak, barınak (take refuge in)", "Thousands of families took refuge in neighbouring countries.", "Binlerce aile komşu ülkelere sığındı."],
+  ["significance", "n", "önem, anlam", "Historians still debate the significance of the treaty.", "Tarihçiler antlaşmanın önemini hâlâ tartışıyor."],
+  ["stability", "n", "istikrar, denge", "Investors are looking for economic stability.", "Yatırımcılar ekonomik istikrar arıyor."],
+  ["susceptibility", "n", "yatkınlık, duyarlılık (susceptibility to)", "Genes may increase a person's susceptibility to certain diseases.", "Genler bir kişinin bazı hastalıklara yatkınlığını artırabilir."],
+  ["tendency", "n", "eğilim (tendency to do sth)", "Teenagers have a tendency to stay up late.", "Ergenlerin geç saatlere kadar uyanık kalma eğilimi vardır."],
+  ["threshold", "n", "eşik, sınır", "Noise above this threshold can damage hearing.", "Bu eşiğin üzerindeki gürültü işitmeye zarar verebilir."],
+  // Adjectives
+  ["accurate", "adj", "doğru, kesin, hatasız", "Accurate measurements are essential in chemistry.", "Kimyada doğru ölçümler şarttır."],
+  ["comprehensive", "adj", "kapsamlı, ayrıntılı", "The report offers a comprehensive review of the health system.", "Rapor sağlık sistemini kapsamlı biçimde değerlendiriyor."],
+  ["consistent", "adj", "tutarlı; istikrarlı (consistent with: ile uyumlu)", "The results are consistent with earlier studies.", "Sonuçlar önceki çalışmalarla uyumludur."],
+  ["diverse", "adj", "çeşitli, farklı farklı", "The city has a diverse population.", "Şehrin çeşitli kökenlerden oluşan bir nüfusu var."],
+  ["eligible", "adj", "uygun, hak sahibi (eligible for / to do)", "Students with high grades are eligible for a scholarship.", "Notları yüksek olan öğrenciler bursa hak kazanır."],
+  ["excessive", "adj", "aşırı, fazla", "Excessive use of antibiotics creates resistant bacteria.", "Antibiyotiklerin aşırı kullanımı dirençli bakteriler oluşturur."],
+  ["hostile", "adj", "düşmanca, olumsuz (hostile to)", "The new law received a hostile reaction from farmers.", "Yeni yasa çiftçilerden olumsuz tepki aldı."],
+  ["identical", "adj", "özdeş, aynı (identical to/with)", "The two samples were almost identical.", "İki örnek neredeyse aynıydı."],
+  ["mandatory", "adj", "zorunlu", "Wearing a helmet is mandatory on construction sites.", "İnşaat alanlarında baret takmak zorunludur."],
+  ["predominant", "adj", "baskın, hâkim, en yaygın", "Rice is the predominant crop in the region.", "Pirinç bölgedeki baskın üründür."],
+  ["preliminary", "adj", "ön, hazırlık niteliğinde", "Preliminary results suggest the drug is effective.", "Ön sonuçlar ilacın etkili olduğunu gösteriyor."],
+  ["prone", "adj", "eğilimli, yatkın (prone to sth / to do)", "This area is prone to flooding in spring.", "Bu bölge ilkbaharda sele yatkındır."],
+  ["robust", "adj", "sağlam, güçlü, dayanıklı", "The study provides robust evidence for the theory.", "Çalışma teori için sağlam kanıt sunuyor."],
+  ["severe", "adj", "şiddetli, ciddi, ağır", "The storm caused severe damage to the harbour.", "Fırtına limana ağır hasar verdi."],
+  ["sophisticated", "adj", "gelişmiş, karmaşık, ileri düzey", "Hackers are using increasingly sophisticated methods.", "Bilgisayar korsanları giderek daha gelişmiş yöntemler kullanıyor."],
+  ["spontaneous", "adj", "kendiliğinden, ani, plansız", "The crowd broke into spontaneous applause.", "Kalabalık kendiliğinden alkışlamaya başladı."],
+  ["subsequent", "adj", "sonraki, ardından gelen", "Subsequent tests confirmed the first diagnosis.", "Sonraki testler ilk teşhisi doğruladı."],
+  ["susceptible", "adj", "yatkın, savunmasız (susceptible to)", "Older people are more susceptible to infection.", "Yaşlılar enfeksiyona daha yatkındır."],
+  ["tremendous", "adj", "muazzam, çok büyük", "The internet has had a tremendous impact on education.", "İnternetin eğitim üzerinde muazzam bir etkisi oldu."],
+  ["widespread", "adj", "yaygın, geniş çaplı", "There is widespread concern about air pollution.", "Hava kirliliği konusunda yaygın bir endişe var."],
+  // Adverbs
+  ["accordingly", "adv", "buna göre, uygun şekilde; bu nedenle", "Prices rose, and demand fell accordingly.", "Fiyatlar yükseldi ve talep buna bağlı olarak düştü."],
+  ["adequately", "adv", "yeterli ölçüde, gerektiği gibi", "Many workers are not adequately protected from noise.", "Birçok işçi gürültüden yeterince korunmuyor."],
+  ["deliberately", "adv", "kasıtlı olarak, bilerek", "The fire was started deliberately.", "Yangın kasıtlı olarak çıkarıldı."],
+  ["drastically", "adv", "büyük ölçüde, köklü biçimde", "The number of tourists fell drastically last year.", "Geçen yıl turist sayısı büyük ölçüde düştü."],
+  ["exclusively", "adv", "yalnızca, sadece", "The service is available exclusively to members.", "Hizmet yalnızca üyelere açıktır."],
+  ["explicitly", "adv", "açıkça, net biçimde", "The contract explicitly forbids sharing the data.", "Sözleşme verilerin paylaşılmasını açıkça yasaklıyor."],
+  ["increasingly", "adv", "giderek, gittikçe artan biçimde", "Online shopping is becoming increasingly popular.", "Çevrim içi alışveriş giderek daha popüler hâle geliyor."],
+  ["initially", "adv", "başlangıçta, ilk başta", "Initially, the project was funded by a single donor.", "Başlangıçta proje tek bir bağışçı tarafından finanse edildi."],
+  ["largely", "adv", "büyük ölçüde, çoğunlukla", "The success of the plan was largely due to good timing.", "Planın başarısı büyük ölçüde iyi zamanlamadan kaynaklanıyordu."],
+  ["merely", "adv", "sadece, yalnızca, -den ibaret", "The new law is merely a first step.", "Yeni yasa yalnızca ilk adım."],
+  ["primarily", "adv", "öncelikle, esas olarak", "The disease primarily affects young children.", "Hastalık esas olarak küçük çocukları etkiler."],
+  ["readily", "adv", "kolayca; seve seve, hemen", "This information is readily available online.", "Bu bilgiye internetten kolayca ulaşılabilir."],
+  ["severely", "adv", "ciddi biçimde, ağır şekilde", "The region was severely affected by the drought.", "Bölge kuraklıktan ciddi biçimde etkilendi."],
+  ["significantly", "adv", "önemli ölçüde, kayda değer biçimde", "Regular exercise significantly lowers the risk of heart disease.", "Düzenli egzersiz kalp hastalığı riskini önemli ölçüde azaltır."],
+  ["simultaneously", "adv", "aynı anda, eş zamanlı olarak", "The two experiments were conducted simultaneously.", "İki deney eş zamanlı olarak yürütüldü."],
+  ["solely", "adv", "yalnızca, tek başına", "The decision was based solely on cost.", "Karar yalnızca maliyete dayanıyordu."],
+  ["steadily", "adv", "istikrarlı biçimde, düzenli olarak", "Unemployment has risen steadily since March.", "İşsizlik Mart'tan bu yana istikrarlı biçimde arttı."],
+  ["substantially", "adv", "büyük ölçüde, önemli miktarda", "The new engine uses substantially less fuel.", "Yeni motor önemli ölçüde daha az yakıt kullanıyor."],
+  ["thoroughly", "adv", "iyice, baştan sona, tamamen", "All equipment must be thoroughly cleaned after use.", "Tüm ekipman kullanımdan sonra iyice temizlenmelidir."],
+  ["ultimately", "adv", "sonuçta, nihayetinde", "Ultimately, the success of the reform depends on teachers.", "Sonuçta reformun başarısı öğretmenlere bağlı."],
+  ["widely", "adv", "yaygın olarak, geniş ölçüde", "English is widely used in international business.", "İngilizce uluslararası iş dünyasında yaygın olarak kullanılır."],
+];
