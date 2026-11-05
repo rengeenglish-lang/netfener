@@ -12,9 +12,12 @@ test("guests see paid results as denied with a sign-in link, free pages as free"
   const results = await searchSite("deneme", null);
   const page = results.find((r) => r.href === "/denemeler");
   assert.equal(page?.access, "free");
+  // YDS Deneme 1–5 are free for members; YÖKDİL denemeler need a plan.
   const yds = results.find((r) => r.kind === "Deneme" && r.title.startsWith("YDS"));
-  assert.equal(yds?.access, "denied");
-  assert.ok(yds?.unlockHref?.startsWith("/sign-in"));
+  assert.equal(yds?.access, "free");
+  const yokdil = results.find((r) => r.kind === "Deneme" && r.title.startsWith("YÖKDİL"));
+  assert.equal(yokdil?.access, "denied");
+  assert.ok(yokdil?.unlockHref?.startsWith("/sign-in"));
 });
 
 test("staff accounts get access to plan content", async () => {

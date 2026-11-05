@@ -31,6 +31,14 @@ export const TRACKS: Track[] = [
 
 export const DENEME_BASE_PATH = "/dashboard/yds-denemeleri";
 
+/** YDS Deneme 1–5 are open to every signed-in member; the rest need a paid plan. */
+export const FREE_YDS_DENEME_COUNT = 5;
+
+export function isFreeDeneme(no: number): boolean {
+  const s = splitDenemeNo(no);
+  return Boolean(s && s.track.slug === "yds" && s.local <= FREE_YDS_DENEME_COUNT);
+}
+
 export function trackBySlug(slug: string | null | undefined): Track | undefined {
   return TRACKS.find((t) => t.slug === slug);
 }

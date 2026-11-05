@@ -6,7 +6,7 @@ import { hasEbookAccess } from "@/server/services/ebooks.service";
 import { NETFENER_EBOOKS } from "@/lib/netfener-ebooks";
 import { isEbookFreePromoActive } from "@/lib/netfener-ebook-promo";
 import { FREE_WORD_LIST_SLUGS, getFreeWordList } from "@/lib/free-word-lists";
-import { TRACKS, listHref } from "@/lib/online-denemeler/tracks";
+import { FREE_YDS_DENEME_COUNT, TRACKS, listHref } from "@/lib/online-denemeler/tracks";
 import { releasedCount } from "@/lib/online-denemeler/catalog";
 import { SITE_PAGES } from "@/lib/site-search-pages";
 import { termSlug } from "@/lib/dictionary/text";
@@ -103,7 +103,16 @@ export async function searchSite(rawQuery: string, viewer: Viewer): Promise<Sear
   // Online denemeler (plan feature).
   for (const t of TRACKS.filter((t) => releasedCount(t) > 0 && matches(q, `${t.name} deneme denemeler deneme sınavı mock exam`))) {
     const href = listHref(t);
-    results.push({ kind: "Deneme", title: `${t.name} online denemeleri`, snippet: `${releasedCount(t)} tam deneme · 80 soru · 180 dakika`, href, ...planGate("MOCK_EXAMS", href) });
+    const gate = planGate("MOCK_EXAMS", href);
+    // YDS Deneme 1–5 are free for members, so the YDS entry is open even without a plan.
+    const freeYds = t.slug === "yds" && gate.access === "denied";
+    results.push({
+      kind: "Deneme",
+      title: `${t.name} online denemeleri`,
+      snippet: `${releasedCount(t)} tam deneme · 80 soru · 180 dakika${t.slug === "yds" ? ` · ilk ${FREE_YDS_DENEME_COUNT} deneme ücretsiz` : ""}`,
+      href: freeYds && !signedIn ? signIn(href) : href,
+      ...(freeYds ? { access: "free" as const } : gate),
+    });
   }
 
   // Konu anlatımı: the first topic of every exam is a free preview.

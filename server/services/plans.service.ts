@@ -1,4 +1,5 @@
 import "server-only";
+import { FREE_YDS_DENEME_COUNT } from "@/lib/online-denemeler/tracks";
 import { cache } from "react";
 import { db, type TransactionClient } from "@/server/db";
 import {
@@ -52,7 +53,8 @@ export async function remainingMockExamStarts(userId: string, access: PlanAccess
   const since = { gte: access.plan.startsAt };
   const [classic, online] = await Promise.all([
     db.diagnosticAttempt.count({ where: { userId, kind: "MOCK_EXAM", startedAt: since } }),
-    db.onlineDenemeAttempt.count({ where: { userId, startedAt: since } }),
+    // The free YDS denemeler (1–5) do not use up the plan allowance.
+    db.onlineDenemeAttempt.count({ where: { userId, startedAt: since, denemeNo: { gt: FREE_YDS_DENEME_COUNT } } }),
   ]);
   const used = classic + online;
   return Math.max(0, BASLANGIC_MOCK_EXAM_LIMIT - used);
