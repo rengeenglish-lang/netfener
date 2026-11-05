@@ -24,7 +24,8 @@ export default async function ExamHomePage({ params }: Props) {
   if (!exam) notFound();
   const user = await getAuthContext();
   const topics = await getExamTopicsWithProgress(exam.id, user?.id);
-  const skills = skillProgress(exam, topics);
+  const skills = skillProgress(topics);
+  const byQuestionType = !topics.some((t) => t.category);
   const member = (href: string) => (user ? href : `/register?next=${encodeURIComponent(href)}`);
   const name = isYokdil(exam.code) ? exam.name.replace(/^YÖKDİL\s*/i, "YÖKDİL · ") : exam.name;
   const speaking = SPEAKING[exam.code];
@@ -46,8 +47,8 @@ export default async function ExamHomePage({ params }: Props) {
         ) : null}
       </header>
 
-      <SectionLabel>Beceriler</SectionLabel>
-      <ul className="grid gap-3 sm:grid-cols-2">
+      <SectionLabel>{byQuestionType ? "Soru tipleri" : "Beceriler"}</SectionLabel>
+      <ul className={`grid gap-3 sm:grid-cols-2 ${skills.length > 4 ? "lg:grid-cols-3" : ""}`}>
         {skills.map((s) => (
           <li key={s.key}>
             <SubsiteCard href={`${subsiteHref(exam.slug, "konular")}?beceri=${s.key}`} className="flex h-full items-center gap-4">

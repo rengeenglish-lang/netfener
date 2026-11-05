@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { BookOpen, Check, Lock } from "lucide-react";
 import { getAuthContext } from "@/server/auth/context";
 import { getSubsiteExam, getExamTopicsWithProgress } from "@/server/services/exam-subsite.service";
-import { skillCards, subsiteHref, topicMatchesSkill } from "@/lib/exam-subsite";
+import { buildSkills, subsiteHref } from "@/lib/exam-subsite";
 import { konuAnlatimHref } from "@/lib/konu-links";
 import { EmptyState, SubsiteHeader } from "@/components/exams/subsite/SubsiteUi";
 
@@ -21,9 +21,9 @@ export default async function ExamTopicsPage({ params, searchParams }: Props) {
   const { beceri } = await searchParams;
   const user = await getAuthContext();
   const all = await getExamTopicsWithProgress(exam.id, user?.id);
-  const skills = skillCards(exam.family);
+  const skills = buildSkills(all);
   const skill = skills.find((s) => s.key === beceri);
-  const topics = skill ? all.filter((t) => topicMatchesSkill(t, skill)) : all;
+  const topics = skill ? all.filter((t) => skill.topicIds.includes(t.id)) : all;
   const firstId = all[0]?.id;
   const base = subsiteHref(exam.slug, "konular");
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Headphones, Languages, Mic2, PenLine, SpellCheck, Type, type LucideIcon } from "lucide-react";
+import { AlignLeft, ArrowRight, BookOpen, FileText, Headphones, Languages, Lightbulb, ListChecks, MessagesSquare, Mic2, PenLine, Repeat, ScanSearch, SpellCheck, Type, type LucideIcon } from "lucide-react";
 import { featureGradient } from "@/lib/exam-subsite";
 
 const SKILL_ICONS: Record<string, LucideIcon> = {
@@ -8,9 +8,16 @@ const SKILL_ICONS: Record<string, LucideIcon> = {
   writing: PenLine,
   speaking: Mic2,
   kelime: Type,
-  gramer: SpellCheck,
+  "dil-bilgisi": SpellCheck,
+  "cloze-test": ListChecks,
+  "cumle-tamamlama": AlignLeft,
   ceviri: Languages,
   paragraf: BookOpen,
+  "paragraf-tamamlama": FileText,
+  diyalog: MessagesSquare,
+  "yakin-anlam": Repeat,
+  "anlam-butunlugu": ScanSearch,
+  strateji: Lightbulb,
 };
 
 /** Page heading used on every subsite page: small eyebrow, bold title, muted subtitle. */

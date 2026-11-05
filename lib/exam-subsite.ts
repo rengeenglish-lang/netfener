@@ -24,30 +24,78 @@ export const TRACK_LABELS: Record<(typeof YOKDIL_CODES)[number], string> = {
   YOKDIL_FEN: "Fen Bilimleri",
 };
 
-export type SkillCard = { key: string; title: string; copy: string; keywords: string[] };
-/** The four skill areas shown on an exam home, by exam family. Keywords match topic names/categories. */
-export function skillCards(family: ExamFamily): SkillCard[] {
-  if (family === "TRANSLATION_GRAMMAR")
-    return [
-      { key: "kelime", title: "Kelime", copy: "Sınavda çıkan kelime ve deyimler", keywords: ["kelime", "vocabulary", "deyim", "phrasal"] },
-      { key: "gramer", title: "Dil bilgisi", copy: "Tense, yapı ve bağlaç soruları", keywords: ["gramer", "grammar", "dil bilgisi", "tense", "bağlaç", "preposition", "edat"] },
-      { key: "ceviri", title: "Çeviri", copy: "İngilizce–Türkçe çeviri soruları", keywords: ["çeviri", "translation"] },
-      { key: "paragraf", title: "Paragraf", copy: "Okuma, anlam ve paragraf tamamlama", keywords: ["paragraf", "okuma", "reading", "anlam", "cloze"] },
-    ];
-  return [
-    { key: "reading", title: "Reading", copy: "Okuma görevleri ve soru tipleri", keywords: ["reading", "okuma"] },
-    { key: "listening", title: "Listening", copy: "Dinleme görevleri ve not alma", keywords: ["listening", "dinleme"] },
-    { key: "writing", title: "Writing", copy: "Yazma görevleri ve değerlendirme", keywords: ["writing", "yazma", "essay"] },
-    { key: "speaking", title: "Speaking", copy: "Konuşma görevleri ve pratik", keywords: ["speaking", "konuşma"] },
-  ];
+type TopicLike = { id: string; name: string; category: string | null; skillsTested?: string | null; slug: string };
+export type Skill = { key: string; title: string; copy: string; topicIds: string[] };
+
+const CATEGORY_LABELS: Record<string, { title: string; copy: string }> = {
+  READING: { title: "Reading", copy: "Okuma görevleri ve soru tipleri" },
+  LISTENING: { title: "Listening", copy: "Dinleme görevleri ve not alma" },
+  WRITING: { title: "Writing", copy: "Yazma görevleri ve değerlendirme" },
+  SPEAKING: { title: "Speaking", copy: "Konuşma görevleri ve pratik" },
+};
+
+/**
+ * YDS / YÖKDİL question-type sections, in exam order. Each topic joins the first section whose
+ * keywords it contains (specific names such as "Paragraf Tamamlama" are matched before "Paragraf").
+ */
+const QUESTION_TYPES: { key: string; title: string; copy: string; keywords: string[] }[] = [
+  { key: "kelime", title: "Kelime", copy: "Kelime, deyim ve phrasal verb soruları", keywords: ["kelime", "vocabulary", "phrasal"] },
+  { key: "dil-bilgisi", title: "Dil bilgisi", copy: "Tense, yapı, bağlaç ve edat soruları", keywords: ["tense", "zaman", "modal", "kiplik", "passive", "edilgen", "gerund", "infinitive", "mastar", "adjective", "adverb", "sıfat", "zarf", "clause", "cümlecik", "conditional", "koşul", "wish", "conjunction", "bağlaç", "inversion", "devrik", "quantifier", "miktar", "preposition", "edat", "grammar", "dil bilgisi", "gramer"] },
+  { key: "cloze-test", title: "Cloze test", copy: "Paragrafta boşluk doldurma", keywords: ["cloze", "boşluk doldurma"] },
+  { key: "cumle-tamamlama", title: "Cümle tamamlama", copy: "Yarım cümleyi doğru tamamlama", keywords: ["cümle tamamlama", "sentence completion"] },
+  { key: "ceviri", title: "Çeviri", copy: "İngilizce ↔ Türkçe çeviri soruları", keywords: ["çeviri", "translation"] },
+  { key: "paragraf", title: "Paragraf", copy: "Okuduğunu anlama soruları", keywords: ["paragraf soru", "okuma", "reading comprehension"] },
+  { key: "paragraf-tamamlama", title: "Paragraf tamamlama", copy: "Paragraftaki boşluğu tamamlama", keywords: ["paragraf tamamlama"] },
+  { key: "diyalog", title: "Diyalog tamamlama", copy: "Konuşmayı anlamlı sürdürme", keywords: ["diyalog", "dialog"] },
+  { key: "yakin-anlam", title: "Yakın anlamlı cümle", copy: "Anlamca en yakın cümleyi bulma", keywords: ["yakın anlam"] },
+  { key: "anlam-butunlugu", title: "Anlam bütünlüğü", copy: "Akışı bozan cümleyi bulma", keywords: ["bütünlüğ"] },
+  { key: "strateji", title: "Stratejiler", copy: "Süre yönetimi ve çözüm taktikleri", keywords: ["strateji"] },
+];
+/** Order in which question types are tried (most specific first); display order stays exam order. */
+const MATCH_ORDER = ["paragraf-tamamlama", "cumle-tamamlama", "diyalog", "yakin-anlam", "anlam-butunlugu", "cloze-test", "ceviri", "strateji", "kelime", "paragraf", "dil-bilgisi"];
+
+const lower = (v: string) => `${v.toLowerCase()} ${v.toLocaleLowerCase("tr-TR")}`;
+function questionTypeOf(topic: TopicLike) {
+  const hay = lower(`${topic.name} ${topic.slug.replace(/-/g, " ")}`);
+  for (const key of MATCH_ORDER) {
+    const qt = QUESTION_TYPES.find((q) => q.key === key)!;
+    if (qt.keywords.some((k) => hay.includes(k))) return qt;
+  }
+  return null;
 }
 
-type TopicLike = { name: string; category: string | null; skillsTested: string | null; slug: string };
-export function topicMatchesSkill(topic: TopicLike, skill: SkillCard) {
-  const raw = `${topic.name} ${topic.category ?? ""} ${topic.skillsTested ?? ""} ${topic.slug}`;
-  // English labels ("READING") need plain lowercasing; Turkish ones ("Çeviri", "İngilizce") need Turkish rules.
-  const hay = `${raw.toLowerCase()} ${raw.toLocaleLowerCase("tr-TR")}`;
-  return skill.keywords.some((k) => hay.includes(k));
+/**
+ * The skill areas of an exam, built from its real topics: by topic category when the exam has
+ * categories (IELTS, TOEFL, PTE), otherwise by YDS/YÖKDİL question type. Only areas that have
+ * topics are returned; a topic that fits no known type becomes its own area.
+ */
+export function buildSkills(topics: TopicLike[]): Skill[] {
+  if (topics.some((t) => t.category)) {
+    const order: string[] = [];
+    const byCat = new Map<string, string[]>();
+    for (const t of topics) {
+      const cat = (t.category ?? "DİĞER").toUpperCase();
+      if (!byCat.has(cat)) (order.push(cat), byCat.set(cat, []));
+      byCat.get(cat)!.push(t.id);
+    }
+    return order.map((cat) => ({
+      key: cat.toLowerCase(),
+      title: CATEGORY_LABELS[cat]?.title ?? cat.charAt(0) + cat.slice(1).toLocaleLowerCase("tr-TR"),
+      copy: CATEGORY_LABELS[cat]?.copy ?? "",
+      topicIds: byCat.get(cat)!,
+    }));
+  }
+  const grouped = new Map<string, string[]>();
+  const own: Skill[] = [];
+  for (const t of topics) {
+    const qt = questionTypeOf(t);
+    if (qt) grouped.set(qt.key, [...(grouped.get(qt.key) ?? []), t.id]);
+    else own.push({ key: t.slug, title: t.name, copy: "", topicIds: [t.id] });
+  }
+  return [
+    ...QUESTION_TYPES.filter((q) => grouped.has(q.key)).map((q) => ({ key: q.key, title: q.title, copy: q.copy, topicIds: grouped.get(q.key)! })),
+    ...own,
+  ];
 }
 
 /** Darkened gradient from an exam colour so white text stays readable on feature cards. */

@@ -26,7 +26,7 @@ export default async function ExamProgressPage({ params }: Props) {
       </>
     );
   const topics = await getExamTopicsWithProgress(exam.id, user.id);
-  const skills = skillProgress(exam, topics);
+  const skills = skillProgress(topics);
   const total = topics.reduce((n, t) => n + t.lessonCount, 0);
   const done = topics.reduce((n, t) => n + t.completed, 0);
   const started = topics.filter((t) => t.completed > 0 && t.completed < t.lessonCount);
@@ -41,7 +41,7 @@ export default async function ExamProgressPage({ params }: Props) {
         <p className="mt-1 text-3xl font-extrabold">{done}<span className="text-base font-semibold text-[color:var(--muted)]"> / {total}</span></p>
         <ProgressBar percent={total ? Math.round((done / total) * 100) : 0} label="Genel ilerleme" />
       </SubsiteCard>
-      <SectionLabel>Beceriler</SectionLabel>
+      <SectionLabel>{topics.some((t) => t.category) ? "Beceriler" : "Soru tipleri"}</SectionLabel>
       <ul className="grid gap-3 sm:grid-cols-2">
         {skills.map((s) => (
           <li key={s.key}>
