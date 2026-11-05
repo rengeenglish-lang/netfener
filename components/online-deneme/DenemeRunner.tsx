@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Flag, Lock, Timer } from "lucide-react";
+import { ChevronLeft, ChevronRight, Flag, Lock, Maximize2, Minimize2, Timer } from "lucide-react";
 import {
   finishOnlineDenemeAction,
   lockOnlineDenemeAction,
@@ -185,15 +185,39 @@ export function DenemeRunner({
     void setOnlineDenemeModeAction(attemptId, next).catch(() => undefined);
   };
 
+  // ---- full screen: the sitting covers the whole window; the browser's full-screen mode is offered on open ----
+  const [isFull, setIsFull] = useState(false);
+  const [fullPrompt, setFullPrompt] = useState(true);
+  useEffect(() => {
+    const sync = () => setIsFull(Boolean(document.fullscreenElement));
+    sync();
+    document.addEventListener("fullscreenchange", sync);
+    // Leave browser full screen when the sitting page is left (e.g. after finishing).
+    return () => {
+      document.removeEventListener("fullscreenchange", sync);
+      if (document.fullscreenElement) void document.exitFullscreen().catch(() => undefined);
+    };
+  }, []);
+  const enterFull = () => {
+    setFullPrompt(false);
+    const el = document.documentElement;
+    if (el.requestFullscreen) void el.requestFullscreen().catch(() => undefined);
+  };
+  const toggleFull = () => {
+    if (document.fullscreenElement) void document.exitFullscreen().catch(() => undefined);
+    else enterFull();
+  };
+
   const answered = paper.questions.filter((q) => answers[q.n]?.choice != null).length;
   const flagged = paper.questions.filter((q) => answers[q.n]?.flagged).length;
   const urgent = remaining < 5 * 60_000;
   const warning = remaining < 15 * 60_000;
 
   return (
-    <div className="mx-auto w-full max-w-[1500px]">
+    <div className="fixed inset-0 z-[90] overflow-y-auto bg-[color:var(--background)]">
+    <div className="mx-auto w-full max-w-[1500px] px-4 pb-16 sm:px-6">
       {/* e-sınav style bar: exam name on the left, a large "Kalan Süre" clock in the middle, actions on the right. */}
-      <header className="sticky top-[76px] z-30 -mx-4 mb-5 grid grid-cols-1 items-center gap-3 border-b-4 border-[color:var(--accent)] bg-[color:var(--night)] px-4 py-3 text-white sm:-mx-6 sm:grid-cols-[1fr_auto_1fr] sm:px-6">
+      <header className="sticky top-0 z-30 -mx-4 mb-5 grid grid-cols-1 items-center gap-3 border-b-4 border-[color:var(--accent)] bg-[color:var(--night)] px-4 py-3 text-white sm:-mx-6 sm:grid-cols-[1fr_auto_1fr] sm:px-6">
         <div className="min-w-0">
           <p className="text-[0.7rem] font-extrabold uppercase tracking-[0.2em] text-white/60">Elektronik sınav görünümü</p>
           <p className="truncate text-base font-extrabold">{paper.title}</p>
@@ -215,6 +239,15 @@ export function DenemeRunner({
           <span className="font-mono text-3xl font-black tabular-nums leading-none tracking-wider">{formatClock(locked ? 0 : remaining)}</span>
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-white/40 px-3 py-2 text-xs font-bold text-white transition hover:bg-white/10"
+            onClick={toggleFull}
+            aria-pressed={isFull}
+          >
+            {isFull ? <Minimize2 size={14} aria-hidden="true" /> : <Maximize2 size={14} aria-hidden="true" />}
+            {isFull ? "Tam ekrandan çık" : "Tam ekran"}
+          </button>
           <button
             type="button"
             className="rounded-lg border border-white/40 px-3 py-2 text-xs font-bold text-white transition hover:bg-white/10 disabled:opacity-50"
@@ -289,6 +322,25 @@ export function DenemeRunner({
           </div>
         </div>
       ) : null}
+
+      {fullPrompt && !isFull && !locked ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div role="dialog" aria-modal="true" aria-labelledby="full-title" className="w-full max-w-md rounded-3xl bg-[color:var(--surface)] p-7 text-center shadow-xl">
+            <span className="mx-auto grid size-14 place-items-center rounded-full bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)]">
+              <Maximize2 size={26} aria-hidden="true" />
+            </span>
+            <h2 id="full-title" className="mt-4 text-xl font-extrabold text-[color:var(--foreground)]">Sınav tam ekranda açılıyor</h2>
+            <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">Gerçek e-sınavdaki gibi dikkatin dağılmadan çözmen için deneme tam ekranda açılır. Süren zaten işliyor.</p>
+            <button type="button" className="primary-button mt-5 w-full justify-center" onClick={enterFull} autoFocus>
+              Tam ekrana geç
+            </button>
+            <button type="button" className="ghost-button mt-2 w-full justify-center" onClick={() => setFullPrompt(false)}>
+              Tam ekran olmadan devam et
+            </button>
+          </div>
+        </div>
+      ) : null}
+    </div>
     </div>
   );
 }
@@ -417,7 +469,7 @@ function KlasikView({ paper, answers, current, setCurrent, choose, toggleFlag, l
           <QuestionMap paper={paper} answers={answers} current={current} setCurrent={setCurrent} />
         </div>
       </details>
-      <nav aria-label="Soru haritası" className="dashboard-panel hidden h-fit lg:sticky lg:top-[180px] lg:block">
+      <nav aria-label="Soru haritası" className="dashboard-panel hidden h-fit lg:sticky lg:top-[112px] lg:block">
         <QuestionMap paper={paper} answers={answers} current={current} setCurrent={setCurrent} />
       </nav>
 
@@ -551,7 +603,7 @@ function OptikView({ paper, answers, current, setCurrent, choose, locked }: View
         </div>
       </section>
 
-      <aside aria-label="Optik cevap kâğıdı" className="h-fit lg:sticky lg:top-[180px]">
+      <aside aria-label="Optik cevap kâğıdı" className="h-fit lg:sticky lg:top-[112px]">
         <div className="rounded-xl border-2 border-[color:var(--foreground)] bg-[color:var(--surface)] p-4">
           <div className="flex items-center justify-between">
             <p className="text-sm font-black tracking-wide text-[color:var(--foreground)]">CEVAP KÂĞIDI</p>
