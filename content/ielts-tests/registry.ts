@@ -2,11 +2,15 @@ import { ACADEMIC_1 } from "./academic-1";
 import { ACADEMIC_2 } from "./academic-2";
 import { ACADEMIC_3 } from "./academic-3";
 import { ACADEMIC_4 } from "./academic-4";
+import { ACADEMIC_5 } from "./academic-5";
+import { ACADEMIC_6 } from "./academic-6";
 import { GENERAL_1 } from "./general-1";
 import { GENERAL_2 } from "./general-2";
+import { GENERAL_3 } from "./general-3";
+import { GENERAL_4 } from "./general-4";
 import type { IeltsModuleId, IeltsTest, IeltsTrack } from "./types";
 
-export const IELTS_TESTS: IeltsTest[] = [ACADEMIC_1, ACADEMIC_2, ACADEMIC_3, ACADEMIC_4, GENERAL_1, GENERAL_2];
+export const IELTS_TESTS: IeltsTest[] = [ACADEMIC_1, ACADEMIC_2, ACADEMIC_3, ACADEMIC_4, ACADEMIC_5, ACADEMIC_6, GENERAL_1, GENERAL_2, GENERAL_3, GENERAL_4];
 
 /** Library slots: released tests are open, the rest are shown as coming soon. */
 export const IELTS_LIBRARY: { track: IeltsTrack; name: string; slots: number }[] = [
