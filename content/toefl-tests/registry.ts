@@ -2,6 +2,10 @@ import type { SpeakingModule } from "@/content/ielts-tests/types";
 import type { AdaptiveSection, ListeningTask, ReadingTask, Stage, ToeflSectionId, ToeflTest } from "./types";
 import { TOEFL_1 } from "./toefl-1";
 import { TOEFL_2 } from "./toefl-2";
+import { TOEFL_3 } from "./toefl-3";
+import { TOEFL_4 } from "./toefl-4";
+import { TOEFL_5 } from "./toefl-5";
+import { TOEFL_6 } from "./toefl-6";
 
 /** Fills in the audio path of every listening item from its position in the test. */
 function withAudio(test: ToeflTest): ToeflTest {
@@ -14,7 +18,7 @@ function withAudio(test: ToeflTest): ToeflTest {
   return { ...test, listening: { ...l, stage1: stage("s1", l.stage1), easier: stage("s2e", l.easier), harder: stage("s2h", l.harder) } };
 }
 
-export const TOEFL_TESTS: ToeflTest[] = [TOEFL_1, TOEFL_2].map(withAudio);
+export const TOEFL_TESTS: ToeflTest[] = [TOEFL_1, TOEFL_2, TOEFL_3, TOEFL_4, TOEFL_5, TOEFL_6].map(withAudio);
 
 /** Ten slots in the library; tests not yet released are shown as coming soon. */
 export const TOEFL_SLOTS = 10;
