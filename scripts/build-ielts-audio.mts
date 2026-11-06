@@ -1,5 +1,5 @@
 /**
- * Builds the MP3 recordings for IELTS listening parts with Azure Speech (neural TTS).
+ * Builds the MP3 recordings for the IELTS and TOEFL practice tests with Azure Speech (neural TTS).
  *
  *   npx tsx scripts/build-ielts-audio.mts            # build parts whose script changed
  *   npx tsx scripts/build-ielts-audio.mts --dry      # characters the next build would use, no API calls
@@ -19,7 +19,11 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { IELTS_TESTS } from "../content/ielts-tests/registry";
-import type { Line, QuestionPart } from "../content/ielts-tests/types";
+import { TOEFL_TESTS, toeflSpeakingModule } from "../content/toefl-tests/registry";
+import type { Line, SpeakingModule } from "../content/ielts-tests/types";
+
+/** Anything read from a script with a cast: an IELTS listening part or a TOEFL listening set. */
+type Scripted = { title: string; cast?: Partial<Record<string, string>>; script?: Line[] };
 
 const REGION = process.env.AZURE_SPEECH_REGION ?? "swedencentral";
 const ENDPOINT = `https://${REGION}.tts.speech.microsoft.com/cognitiveservices/v1`;
@@ -52,17 +56,17 @@ function speakable(text: string) {
   return esc(text).replace(/\b([A-Z]), (?=(?:double [A-Z]|[A-Z])\b)/g, '$1, <break time="150ms"/>');
 }
 
-function lineSsml(line: Line, part: QuestionPart) {
-  const voice = line.who === "N" ? NARRATOR : part.cast?.[line.who];
+function lineSsml(line: Line, part: Scripted, narrator = NARRATOR) {
+  const voice = line.who === "N" ? narrator : part.cast?.[line.who];
   if (!voice) throw new Error(`${part.title}: no voice in cast for speaker ${line.who}`);
   const rate = line.who === "N" ? "-8%" : "-5%";
   const gap = line.pause ?? (line.who === "N" ? 0.8 : 0.35);
   return `<voice name="${voice}"><prosody rate="${rate}">${speakable(line.text)}</prosody>${silence(gap)}</voice>`;
 }
 
-function partSsml(part: QuestionPart) {
-  const body = (part.script ?? []).map((l) => lineSsml(l, part)).join("");
-  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-GB">${body}</speak>`;
+function partSsml(part: Scripted, narrator = NARRATOR, lang = "en-GB") {
+  const body = (part.script ?? []).map((l) => lineSsml(l, part, narrator)).join("");
+  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="${lang}">${body}</speak>`;
 }
 
 async function synthesize(ssml: string) {
@@ -97,6 +101,18 @@ function examinerSsml(voice: string, text: string) {
 
 type Job = { label: string; audio: string; ssml: string };
 
+const TOEFL_NARRATOR = "en-US-BrianNeural";
+
+/** Speaking: every examiner line (part intros, questions, closing) is its own short clip. */
+function speakingJobs(out: Job[], testId: string, m: SpeakingModule) {
+  const say = (label: string, audio: string, text: string) => out.push({ label: `${testId} Speaking ${label}`, audio, ssml: examinerSsml(m.examiner, text) });
+  for (const part of m.parts) {
+    say(`${part.title} intro`, part.introAudio, part.intro);
+    part.prompts.forEach((q, i) => say(`${part.title} Q${i + 1}`, q.audio, q.spoken ?? q.text));
+  }
+  say("outro", m.outroAudio, m.outro);
+}
+
 function jobs(): Job[] {
   const out: Job[] = [];
   for (const test of IELTS_TESTS) {
@@ -106,14 +122,20 @@ function jobs(): Job[] {
           if (part.audio && part.script?.length) out.push({ label: `${test.id} ${part.title}`, audio: part.audio, ssml: partSsml(part) });
         }
       } else if (m.id === "speaking") {
-        const say = (label: string, audio: string, text: string) => out.push({ label: `${test.id} Speaking ${label}`, audio, ssml: examinerSsml(m.examiner, text) });
-        for (const part of m.parts) {
-          say(`${part.title} intro`, part.introAudio, part.intro);
-          part.prompts.forEach((q, i) => say(`${part.title} Q${i + 1}`, q.audio, q.spoken ?? q.text));
-        }
-        say("outro", m.outroAudio, m.outro);
+        speakingJobs(out, test.id, m);
       }
     }
+  }
+  for (const test of TOEFL_TESTS) {
+    const l = test.listening;
+    for (const [stage, tasks] of [["Stage 1", l.stage1.tasks], ["Stage 2 easier", l.easier.tasks], ["Stage 2 harder", l.harder.tasks]] as const) {
+      tasks.forEach((t, i) => {
+        const label = `${test.id} Listening ${stage} #${i + 1}`;
+        if (!t.audio) throw new Error(`${label}: no audio path`);
+        out.push({ label, audio: t.audio, ssml: t.kind === "choose-response" ? examinerSsml(t.voice, t.line) : partSsml(t, TOEFL_NARRATOR, "en-US") });
+      });
+    }
+    speakingJobs(out, test.id, toeflSpeakingModule(test));
   }
   return out;
 }

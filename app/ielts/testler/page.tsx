@@ -80,7 +80,7 @@ export default function IeltsLibraryPage() {
       ))}
 
       <p className="mt-10 text-sm text-[color:var(--muted)]">
-        Speaking pratiği için <Link href="/exams/ielts/pratik" className="font-bold underline">IELTS Pratik</Link> sayfasına bak. Netfener’in kendi içeriğidir; resmi IELTS materyali değildir.
+        Ek konuşma alıştırmaları için <Link href="/exams/ielts/pratik" className="font-bold underline">IELTS Pratik</Link> sayfasına bak. Netfener’in kendi içeriğidir; resmi IELTS materyali değildir.
       </p>
     </main>
   );

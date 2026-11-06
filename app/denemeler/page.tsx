@@ -59,9 +59,18 @@ export default async function DenemelerHubPage() {
         <div>
           <p className="eyebrow">IELTS</p>
           <h2 className="mt-2 text-xl font-black text-[color:var(--foreground)]">IELTS test kütüphanesi</h2>
-          <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">Bilgisayarda yapılan IELTS ekranının düzeninde Listening, Reading ve Writing testleri.</p>
+          <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">Bilgisayarda yapılan IELTS ekranının düzeninde Listening, Reading, Writing ve Speaking testleri.</p>
         </div>
         <Link href="/ielts/testler" className="primary-button"><Timer size={16} aria-hidden="true" /> Kütüphaneyi aç</Link>
+      </section>
+
+      <section className="panel mt-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="eyebrow">TOEFL iBT</p>
+          <h2 className="mt-2 text-xl font-black text-[color:var(--foreground)]">TOEFL iBT deneme kütüphanesi</h2>
+          <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">2026 formatında adaptif Reading ve Listening, yeni Writing ve Speaking görevleriyle tam denemeler.</p>
+        </div>
+        <Link href="/toefl/testler" className="primary-button"><Timer size={16} aria-hidden="true" /> Kütüphaneyi aç</Link>
       </section>
     </main>
   );

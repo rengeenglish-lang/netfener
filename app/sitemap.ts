@@ -33,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/campaigns` },
     { url: `${base}/kaynaklar` },
     { url: `${base}/ielts/testler` },
+    { url: `${base}/toefl/testler` },
     { url: `${base}/sozluk` },
     { url: `${base}/thesaurus` },
   ];
