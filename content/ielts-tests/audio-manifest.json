@@ -58,5 +58,65 @@
     "hash": "9bd6033448d4088e",
     "chars": 4397,
     "seconds": 273.3
+  },
+  "/audio/ielts/academic-3/listening-part1.mp3": {
+    "hash": "02d31921e6f55507",
+    "chars": 5753,
+    "seconds": 293
+  },
+  "/audio/ielts/academic-3/listening-part2.mp3": {
+    "hash": "e266dcbab162d475",
+    "chars": 4548,
+    "seconds": 288.9
+  },
+  "/audio/ielts/academic-3/listening-part3.mp3": {
+    "hash": "d5e7453135acdd60",
+    "chars": 5715,
+    "seconds": 293.1
+  },
+  "/audio/ielts/academic-3/listening-part4.mp3": {
+    "hash": "ce77588119337c27",
+    "chars": 4515,
+    "seconds": 264.2
+  },
+  "/audio/ielts/academic-4/listening-part1.mp3": {
+    "hash": "7e8f904e83cd51c2",
+    "chars": 5325,
+    "seconds": 281.2
+  },
+  "/audio/ielts/academic-4/listening-part2.mp3": {
+    "hash": "12e138689639ade7",
+    "chars": 4739,
+    "seconds": 310.5
+  },
+  "/audio/ielts/academic-4/listening-part3.mp3": {
+    "hash": "3af43b4b709bba24",
+    "chars": 5532,
+    "seconds": 316.8
+  },
+  "/audio/ielts/academic-4/listening-part4.mp3": {
+    "hash": "d0faf37a9c34f15e",
+    "chars": 4019,
+    "seconds": 252.2
+  },
+  "/audio/ielts/general-2/listening-part1.mp3": {
+    "hash": "5cf763b307df03fc",
+    "chars": 5423,
+    "seconds": 295.4
+  },
+  "/audio/ielts/general-2/listening-part2.mp3": {
+    "hash": "240deb374bf806d1",
+    "chars": 4638,
+    "seconds": 294.2
+  },
+  "/audio/ielts/general-2/listening-part3.mp3": {
+    "hash": "1a0bd7af1b51229f",
+    "chars": 5198,
+    "seconds": 304.1
+  },
+  "/audio/ielts/general-2/listening-part4.mp3": {
+    "hash": "f370c650ccd7ca64",
+    "chars": 4042,
+    "seconds": 227.2
   }
 }
