@@ -118,5 +118,85 @@
     "hash": "f370c650ccd7ca64",
     "chars": 4042,
     "seconds": 227.2
+  },
+  "/audio/ielts/academic-5/listening-part1.mp3": {
+    "hash": "1de44abf0f010005",
+    "chars": 5191,
+    "seconds": 277.1
+  },
+  "/audio/ielts/academic-5/listening-part2.mp3": {
+    "hash": "2e68d962f260a3ec",
+    "chars": 4500,
+    "seconds": 277.5
+  },
+  "/audio/ielts/academic-5/listening-part3.mp3": {
+    "hash": "cfbe68238da02a3e",
+    "chars": 4946,
+    "seconds": 291
+  },
+  "/audio/ielts/academic-5/listening-part4.mp3": {
+    "hash": "c03ab8accfb14776",
+    "chars": 4169,
+    "seconds": 274.3
+  },
+  "/audio/ielts/academic-6/listening-part1.mp3": {
+    "hash": "1706daa130916d56",
+    "chars": 5673,
+    "seconds": 300.8
+  },
+  "/audio/ielts/academic-6/listening-part2.mp3": {
+    "hash": "665b2551af1155e3",
+    "chars": 4689,
+    "seconds": 286.9
+  },
+  "/audio/ielts/academic-6/listening-part3.mp3": {
+    "hash": "0cd3931982c96643",
+    "chars": 5300,
+    "seconds": 302.7
+  },
+  "/audio/ielts/academic-6/listening-part4.mp3": {
+    "hash": "70c16b9e61e90360",
+    "chars": 4314,
+    "seconds": 255.3
+  },
+  "/audio/ielts/general-3/listening-part1.mp3": {
+    "hash": "dd868c538c7aeb8d",
+    "chars": 5357,
+    "seconds": 285.4
+  },
+  "/audio/ielts/general-3/listening-part2.mp3": {
+    "hash": "b26fe7d6b24d025f",
+    "chars": 4182,
+    "seconds": 255.2
+  },
+  "/audio/ielts/general-3/listening-part3.mp3": {
+    "hash": "de3baf6d84d51132",
+    "chars": 4993,
+    "seconds": 281.2
+  },
+  "/audio/ielts/general-3/listening-part4.mp3": {
+    "hash": "77dac4343b2f29c0",
+    "chars": 4200,
+    "seconds": 229.5
+  },
+  "/audio/ielts/general-4/listening-part1.mp3": {
+    "hash": "82766a42fe58d0a3",
+    "chars": 5244,
+    "seconds": 283.9
+  },
+  "/audio/ielts/general-4/listening-part2.mp3": {
+    "hash": "c86c39bf0b3d6336",
+    "chars": 4322,
+    "seconds": 264.5
+  },
+  "/audio/ielts/general-4/listening-part3.mp3": {
+    "hash": "f3a901decefacc64",
+    "chars": 4771,
+    "seconds": 284.7
+  },
+  "/audio/ielts/general-4/listening-part4.mp3": {
+    "hash": "e477c0afdb3e4275",
+    "chars": 3889,
+    "seconds": 232.8
   }
 }
