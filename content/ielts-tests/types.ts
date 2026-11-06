@@ -78,6 +78,8 @@ export type SpeakingPart = {
   introAudio: string;
   /** Part 2 only: the task card, read during the preparation time. */
   cueCard?: { topic: string; points: string[]; prepSeconds: number };
+  /** Keep the question text hidden during the test (e.g. TOEFL Listen and Repeat, where the text is the answer). */
+  hideText?: boolean;
   prompts: SpeakingPrompt[];
 };
 

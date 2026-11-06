@@ -250,7 +250,7 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
       <div ref={rootRef} className="fixed inset-0 z-[90] overflow-y-auto bg-[color:var(--background)]">
         <TopBar candidate={candidate} />
         <div className="mx-auto max-w-2xl px-5 py-12">
-          <p className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
+          <p lang="en" className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
           <h1 className="mt-2 text-3xl font-black tracking-[-.02em]">IELTS {MODULE_NAME[module.id]}</h1>
           <p className="mt-1 text-sm font-bold text-[color:var(--muted)]">Time: {module.minutes} minutes</p>
           <div className="mt-6 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-6 text-sm leading-7">
@@ -284,7 +284,7 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
       <div ref={rootRef} className="fixed inset-0 z-[90] overflow-y-auto bg-[color:var(--background)]">
         <TopBar candidate={candidate} />
         <div className="mx-auto max-w-3xl px-5 py-10">
-          <p className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
+          <p lang="en" className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
           <h1 className="mt-2 text-3xl font-black tracking-[-.02em]">{MODULE_NAME[module.id]} tamamlandı</h1>
           {isWriting ? <WritingSummary tasks={tasks} answers={answers} /> : <ScoreTable parts={parts} answers={answers} />}
           <div className="mt-8 flex flex-wrap gap-3">

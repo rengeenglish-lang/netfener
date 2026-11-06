@@ -43,7 +43,12 @@ export default async function ExamMocksPage({ params }: Props) {
       <SubsiteHeader eyebrow="Denemeler" title={`${exam.name} deneme sınavları`} copy="Gerçek sınav süresiyle tam deneme çöz; sonucunu ve yanlışlarını hemen gör." />
       {exam.slug === "ielts" ? (
         <div className="mb-5">
-          <FeatureCard href="/ielts/testler" eyebrow="IELTS test kütüphanesi" title="Bilgisayar ekranında IELTS testi" copy="Listening, Reading ve Writing: kalan süre, soru gezgini ve Review işaretiyle gerçek test ekranı düzeni." cta="Kütüphaneyi aç" color={exam.color} icon={Monitor} />
+          <FeatureCard href="/ielts/testler" eyebrow="IELTS test kütüphanesi" title="Bilgisayar ekranında IELTS testi" copy="Listening, Reading, Writing ve Speaking: kalan süre, soru gezgini ve Review işaretiyle gerçek test ekranı düzeni." cta="Kütüphaneyi aç" color={exam.color} icon={Monitor} />
+        </div>
+      ) : null}
+      {exam.slug === "toefl" ? (
+        <div className="mb-5">
+          <FeatureCard href="/toefl/testler" eyebrow="TOEFL iBT deneme kütüphanesi" title="2026 formatında TOEFL iBT denemesi" copy="Adaptif Reading ve Listening, Build a Sentence, Write an Email, Academic Discussion, Listen and Repeat ve Take an Interview; 1–6 band tahmini." cta="Kütüphaneyi aç" color={exam.color} icon={Monitor} />
         </div>
       ) : null}
       {mockSets || onlineCount ? (

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Check, Eye, EyeOff, Mic, Send, Volume2 } from "lucide-react";
 import type { SpeakingModule } from "@/content/ielts-tests/types";
 import { TopBar } from "@/components/ielts/IeltsRunner";
+import { ToeflBar } from "@/components/toefl/ToeflChrome";
 import { SPEAKING_BAND_GUIDE, SPEAKING_CRITERIA, baseAudioType } from "@/lib/ielts-speaking";
 import { requestSpeakingUploadsAction, submitSpeakingAction } from "@/app/actions/ielts-speaking";
 
@@ -18,6 +19,8 @@ type Props = {
   signInHref: string;
   /** False when recording storage isn't configured on the server. */
   teacherReview: boolean;
+  /** "toefl": TOEFL header and directions, no IELTS band guide or teacher review. */
+  brand?: "ielts" | "toefl";
 };
 
 type Step =
@@ -40,7 +43,9 @@ function recorderType() {
   return ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"].find((t) => MediaRecorder.isTypeSupported(t));
 }
 
-export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libraryHref, signedIn, signInHref, teacherReview }: Props) {
+export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libraryHref, signedIn, signInHref, teacherReview, brand = "ielts" }: Props) {
+  const toefl = brand === "toefl";
+  const header = (extra?: React.ReactNode) => (toefl ? <ToeflBar section="Speaking" extra={extra} /> : <TopBar candidate={candidate}>{extra}</TopBar>);
   const [phase, setPhase] = useState<"intro" | "test" | "done">("intro");
   const [stepIdx, setStepIdx] = useState(0);
   const [sub, setSub] = useState<Sub>("examiner");
@@ -70,7 +75,7 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
       out.push({ kind: "say", part: p, audio: part.introAudio, text: part.intro });
       if (part.cueCard) out.push({ kind: "prep", part: p, seconds: part.cueCard.prepSeconds });
       part.prompts.forEach((q) => {
-        out.push({ kind: "ask", part: p, index: index++, audio: q.audio, spoken: q.spoken ?? q.text, seconds: q.seconds, minSeconds: q.seconds >= 90 ? 60 : 3 });
+        out.push({ kind: "ask", part: p, index: index++, audio: q.audio, spoken: q.spoken ?? q.text, seconds: q.seconds, minSeconds: q.seconds >= 90 ? 60 : q.seconds < 15 ? 1 : 3 });
       });
     });
     out.push({ kind: "say", part: module.parts.length - 1, audio: module.outroAudio, text: module.outro });
@@ -268,20 +273,29 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
   if (phase === "intro") {
     return (
       <div className="fixed inset-0 z-[90] overflow-y-auto bg-[color:var(--background)]">
-        <TopBar candidate={candidate} />
+        {header()}
         <div className="mx-auto max-w-2xl px-5 py-12">
-          <p className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
-          <h1 className="mt-2 text-3xl font-black tracking-[-.02em]">IELTS Speaking</h1>
+          <p lang="en" className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
+          <h1 className="mt-2 text-3xl font-black tracking-[-.02em]">{toefl ? "TOEFL iBT Speaking" : "IELTS Speaking"}</h1>
           <p className="mt-1 text-sm font-bold text-[color:var(--muted)]">Time: about {module.minutes} minutes · 3 parts</p>
           <div className="mt-6 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-6 text-sm leading-7">
-            <p className="font-extrabold">INSTRUCTIONS TO CANDIDATES</p>
-            <ul className="mt-2 list-disc space-y-1 pl-5">
-              <li>The examiner asks each question aloud. Your answer is recorded straight after the question.</li>
-              <li>Part 1: short answers about yourself. Part 2: one minute to prepare, then speak for up to two minutes. Part 3: a discussion.</li>
-              <li>Each answer has a time limit. Press “Finish answer” when you have finished speaking.</li>
-              <li>Use headphones if you can, and find a quiet room.</li>
-            </ul>
-            <p className="mt-4 rounded-xl bg-[color:var(--brand-soft)] px-4 py-3 text-[13px] font-semibold">
+            <p className="font-extrabold">{toefl ? "SPEAKING SECTION DIRECTIONS" : "INSTRUCTIONS TO CANDIDATES"}</p>
+            {toefl ? (
+              <ul className="mt-2 list-disc space-y-1 pl-5">
+                <li>Listen and Repeat: you will hear seven sentences, one at a time. Repeat each sentence exactly as you hear it. You hear each sentence only once.</li>
+                <li>Take an Interview: an interviewer asks four questions. You have 45 seconds to answer each one.</li>
+                <li>Your answer is recorded straight after each recording. Press “Finish answer” when you have finished speaking.</li>
+                <li>Use headphones if you can, and find a quiet room.</li>
+              </ul>
+            ) : (
+              <ul className="mt-2 list-disc space-y-1 pl-5">
+                <li>The examiner asks each question aloud. Your answer is recorded straight after the question.</li>
+                <li>Part 1: short answers about yourself. Part 2: one minute to prepare, then speak for up to two minutes. Part 3: a discussion.</li>
+                <li>Each answer has a time limit. Press “Finish answer” when you have finished speaking.</li>
+                <li>Use headphones if you can, and find a quiet room.</li>
+              </ul>
+            )}
+            <p className={`mt-4 rounded-xl bg-[color:var(--brand-soft)] px-4 py-3 text-[13px] font-semibold ${toefl ? "hidden" : ""}`}>
               Sonunda kayıtlarını örnek cevaplarla karşılaştırabilirsin. İstersen kayıtları bir Netfener öğretmenine gönderip dört kriterde band puanı ve yazılı geri bildirim alabilirsin
               {signedIn ? "." : " (bunun için testten önce giriş yapmalısın; kayıtlar sayfadan çıkınca silinir)."}
             </p>
@@ -289,7 +303,7 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
           {micError ? <p className="mt-4 text-sm font-semibold text-[color:var(--danger)]">{micError}</p> : null}
           <div className="mt-6 flex flex-wrap gap-3">
             <button type="button" onClick={start} className="primary-button"><Mic size={18} aria-hidden="true" /> Allow microphone and start</button>
-            {!signedIn ? <Link href={signInHref} className="secondary-button">Önce giriş yap</Link> : null}
+            {!signedIn && !toefl ? <Link href={signInHref} className="secondary-button">Önce giriş yap</Link> : null}
             <Link href={libraryHref} className="secondary-button">Kütüphaneye dön</Link>
           </div>
         </div>
@@ -302,13 +316,15 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
     const complete = recordings.length === prompts.length && recordings.every(Boolean);
     return (
       <div className="fixed inset-0 z-[90] overflow-y-auto bg-[color:var(--background)]">
-        <TopBar candidate={candidate} />
+        {header()}
         <div className="mx-auto max-w-3xl px-5 py-10">
-          <p className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
+          <p lang="en" className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
           <h1 className="mt-2 text-3xl font-black tracking-[-.02em]">Speaking tamamlandı</h1>
-          <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">Kayıtlarını dinle, örnek cevaplarla karşılaştır ve aşağıdaki band rehberiyle kendini değerlendir.</p>
+          <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">
+            {toefl ? "Kayıtlarını dinle: Listen and Repeat’te cümleyi kelimesi kelimesine tekrar edebildin mi, Take an Interview’da örnek cevaplarla karşılaştır." : "Kayıtlarını dinle, örnek cevaplarla karşılaştır ve aşağıdaki band rehberiyle kendini değerlendir."}
+          </p>
 
-          <section className="mt-6 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-5">
+          <section className={`mt-6 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-5 ${toefl ? "hidden" : ""}`}>
             <p className="font-extrabold">Öğretmen değerlendirmesi</p>
             {!teacherReview ? (
               <p className="mt-2 text-sm text-[color:var(--muted)]">Öğretmen değerlendirmesi şu anda kapalı. Kayıtlarını bu sayfada dinleyebilirsin.</p>
@@ -357,7 +373,7 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
                         <p className="mt-2 text-sm text-[color:var(--muted)]">Kayıt yok.</p>
                       )}
                       <details className="mt-3">
-                        <summary className="cursor-pointer text-sm font-bold text-[color:var(--accent)]">Örnek cevap</summary>
+                        <summary className="cursor-pointer text-sm font-bold text-[color:var(--accent)]">{p.hideText ? "Duyduğun cümle" : "Örnek cevap"}</summary>
                         <p className="mt-2 text-sm leading-7">{q.sample}</p>
                       </details>
                     </li>
@@ -367,7 +383,18 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
             </section>
           ))}
 
-          <section className="mt-10">
+          {toefl ? (
+            <section className="mt-10 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-sm leading-6">
+              <h2 className="text-xl font-black">Kendini değerlendir</h2>
+              <ul className="mt-2 list-disc space-y-1 pl-5">
+                <li><b>Listen and Repeat:</b> Cümleyi eksiksiz ve doğru sırayla tekrarladın mı? Vurgu ve tonlama duyduğuna benziyor mu?</li>
+                <li><b>Take an Interview:</b> Soruyu doğrudan yanıtladın mı? Bir neden ve somut bir örnek verdin mi?</li>
+                <li>45 saniyeyi verimli kullandın mı? Uzun duraksamalar ve “umm” sesleri az mı?</li>
+                <li>Telaffuzun dinleyen için kolay anlaşılır mı? Dil bilgisi hataları anlamı bozuyor mu?</li>
+              </ul>
+            </section>
+          ) : null}
+          <section className={`mt-10 ${toefl ? "hidden" : ""}`}>
             <h2 className="text-xl font-black">Band rehberi</h2>
             <p className="mt-1 text-sm text-[color:var(--muted)]">IELTS Speaking dört kriterle puanlanır. Kayıtlarını dinlerken hangi satır sana en çok benziyor?</p>
             <div className="mt-4 overflow-x-auto">
@@ -408,12 +435,13 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
 
   return (
     <div className="fixed inset-0 z-[90] flex flex-col bg-[color:var(--background)] text-[color:var(--foreground)]">
-      <TopBar candidate={candidate}>
+      {header(
+
         <div className="flex items-center gap-3 text-sm font-extrabold tabular-nums">
           {sub === "prep" ? <span>Preparation {clock(left)}</span> : sub === "recording" ? <span className="text-red-300">● Recording {clock(left)}</span> : <span className="inline-flex items-center gap-1.5"><Volume2 size={16} aria-hidden="true" className="animate-pulse" /> Examiner</span>}
           <span className="h-2 w-20 overflow-hidden rounded-full bg-white/15" aria-hidden="true"><span className="block h-full bg-emerald-400 transition-[width]" style={{ width: `${Math.round(level * 100)}%` }} /></span>
         </div>
-      </TopBar>
+      )}
 
       <div className="border-b border-[color:var(--border)] bg-[color:var(--surface)] px-5 py-3">
         <p className="text-sm font-extrabold">{part.title}</p>
@@ -443,7 +471,7 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
             </div>
           )}
 
-          {ask ? (
+          {ask && !part.hideText ? (
             <div className="mt-6">
               <button type="button" onClick={() => setShowQuestion((s) => !s)} className="inline-flex items-center gap-1.5 text-sm font-bold text-[color:var(--muted)]">
                 {showQuestion ? <EyeOff size={15} aria-hidden="true" /> : <Eye size={15} aria-hidden="true" />} {showQuestion ? "Hide question" : "Show question"}
