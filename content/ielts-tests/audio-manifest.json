@@ -1408,5 +1408,825 @@
     "hash": "15ee1e3014a10beb",
     "chars": 219,
     "seconds": 3.5
+  },
+  "/audio/toefl/toefl-3/listening/s1-01.mp3": {
+    "hash": "cd5a1d3316d50b72",
+    "chars": 228,
+    "seconds": 3.5
+  },
+  "/audio/toefl/toefl-3/listening/s1-02.mp3": {
+    "hash": "7101177d9cd8509f",
+    "chars": 225,
+    "seconds": 3.4
+  },
+  "/audio/toefl/toefl-3/listening/s1-03.mp3": {
+    "hash": "c7f5fbfc19a89ef3",
+    "chars": 230,
+    "seconds": 4
+  },
+  "/audio/toefl/toefl-3/listening/s1-04.mp3": {
+    "hash": "6711d9e2300cd8e7",
+    "chars": 226,
+    "seconds": 3.4
+  },
+  "/audio/toefl/toefl-3/listening/s1-05.mp3": {
+    "hash": "218fb6651ddbc9bd",
+    "chars": 219,
+    "seconds": 3.8
+  },
+  "/audio/toefl/toefl-3/listening/s1-06.mp3": {
+    "hash": "4d9f19542171f915",
+    "chars": 230,
+    "seconds": 3.7
+  },
+  "/audio/toefl/toefl-3/listening/s1-07.mp3": {
+    "hash": "d2fb6cb359a0c6af",
+    "chars": 220,
+    "seconds": 3.3
+  },
+  "/audio/toefl/toefl-3/listening/s1-08.mp3": {
+    "hash": "6ad074aa0b022dd8",
+    "chars": 229,
+    "seconds": 3.5
+  },
+  "/audio/toefl/toefl-3/listening/s1-09.mp3": {
+    "hash": "ad8644295010753e",
+    "chars": 1523,
+    "seconds": 58.5
+  },
+  "/audio/toefl/toefl-3/listening/s1-10.mp3": {
+    "hash": "8112f3c26c2f3742",
+    "chars": 742,
+    "seconds": 35.6
+  },
+  "/audio/toefl/toefl-3/listening/s1-11.mp3": {
+    "hash": "dd7fd022de0ccd56",
+    "chars": 1473,
+    "seconds": 62.6
+  },
+  "/audio/toefl/toefl-3/listening/s2e-01.mp3": {
+    "hash": "08f19c632f80375b",
+    "chars": 201,
+    "seconds": 2.4
+  },
+  "/audio/toefl/toefl-3/listening/s2e-02.mp3": {
+    "hash": "43ab2a19d44f3b8e",
+    "chars": 206,
+    "seconds": 2.9
+  },
+  "/audio/toefl/toefl-3/listening/s2e-03.mp3": {
+    "hash": "4b166cf565a31f0e",
+    "chars": 209,
+    "seconds": 2.9
+  },
+  "/audio/toefl/toefl-3/listening/s2e-04.mp3": {
+    "hash": "93d313a85da8f52c",
+    "chars": 217,
+    "seconds": 2.9
+  },
+  "/audio/toefl/toefl-3/listening/s2e-05.mp3": {
+    "hash": "3c93a547b216fbbd",
+    "chars": 197,
+    "seconds": 2.3
+  },
+  "/audio/toefl/toefl-3/listening/s2e-06.mp3": {
+    "hash": "89b7a9e40d643009",
+    "chars": 213,
+    "seconds": 2.9
+  },
+  "/audio/toefl/toefl-3/listening/s2e-07.mp3": {
+    "hash": "0f26c80b850b36df",
+    "chars": 861,
+    "seconds": 24.5
+  },
+  "/audio/toefl/toefl-3/listening/s2e-08.mp3": {
+    "hash": "948c2e88ae8e4161",
+    "chars": 1128,
+    "seconds": 49.8
+  },
+  "/audio/toefl/toefl-3/listening/s2h-01.mp3": {
+    "hash": "dcce9935c2839ddc",
+    "chars": 242,
+    "seconds": 4.7
+  },
+  "/audio/toefl/toefl-3/listening/s2h-02.mp3": {
+    "hash": "c2fd0e47301c8ae4",
+    "chars": 245,
+    "seconds": 4.2
+  },
+  "/audio/toefl/toefl-3/listening/s2h-03.mp3": {
+    "hash": "7ac38cfaa2f4a462",
+    "chars": 251,
+    "seconds": 4.5
+  },
+  "/audio/toefl/toefl-3/listening/s2h-04.mp3": {
+    "hash": "c58a96808531412a",
+    "chars": 235,
+    "seconds": 4.2
+  },
+  "/audio/toefl/toefl-3/listening/s2h-05.mp3": {
+    "hash": "d965bd8123c8e911",
+    "chars": 229,
+    "seconds": 3.8
+  },
+  "/audio/toefl/toefl-3/listening/s2h-06.mp3": {
+    "hash": "cb7847a3f6c83969",
+    "chars": 248,
+    "seconds": 4.3
+  },
+  "/audio/toefl/toefl-3/listening/s2h-07.mp3": {
+    "hash": "9ed93ba90ba7def9",
+    "chars": 1512,
+    "seconds": 57.9
+  },
+  "/audio/toefl/toefl-3/listening/s2h-08.mp3": {
+    "hash": "b4ee7eba75e7563f",
+    "chars": 1405,
+    "seconds": 71.2
+  },
+  "/audio/toefl/toefl-3/speaking/repeat-intro.mp3": {
+    "hash": "ad6affa3ff1e77aa",
+    "chars": 401,
+    "seconds": 17.5
+  },
+  "/audio/toefl/toefl-3/speaking/repeat-1.mp3": {
+    "hash": "b242624d3394a5ec",
+    "chars": 208,
+    "seconds": 2.9
+  },
+  "/audio/toefl/toefl-3/speaking/repeat-2.mp3": {
+    "hash": "9cbefe6439711b5b",
+    "chars": 222,
+    "seconds": 3.7
+  },
+  "/audio/toefl/toefl-3/speaking/repeat-3.mp3": {
+    "hash": "690e83f546b404d7",
+    "chars": 220,
+    "seconds": 3.7
+  },
+  "/audio/toefl/toefl-3/speaking/repeat-4.mp3": {
+    "hash": "1ace5436f3ad8dba",
+    "chars": 236,
+    "seconds": 4.5
+  },
+  "/audio/toefl/toefl-3/speaking/repeat-5.mp3": {
+    "hash": "608171127df9b18a",
+    "chars": 232,
+    "seconds": 4.2
+  },
+  "/audio/toefl/toefl-3/speaking/repeat-6.mp3": {
+    "hash": "7072f740da4a48a7",
+    "chars": 259,
+    "seconds": 5.8
+  },
+  "/audio/toefl/toefl-3/speaking/repeat-7.mp3": {
+    "hash": "0c75a9d50c9a41a1",
+    "chars": 289,
+    "seconds": 7.1
+  },
+  "/audio/toefl/toefl-3/speaking/interview-intro.mp3": {
+    "hash": "e6c2b3ba4e12a717",
+    "chars": 354,
+    "seconds": 13.8
+  },
+  "/audio/toefl/toefl-3/speaking/interview-1.mp3": {
+    "hash": "839f4e2350dce70e",
+    "chars": 241,
+    "seconds": 4.5
+  },
+  "/audio/toefl/toefl-3/speaking/interview-2.mp3": {
+    "hash": "4103077e57718f1f",
+    "chars": 249,
+    "seconds": 6.2
+  },
+  "/audio/toefl/toefl-3/speaking/interview-3.mp3": {
+    "hash": "aaa1b8900c1d12f5",
+    "chars": 321,
+    "seconds": 10.1
+  },
+  "/audio/toefl/toefl-3/speaking/interview-4.mp3": {
+    "hash": "72e955f832ccaa3b",
+    "chars": 255,
+    "seconds": 4.9
+  },
+  "/audio/toefl/toefl-3/speaking/outro.mp3": {
+    "hash": "a4264f563aae34ec",
+    "chars": 220,
+    "seconds": 3.5
+  },
+  "/audio/toefl/toefl-4/listening/s1-01.mp3": {
+    "hash": "096cd73802bed13c",
+    "chars": 239,
+    "seconds": 4.2
+  },
+  "/audio/toefl/toefl-4/listening/s1-02.mp3": {
+    "hash": "a9d66a88679b953a",
+    "chars": 214,
+    "seconds": 2.9
+  },
+  "/audio/toefl/toefl-4/listening/s1-03.mp3": {
+    "hash": "06288f1d5ccbae4e",
+    "chars": 211,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-4/listening/s1-04.mp3": {
+    "hash": "03786a6822f7303d",
+    "chars": 212,
+    "seconds": 3.1
+  },
+  "/audio/toefl/toefl-4/listening/s1-05.mp3": {
+    "hash": "46baddc1a5af6d84",
+    "chars": 225,
+    "seconds": 3.5
+  },
+  "/audio/toefl/toefl-4/listening/s1-06.mp3": {
+    "hash": "cfbbe6ea7813c9d8",
+    "chars": 225,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-4/listening/s1-07.mp3": {
+    "hash": "ea9240315035d26a",
+    "chars": 216,
+    "seconds": 3.2
+  },
+  "/audio/toefl/toefl-4/listening/s1-08.mp3": {
+    "hash": "463aba47dd057f00",
+    "chars": 217,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-4/listening/s1-09.mp3": {
+    "hash": "e7e9e4ce22dc4541",
+    "chars": 1489,
+    "seconds": 55.7
+  },
+  "/audio/toefl/toefl-4/listening/s1-10.mp3": {
+    "hash": "ff81f2787c051759",
+    "chars": 746,
+    "seconds": 33.8
+  },
+  "/audio/toefl/toefl-4/listening/s1-11.mp3": {
+    "hash": "71a2d67fa655b645",
+    "chars": 1482,
+    "seconds": 70.9
+  },
+  "/audio/toefl/toefl-4/listening/s2e-01.mp3": {
+    "hash": "4ddd54764a2591f7",
+    "chars": 211,
+    "seconds": 2.5
+  },
+  "/audio/toefl/toefl-4/listening/s2e-02.mp3": {
+    "hash": "637744eeff24fffb",
+    "chars": 215,
+    "seconds": 3.1
+  },
+  "/audio/toefl/toefl-4/listening/s2e-03.mp3": {
+    "hash": "6d50a2376173fcc3",
+    "chars": 207,
+    "seconds": 2.7
+  },
+  "/audio/toefl/toefl-4/listening/s2e-04.mp3": {
+    "hash": "c4083523fd6b02ac",
+    "chars": 208,
+    "seconds": 3.1
+  },
+  "/audio/toefl/toefl-4/listening/s2e-05.mp3": {
+    "hash": "cc2a69650689aeff",
+    "chars": 208,
+    "seconds": 2.6
+  },
+  "/audio/toefl/toefl-4/listening/s2e-06.mp3": {
+    "hash": "5a5f61a20445d945",
+    "chars": 212,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-4/listening/s2e-07.mp3": {
+    "hash": "31937d600025309d",
+    "chars": 902,
+    "seconds": 31.9
+  },
+  "/audio/toefl/toefl-4/listening/s2e-08.mp3": {
+    "hash": "ec066c610dc1fd89",
+    "chars": 1085,
+    "seconds": 41.6
+  },
+  "/audio/toefl/toefl-4/listening/s2h-01.mp3": {
+    "hash": "ad0783be13026e0d",
+    "chars": 263,
+    "seconds": 6
+  },
+  "/audio/toefl/toefl-4/listening/s2h-02.mp3": {
+    "hash": "1e3214a6cab6eb64",
+    "chars": 250,
+    "seconds": 4.6
+  },
+  "/audio/toefl/toefl-4/listening/s2h-03.mp3": {
+    "hash": "ea0821f0336adb1a",
+    "chars": 241,
+    "seconds": 4.8
+  },
+  "/audio/toefl/toefl-4/listening/s2h-04.mp3": {
+    "hash": "0ee9e3d7c4fcaa76",
+    "chars": 253,
+    "seconds": 5
+  },
+  "/audio/toefl/toefl-4/listening/s2h-05.mp3": {
+    "hash": "a571d1f59714c25e",
+    "chars": 243,
+    "seconds": 3.9
+  },
+  "/audio/toefl/toefl-4/listening/s2h-06.mp3": {
+    "hash": "d09dc4f10b675748",
+    "chars": 246,
+    "seconds": 4.8
+  },
+  "/audio/toefl/toefl-4/listening/s2h-07.mp3": {
+    "hash": "2c44b6ee35d9771d",
+    "chars": 1490,
+    "seconds": 57.3
+  },
+  "/audio/toefl/toefl-4/listening/s2h-08.mp3": {
+    "hash": "7a1c02f5dcd2cf01",
+    "chars": 1558,
+    "seconds": 75.9
+  },
+  "/audio/toefl/toefl-4/speaking/repeat-intro.mp3": {
+    "hash": "c95b0f265f277f36",
+    "chars": 390,
+    "seconds": 13.9
+  },
+  "/audio/toefl/toefl-4/speaking/repeat-1.mp3": {
+    "hash": "32a9d014918d241d",
+    "chars": 215,
+    "seconds": 2.2
+  },
+  "/audio/toefl/toefl-4/speaking/repeat-2.mp3": {
+    "hash": "a21654d9f58971bf",
+    "chars": 224,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-4/speaking/repeat-3.mp3": {
+    "hash": "c6c2dd39da840403",
+    "chars": 221,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-4/speaking/repeat-4.mp3": {
+    "hash": "fbc2f25f9c34fb14",
+    "chars": 233,
+    "seconds": 3.8
+  },
+  "/audio/toefl/toefl-4/speaking/repeat-5.mp3": {
+    "hash": "0e454f06b5736963",
+    "chars": 241,
+    "seconds": 3.8
+  },
+  "/audio/toefl/toefl-4/speaking/repeat-6.mp3": {
+    "hash": "c1821b6ce7eca3b2",
+    "chars": 264,
+    "seconds": 5.1
+  },
+  "/audio/toefl/toefl-4/speaking/repeat-7.mp3": {
+    "hash": "cbaf401bf5e2d9b7",
+    "chars": 286,
+    "seconds": 6.5
+  },
+  "/audio/toefl/toefl-4/speaking/interview-intro.mp3": {
+    "hash": "15923563f540f2e5",
+    "chars": 365,
+    "seconds": 11
+  },
+  "/audio/toefl/toefl-4/speaking/interview-1.mp3": {
+    "hash": "34d1ee43be7f31c9",
+    "chars": 234,
+    "seconds": 3.4
+  },
+  "/audio/toefl/toefl-4/speaking/interview-2.mp3": {
+    "hash": "544cc0ec0d2d3e52",
+    "chars": 260,
+    "seconds": 4.7
+  },
+  "/audio/toefl/toefl-4/speaking/interview-3.mp3": {
+    "hash": "79a1344359d4f1b4",
+    "chars": 280,
+    "seconds": 6.6
+  },
+  "/audio/toefl/toefl-4/speaking/interview-4.mp3": {
+    "hash": "838559ee9b2ccdcc",
+    "chars": 251,
+    "seconds": 4.4
+  },
+  "/audio/toefl/toefl-4/speaking/outro.mp3": {
+    "hash": "f04be6a776dc7f80",
+    "chars": 222,
+    "seconds": 2.7
+  },
+  "/audio/toefl/toefl-5/listening/s1-01.mp3": {
+    "hash": "900cbd88249299dc",
+    "chars": 224,
+    "seconds": 3.9
+  },
+  "/audio/toefl/toefl-5/listening/s1-02.mp3": {
+    "hash": "c4785204387a3f79",
+    "chars": 219,
+    "seconds": 3.2
+  },
+  "/audio/toefl/toefl-5/listening/s1-03.mp3": {
+    "hash": "f43e7e29170156c1",
+    "chars": 214,
+    "seconds": 3.3
+  },
+  "/audio/toefl/toefl-5/listening/s1-04.mp3": {
+    "hash": "37c74876cc3085e4",
+    "chars": 214,
+    "seconds": 2.7
+  },
+  "/audio/toefl/toefl-5/listening/s1-05.mp3": {
+    "hash": "09710efec455e261",
+    "chars": 222,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-5/listening/s1-06.mp3": {
+    "hash": "c3d182bdc42e9c4a",
+    "chars": 223,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-5/listening/s1-07.mp3": {
+    "hash": "da83708830c81781",
+    "chars": 223,
+    "seconds": 3.3
+  },
+  "/audio/toefl/toefl-5/listening/s1-08.mp3": {
+    "hash": "6c4e7c8805774771",
+    "chars": 221,
+    "seconds": 3.4
+  },
+  "/audio/toefl/toefl-5/listening/s1-09.mp3": {
+    "hash": "53414c2c085c3399",
+    "chars": 1333,
+    "seconds": 48.7
+  },
+  "/audio/toefl/toefl-5/listening/s1-10.mp3": {
+    "hash": "8cb260a93a8caa38",
+    "chars": 772,
+    "seconds": 35.5
+  },
+  "/audio/toefl/toefl-5/listening/s1-11.mp3": {
+    "hash": "aaee85c2900a72b1",
+    "chars": 1560,
+    "seconds": 73
+  },
+  "/audio/toefl/toefl-5/listening/s2e-01.mp3": {
+    "hash": "4b79acb3daf1aa67",
+    "chars": 199,
+    "seconds": 1.9
+  },
+  "/audio/toefl/toefl-5/listening/s2e-02.mp3": {
+    "hash": "d319b97abfd642ae",
+    "chars": 227,
+    "seconds": 3.6
+  },
+  "/audio/toefl/toefl-5/listening/s2e-03.mp3": {
+    "hash": "2d8a7c4d78cb99ed",
+    "chars": 207,
+    "seconds": 2.6
+  },
+  "/audio/toefl/toefl-5/listening/s2e-04.mp3": {
+    "hash": "fa79a83144f6eefd",
+    "chars": 205,
+    "seconds": 2.9
+  },
+  "/audio/toefl/toefl-5/listening/s2e-05.mp3": {
+    "hash": "5580a5914045bcfb",
+    "chars": 209,
+    "seconds": 2.9
+  },
+  "/audio/toefl/toefl-5/listening/s2e-06.mp3": {
+    "hash": "d800573550cdf180",
+    "chars": 198,
+    "seconds": 2.4
+  },
+  "/audio/toefl/toefl-5/listening/s2e-07.mp3": {
+    "hash": "b9b1134b0527475c",
+    "chars": 820,
+    "seconds": 27.5
+  },
+  "/audio/toefl/toefl-5/listening/s2e-08.mp3": {
+    "hash": "0e072ad3b31a6752",
+    "chars": 1071,
+    "seconds": 45.8
+  },
+  "/audio/toefl/toefl-5/listening/s2h-01.mp3": {
+    "hash": "1f836452e82e95e1",
+    "chars": 263,
+    "seconds": 5.4
+  },
+  "/audio/toefl/toefl-5/listening/s2h-02.mp3": {
+    "hash": "f483a8eb62bc5efc",
+    "chars": 254,
+    "seconds": 4.3
+  },
+  "/audio/toefl/toefl-5/listening/s2h-03.mp3": {
+    "hash": "0dd5730bae43cff1",
+    "chars": 232,
+    "seconds": 3.7
+  },
+  "/audio/toefl/toefl-5/listening/s2h-04.mp3": {
+    "hash": "2f1cff8e6e33e2fc",
+    "chars": 240,
+    "seconds": 4.4
+  },
+  "/audio/toefl/toefl-5/listening/s2h-05.mp3": {
+    "hash": "c1480329822e3944",
+    "chars": 249,
+    "seconds": 3.4
+  },
+  "/audio/toefl/toefl-5/listening/s2h-06.mp3": {
+    "hash": "b5819e05cc27720f",
+    "chars": 251,
+    "seconds": 4.4
+  },
+  "/audio/toefl/toefl-5/listening/s2h-07.mp3": {
+    "hash": "79605d523dea88b2",
+    "chars": 1589,
+    "seconds": 65
+  },
+  "/audio/toefl/toefl-5/listening/s2h-08.mp3": {
+    "hash": "30874cf35ae1a3e5",
+    "chars": 1475,
+    "seconds": 69
+  },
+  "/audio/toefl/toefl-5/speaking/repeat-intro.mp3": {
+    "hash": "1c99feb2ec7c1ca8",
+    "chars": 407,
+    "seconds": 15.2
+  },
+  "/audio/toefl/toefl-5/speaking/repeat-1.mp3": {
+    "hash": "f25cfbca4a87668d",
+    "chars": 218,
+    "seconds": 2.7
+  },
+  "/audio/toefl/toefl-5/speaking/repeat-2.mp3": {
+    "hash": "c760b15d766d19f8",
+    "chars": 226,
+    "seconds": 3.4
+  },
+  "/audio/toefl/toefl-5/speaking/repeat-3.mp3": {
+    "hash": "e933af263d721c02",
+    "chars": 228,
+    "seconds": 3.7
+  },
+  "/audio/toefl/toefl-5/speaking/repeat-4.mp3": {
+    "hash": "fa718f885856837d",
+    "chars": 238,
+    "seconds": 3.9
+  },
+  "/audio/toefl/toefl-5/speaking/repeat-5.mp3": {
+    "hash": "6c2a6daaf66ad1c6",
+    "chars": 242,
+    "seconds": 4.3
+  },
+  "/audio/toefl/toefl-5/speaking/repeat-6.mp3": {
+    "hash": "45328c84b31a70e4",
+    "chars": 259,
+    "seconds": 5.2
+  },
+  "/audio/toefl/toefl-5/speaking/repeat-7.mp3": {
+    "hash": "a0934240e8286714",
+    "chars": 274,
+    "seconds": 6.3
+  },
+  "/audio/toefl/toefl-5/speaking/interview-intro.mp3": {
+    "hash": "710bf606fdd0d1d0",
+    "chars": 358,
+    "seconds": 11.6
+  },
+  "/audio/toefl/toefl-5/speaking/interview-1.mp3": {
+    "hash": "f84fef73118c90b6",
+    "chars": 231,
+    "seconds": 3.4
+  },
+  "/audio/toefl/toefl-5/speaking/interview-2.mp3": {
+    "hash": "87884e598dfa197b",
+    "chars": 224,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-5/speaking/interview-3.mp3": {
+    "hash": "01e607f149b3c4a3",
+    "chars": 300,
+    "seconds": 8.1
+  },
+  "/audio/toefl/toefl-5/speaking/interview-4.mp3": {
+    "hash": "9382199ee643e7ef",
+    "chars": 242,
+    "seconds": 3.7
+  },
+  "/audio/toefl/toefl-5/speaking/outro.mp3": {
+    "hash": "5f9eb91ee752f0af",
+    "chars": 220,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-6/listening/s1-01.mp3": {
+    "hash": "237f10dd22612706",
+    "chars": 222,
+    "seconds": 3.9
+  },
+  "/audio/toefl/toefl-6/listening/s1-02.mp3": {
+    "hash": "202998a724fa47fe",
+    "chars": 210,
+    "seconds": 2.7
+  },
+  "/audio/toefl/toefl-6/listening/s1-03.mp3": {
+    "hash": "dfc6e45cd3b83168",
+    "chars": 242,
+    "seconds": 4.3
+  },
+  "/audio/toefl/toefl-6/listening/s1-04.mp3": {
+    "hash": "063e63cea04e0d65",
+    "chars": 230,
+    "seconds": 3.5
+  },
+  "/audio/toefl/toefl-6/listening/s1-05.mp3": {
+    "hash": "10e185b8c2e5a6c2",
+    "chars": 224,
+    "seconds": 3.4
+  },
+  "/audio/toefl/toefl-6/listening/s1-06.mp3": {
+    "hash": "c27960fb9f2840c7",
+    "chars": 227,
+    "seconds": 4
+  },
+  "/audio/toefl/toefl-6/listening/s1-07.mp3": {
+    "hash": "05839cd6944a0f65",
+    "chars": 218,
+    "seconds": 3.2
+  },
+  "/audio/toefl/toefl-6/listening/s1-08.mp3": {
+    "hash": "1d4b3cb748509201",
+    "chars": 220,
+    "seconds": 3.2
+  },
+  "/audio/toefl/toefl-6/listening/s1-09.mp3": {
+    "hash": "a5060631c29c1daa",
+    "chars": 1418,
+    "seconds": 51.9
+  },
+  "/audio/toefl/toefl-6/listening/s1-10.mp3": {
+    "hash": "363056584d0a46fb",
+    "chars": 787,
+    "seconds": 35.1
+  },
+  "/audio/toefl/toefl-6/listening/s1-11.mp3": {
+    "hash": "93e973d23c2c9429",
+    "chars": 1452,
+    "seconds": 66.5
+  },
+  "/audio/toefl/toefl-6/listening/s2e-01.mp3": {
+    "hash": "30f7ade704988639",
+    "chars": 209,
+    "seconds": 3.3
+  },
+  "/audio/toefl/toefl-6/listening/s2e-02.mp3": {
+    "hash": "6729204a30190772",
+    "chars": 209,
+    "seconds": 3
+  },
+  "/audio/toefl/toefl-6/listening/s2e-03.mp3": {
+    "hash": "2d0719e0b4caf9a5",
+    "chars": 203,
+    "seconds": 2.5
+  },
+  "/audio/toefl/toefl-6/listening/s2e-04.mp3": {
+    "hash": "61c2e8db3f9103d4",
+    "chars": 223,
+    "seconds": 3.1
+  },
+  "/audio/toefl/toefl-6/listening/s2e-05.mp3": {
+    "hash": "1f45b2a44a05175b",
+    "chars": 201,
+    "seconds": 1.9
+  },
+  "/audio/toefl/toefl-6/listening/s2e-06.mp3": {
+    "hash": "af77b55afcc16660",
+    "chars": 200,
+    "seconds": 2.5
+  },
+  "/audio/toefl/toefl-6/listening/s2e-07.mp3": {
+    "hash": "9be7e0996e01f753",
+    "chars": 824,
+    "seconds": 28.5
+  },
+  "/audio/toefl/toefl-6/listening/s2e-08.mp3": {
+    "hash": "9c919e44a1eb2541",
+    "chars": 1108,
+    "seconds": 41.9
+  },
+  "/audio/toefl/toefl-6/listening/s2h-01.mp3": {
+    "hash": "f26123abf93eacea",
+    "chars": 250,
+    "seconds": 4.9
+  },
+  "/audio/toefl/toefl-6/listening/s2h-02.mp3": {
+    "hash": "ea09c5fa9a48c836",
+    "chars": 251,
+    "seconds": 4.5
+  },
+  "/audio/toefl/toefl-6/listening/s2h-03.mp3": {
+    "hash": "7a6af47a3080533b",
+    "chars": 249,
+    "seconds": 4.1
+  },
+  "/audio/toefl/toefl-6/listening/s2h-04.mp3": {
+    "hash": "91a50b405d9ee5ec",
+    "chars": 246,
+    "seconds": 4.8
+  },
+  "/audio/toefl/toefl-6/listening/s2h-05.mp3": {
+    "hash": "ff7df70a68604fa0",
+    "chars": 246,
+    "seconds": 3.9
+  },
+  "/audio/toefl/toefl-6/listening/s2h-06.mp3": {
+    "hash": "0775f38c3fd7547e",
+    "chars": 247,
+    "seconds": 4.9
+  },
+  "/audio/toefl/toefl-6/listening/s2h-07.mp3": {
+    "hash": "c9da4a803e42e321",
+    "chars": 1583,
+    "seconds": 63.1
+  },
+  "/audio/toefl/toefl-6/listening/s2h-08.mp3": {
+    "hash": "6c329b305526eb98",
+    "chars": 1456,
+    "seconds": 62.1
+  },
+  "/audio/toefl/toefl-6/speaking/repeat-intro.mp3": {
+    "hash": "872f7c45a2dec536",
+    "chars": 400,
+    "seconds": 15.5
+  },
+  "/audio/toefl/toefl-6/speaking/repeat-1.mp3": {
+    "hash": "8bae2f71e8371217",
+    "chars": 210,
+    "seconds": 2.6
+  },
+  "/audio/toefl/toefl-6/speaking/repeat-2.mp3": {
+    "hash": "6282d6caf574a0b3",
+    "chars": 219,
+    "seconds": 3.1
+  },
+  "/audio/toefl/toefl-6/speaking/repeat-3.mp3": {
+    "hash": "a93ef1a1f176bc4d",
+    "chars": 237,
+    "seconds": 3.8
+  },
+  "/audio/toefl/toefl-6/speaking/repeat-4.mp3": {
+    "hash": "ecfde370d80aacfc",
+    "chars": 230,
+    "seconds": 3.8
+  },
+  "/audio/toefl/toefl-6/speaking/repeat-5.mp3": {
+    "hash": "6a471eff54fe74b5",
+    "chars": 244,
+    "seconds": 4.2
+  },
+  "/audio/toefl/toefl-6/speaking/repeat-6.mp3": {
+    "hash": "b8cafec346320967",
+    "chars": 260,
+    "seconds": 5.1
+  },
+  "/audio/toefl/toefl-6/speaking/repeat-7.mp3": {
+    "hash": "e7a230a287cb1e93",
+    "chars": 289,
+    "seconds": 6.9
+  },
+  "/audio/toefl/toefl-6/speaking/interview-intro.mp3": {
+    "hash": "b410867aa3abfa43",
+    "chars": 379,
+    "seconds": 13.2
+  },
+  "/audio/toefl/toefl-6/speaking/interview-1.mp3": {
+    "hash": "a037987c82bc9c98",
+    "chars": 234,
+    "seconds": 3.8
+  },
+  "/audio/toefl/toefl-6/speaking/interview-2.mp3": {
+    "hash": "3aee0a3a50888e0e",
+    "chars": 269,
+    "seconds": 6.9
+  },
+  "/audio/toefl/toefl-6/speaking/interview-3.mp3": {
+    "hash": "1e27040ead7f3f3d",
+    "chars": 286,
+    "seconds": 7.8
+  },
+  "/audio/toefl/toefl-6/speaking/interview-4.mp3": {
+    "hash": "1545351428fda81c",
+    "chars": 254,
+    "seconds": 4.8
+  },
+  "/audio/toefl/toefl-6/speaking/outro.mp3": {
+    "hash": "e7638ba97d8d6bb4",
+    "chars": 221,
+    "seconds": 2.9
   }
 }
