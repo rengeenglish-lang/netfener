@@ -2,11 +2,12 @@
  * Builds the MP3 recordings for IELTS listening parts with Azure Speech (neural TTS).
  *
  *   npx tsx scripts/build-ielts-audio.mts            # build parts whose script changed
- *   npx tsx scripts/build-ielts-audio.mts --dry      # print SSML size only, no API calls
+ *   npx tsx scripts/build-ielts-audio.mts --dry      # characters the next build would use, no API calls
  *   npx tsx scripts/build-ielts-audio.mts --force    # rebuild everything
  *
- * Each part with an `audio` path is turned into one SSML document: the narrator (British) reads the
+ * Listening: each part with an `audio` path is turned into one SSML document: the narrator (British) reads the
  * exam instructions, `pause` becomes real silence, and each speaker uses the voice in `cast`.
+ * Speaking: every examiner line (part intros, questions, closing) becomes its own short MP3.
  * A manifest stores a hash of each SSML document, so unchanged parts never spend characters again
  * (the free F0 tier allows 500,000 characters a month, SSML markup included).
  *
@@ -89,36 +90,69 @@ function duration(file: string, bytes: number) {
   }
 }
 
+/** One examiner line for Speaking: a single voice, a natural pace and a short tail of silence. */
+function examinerSsml(voice: string, text: string) {
+  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-GB"><voice name="${voice}"><prosody rate="-5%">${speakable(text)}</prosody>${silence(0.3)}</voice></speak>`;
+}
+
+type Job = { label: string; audio: string; ssml: string };
+
+function jobs(): Job[] {
+  const out: Job[] = [];
+  for (const test of IELTS_TESTS) {
+    for (const m of test.modules) {
+      if (m.id === "listening") {
+        for (const part of m.parts) {
+          if (part.audio && part.script?.length) out.push({ label: `${test.id} ${part.title}`, audio: part.audio, ssml: partSsml(part) });
+        }
+      } else if (m.id === "speaking") {
+        const say = (label: string, audio: string, text: string) => out.push({ label: `${test.id} Speaking ${label}`, audio, ssml: examinerSsml(m.examiner, text) });
+        for (const part of m.parts) {
+          say(`${part.title} intro`, part.introAudio, part.intro);
+          part.prompts.forEach((q, i) => say(`${part.title} Q${i + 1}`, q.audio, q.spoken ?? q.text));
+        }
+        say("outro", m.outroAudio, m.outro);
+      }
+    }
+  }
+  return out;
+}
+
+// The free (F0) tier allows 20 requests a minute, so requests are spaced out.
+const MIN_GAP_MS = 3_200;
+let lastCall = 0;
+async function paced<T>(fn: () => Promise<T>) {
+  const wait = lastCall + MIN_GAP_MS - Date.now();
+  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  lastCall = Date.now();
+  return fn();
+}
+
 const manifest: Record<string, Entry> = existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, "utf8")) : {};
 let spent = 0;
 
-for (const test of IELTS_TESTS) {
-  const listening = test.modules.find((m) => m.id === "listening");
-  if (!listening || listening.id === "writing") continue;
-  for (const part of listening.parts) {
-    if (!part.audio || !part.script?.length) continue;
-    const ssml = partSsml(part);
-    const hash = createHash("sha256").update(ssml).digest("hex").slice(0, 16);
-    const file = join(ROOT, "public", part.audio);
-    const label = `${test.id} ${part.title}`;
-    if (dry) {
-      console.log(`${label}: ${ssml.length} characters`);
-      spent += ssml.length;
-      continue;
+for (const job of jobs()) {
+  const hash = createHash("sha256").update(job.ssml).digest("hex").slice(0, 16);
+  const file = join(ROOT, "public", job.audio);
+  if (dry) {
+    if (force || manifest[job.audio]?.hash !== hash) {
+      console.log(`${job.label}: ${job.ssml.length} characters`);
+      spent += job.ssml.length;
     }
-    if (!force && manifest[part.audio]?.hash === hash && existsSync(file)) {
-      console.log(`${label}: up to date`);
-      continue;
-    }
-    const mp3 = await synthesize(ssml);
-    mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, mp3);
-    const seconds = Math.round(duration(file, mp3.length) * 10) / 10;
-    manifest[part.audio] = { hash, chars: ssml.length, seconds };
-    spent += ssml.length;
-    console.log(`${label}: ${ssml.length} characters → ${part.audio} (${seconds} s)`);
-    writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
+    continue;
   }
+  if (!force && manifest[job.audio]?.hash === hash && existsSync(file)) {
+    console.log(`${job.label}: up to date`);
+    continue;
+  }
+  const mp3 = await paced(() => synthesize(job.ssml));
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, mp3);
+  const seconds = Math.round(duration(file, mp3.length) * 10) / 10;
+  manifest[job.audio] = { hash, chars: job.ssml.length, seconds };
+  spent += job.ssml.length;
+  console.log(`${job.label}: ${job.ssml.length} characters → ${job.audio} (${seconds} s)`);
+  writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
 }
 
 console.log(`${dry ? "Would use" : "Used"} ${spent} characters.`);

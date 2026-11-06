@@ -411,6 +411,8 @@ model User {
   lexiconWords            LexiconWordState[]
   lexiconTests            LexiconSetTest[]
   writingFeedback         WritingFeedback[]
+  ieltsSpeakingSubmissions IeltsSpeakingSubmission[] @relation("SpeakingStudent")
+  ieltsSpeakingReviews     IeltsSpeakingSubmission[] @relation("SpeakingReviewer")
   mistakeExplanationViews MistakeExplanationView[]
   sentMessages            TeacherMessage[]          @relation("MessageStudent")
   answeredMessages        TeacherMessage[]          @relation("MessageResponder")
@@ -2869,4 +2871,35 @@ model WheelEntry {
 
   @@index([ipHash, createdAt])
   @@map("wheel_entries")
+}
+
+enum SpeakingReviewStatus {
+  PENDING
+  REVIEWED
+}
+
+/// An IELTS Speaking mock sent for teacher review. Audio files live in the private R2 "reviews" bucket.
+model IeltsSpeakingSubmission {
+  id            String               @id @default(cuid())
+  userId        String
+  testId        String
+  /// [{ key, part, prompt, question, seconds, contentType }]
+  recordings    Json
+  status        SpeakingReviewStatus @default(PENDING)
+  fluency       Float?
+  lexical       Float?
+  grammar       Float?
+  pronunciation Float?
+  overall       Float?
+  feedback      String?
+  reviewedById  String?
+  submittedAt   DateTime             @default(now())
+  reviewedAt    DateTime?
+
+  user       User  @relation("SpeakingStudent", fields: [userId], references: [id], onDelete: Cascade)
+  reviewedBy User? @relation("SpeakingReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  @@index([status, submittedAt])
+  @@index([userId, submittedAt])
+  @@map("ielts_speaking_submissions")
 }

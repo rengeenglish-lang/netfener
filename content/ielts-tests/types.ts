@@ -1,6 +1,6 @@
 /** Computer-delivered IELTS-style practice tests (Netfener's own content). */
 
-export type IeltsModuleId = "listening" | "reading" | "writing";
+export type IeltsModuleId = "listening" | "reading" | "writing" | "speaking";
 export type IeltsTrack = "academic" | "general";
 
 export type Gap = { n: number; answers: string[] };
@@ -58,9 +58,44 @@ export type WritingTask = {
   chart?: { title: string; unit: string; series: [string, string]; rows: { label: string; values: [number, number] }[] };
 };
 
+/** One examiner question; the candidate's answer is recorded for `seconds`. */
+export type SpeakingPrompt = {
+  /** The question as shown on screen afterwards. */
+  text: string;
+  /** What the examiner says, when it differs from `text` (e.g. "Now let's talk about music. …"). */
+  spoken?: string;
+  seconds: number;
+  /** A model answer the candidate can compare with afterwards. */
+  sample: string;
+  /** Examiner MP3 under /public, built by scripts/build-ielts-audio.mts. */
+  audio: string;
+};
+
+export type SpeakingPart = {
+  title: string;
+  /** What the examiner says before the first question of the part. */
+  intro: string;
+  introAudio: string;
+  /** Part 2 only: the task card, read during the preparation time. */
+  cueCard?: { topic: string; points: string[]; prepSeconds: number };
+  prompts: SpeakingPrompt[];
+};
+
+export type SpeakingModule = {
+  id: "speaking";
+  minutes: number;
+  /** Azure neural voice used for the examiner. */
+  examiner: string;
+  parts: SpeakingPart[];
+  /** The examiner's closing words. */
+  outro: string;
+  outroAudio: string;
+};
+
 export type IeltsModule =
   | { id: "listening" | "reading"; minutes: number; parts: QuestionPart[] }
-  | { id: "writing"; minutes: number; tasks: WritingTask[] };
+  | { id: "writing"; minutes: number; tasks: WritingTask[] }
+  | SpeakingModule;
 
 export type IeltsTest = {
   id: string;

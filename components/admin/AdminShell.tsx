@@ -100,7 +100,7 @@ function studentNav(examFamily: ExamFamily | null): StudentGroup[] {
         { href: "/dashboard/practice", label: "Pratik Bankası", icon: ListChecks },
         { href: "/dashboard/mock-exam", label: "Deneme Sınavı", icon: Timer },
         ...(examFamily === "ACADEMIC_SKILLS" ? [] : [{ href: "/dashboard/yds-denemeleri", label: "Online YDS Denemeleri", icon: ClipboardList }]),
-        ...(examFamily === "TRANSLATION_GRAMMAR" ? [] : [{ href: "/dashboard/speaking-practice", label: "Konuşma pratiği", icon: Mic2 }]),
+        ...(examFamily === "TRANSLATION_GRAMMAR" ? [] : [{ href: "/dashboard/speaking-practice", label: "Konuşma pratiği", icon: Mic2 }, { href: "/dashboard/ielts-speaking", label: "IELTS Speaking sonuçlarım", icon: Mic2 }]),
         { href: "/dashboard/speaking-club", label: "Speaking Club", icon: Users },
         { href: "/dashboard/yazma-geri-bildirim", label: "Yazma geri bildirimi", icon: PenLine },
       ],
@@ -164,6 +164,7 @@ const STAFF_GROUPS: { label: string; items: { href: string; label: string; icon:
       { href: "/admin/leads", label: "Gelen talepler", icon: Inbox },
       { href: "/admin/yorumlar", label: "Öğrenci yorumları", icon: Star, adminOnly: true },
       { href: "/admin/submissions", label: "Deneme değerlendirmeleri", icon: FileCheck2 },
+      { href: "/admin/ielts-speaking", label: "IELTS Speaking değerlendirmeleri", icon: Mic2 },
     ],
   },
   {

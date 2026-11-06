@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, Clock, Headphones, Lock, Monitor, PenLine, type LucideIcon } from "lucide-react";
+import { BookOpen, Clock, Headphones, Lock, Mic2, Monitor, PenLine, type LucideIcon } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { IELTS_LIBRARY, IELTS_TESTS, MODULE_META, ieltsTestHref, questionCount } from "@/content/ielts-tests/registry";
 import type { IeltsModuleId } from "@/content/ielts-tests/types";
 
 export const metadata: Metadata = {
   title: "IELTS Test Kütüphanesi",
-  description: "Bilgisayarda IELTS ekranını birebir hissettiren Listening, Reading ve Writing pratik testleri: geri sayım, soru gezgini, Review işareti ve anında sonuç.",
+  description: "Bilgisayarda IELTS ekranını birebir hissettiren Listening, Reading, Writing ve Speaking pratik testleri: geri sayım, soru gezgini, Review işareti, sesli examiner ve anında sonuç.",
   alternates: { canonical: "/ielts/testler" },
 };
 
-const ICONS: Record<IeltsModuleId, LucideIcon> = { listening: Headphones, reading: BookOpen, writing: PenLine };
-const ORDER: IeltsModuleId[] = ["listening", "reading", "writing"];
+const ICONS: Record<IeltsModuleId, LucideIcon> = { listening: Headphones, reading: BookOpen, writing: PenLine, speaking: Mic2 };
+const ORDER: IeltsModuleId[] = ["listening", "reading", "writing", "speaking"];
 
 export default function IeltsLibraryPage() {
   return (
@@ -22,7 +22,7 @@ export default function IeltsLibraryPage() {
         <h1 className="page-title">IELTS test kütüphanesi</h1>
         <p className="page-copy">
           Testler bilgisayarda yapılan IELTS ekranının düzenini izler: üstte kalan süre, altta soru numaraları ve Review işareti, Reading’de solda metin sağda sorular,
-          Writing’de canlı kelime sayacı. Bir modül seç ve başla.
+          Writing’de canlı kelime sayacı, Speaking’de sesli examiner ve kayıt. Bir modül seç ve başla.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm font-bold">
           <span className="inline-flex items-center gap-2 rounded-2xl border border-[color:var(--border)] px-4 py-2"><Monitor size={16} aria-hidden="true" /> Bilgisayar ekranı</span>
@@ -59,7 +59,7 @@ export default function IeltsLibraryPage() {
                             <div>
                               <p className="text-sm font-extrabold">{meta.name}</p>
                               <p className="text-xs text-[color:var(--muted)]">
-                                {test && mod ? `${mod.minutes} dk · ${id === "writing" ? `${questionCount(test, id)} görev` : `${questionCount(test, id)} soru`}` : `${meta.fullMinutes} dk · ${meta.fullQuestions}`}
+                                {test && mod ? `${mod.minutes} dk · ${id === "writing" ? `${questionCount(test, id)} görev` : id === "speaking" ? meta.fullQuestions : `${questionCount(test, id)} soru`}` : `${meta.fullMinutes} dk · ${meta.fullQuestions}`}
                               </p>
                             </div>
                           </div>

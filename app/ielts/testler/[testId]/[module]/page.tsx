@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAuthContext } from "@/server/auth/context";
 import { IeltsRunner } from "@/components/ielts/IeltsRunner";
+import { IeltsSpeakingRunner } from "@/components/ielts/IeltsSpeakingRunner";
+import { speakingReviewAvailable } from "@/server/services/ielts-speaking.service";
 import { MODULE_META, findIeltsTest } from "@/content/ielts-tests/registry";
 import type { IeltsModuleId } from "@/content/ielts-tests/types";
 
@@ -20,5 +22,20 @@ export default async function IeltsTestPage({ params }: Props) {
   const mod = test?.modules.find((m) => m.id === module);
   if (!test || !mod) notFound();
   const user = await getAuthContext();
-  return <IeltsRunner testTitle={test.title} module={mod} candidate={user?.name?.trim() || "Misafir"} libraryHref="/ielts/testler" />;
+  const candidate = user?.name?.trim() || "Misafir";
+  if (mod.id === "speaking") {
+    return (
+      <IeltsSpeakingRunner
+        testId={test.id}
+        testTitle={test.title}
+        module={mod}
+        candidate={candidate}
+        libraryHref="/ielts/testler"
+        signedIn={Boolean(user)}
+        signInHref={`/sign-in?next=${encodeURIComponent(`/ielts/testler/${test.id}/speaking`)}`}
+        teacherReview={speakingReviewAvailable()}
+      />
+    );
+  }
+  return <IeltsRunner testTitle={test.title} module={mod} candidate={candidate} libraryHref="/ielts/testler" />;
 }
