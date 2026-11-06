@@ -10,6 +10,7 @@ type Phase = "intro" | "test" | "done";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 const TFNG = ["TRUE", "FALSE", "NOT GIVEN"] as const;
+const YNNG = ["YES", "NO", "NOT GIVEN"] as const;
 const MODULE_NAME = { listening: "Listening", reading: "Reading", writing: "Writing" } as const;
 
 const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ").replace(/[.,]$/, "");
@@ -28,7 +29,7 @@ function correctText(g: QuestionGroup, n: number) {
   if (g.kind === "notes") return g.gaps.find((x) => x.n === n)?.answers[0] ?? "";
   const it = g.items.find((x) => x.n === n);
   if (!it) return "";
-  return g.kind === "tfng" ? (it as { answer: string }).answer : LETTERS[(it as { answer: number }).answer];
+  return g.kind === "choice" ? LETTERS[(it as { answer: number }).answer] : (it as { answer: string }).answer;
 }
 function isCorrect(g: QuestionGroup, n: number, given: string | undefined) {
   if (!given) return false;
@@ -36,7 +37,7 @@ function isCorrect(g: QuestionGroup, n: number, given: string | undefined) {
   return correctText(g, n) === given;
 }
 
-/** Rough raw-to-band guide, scaled to the length of this sample. */
+/** Rough raw-to-band guide, scaled to a 40-question paper. */
 function bandFor(correct: number, total: number) {
   const raw40 = Math.round((correct / Math.max(1, total)) * 40);
   const table: [number, number][] = [[39, 9], [37, 8.5], [35, 8], [33, 7.5], [30, 7], [27, 6.5], [23, 6], [19, 5.5], [15, 5], [13, 4.5], [10, 4], [6, 3.5], [4, 3], [2, 2.5]];
@@ -65,6 +66,7 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
   const [audio, setAudio] = useState<"idle" | "playing" | "ended" | "unavailable">("idle");
   const playing = audio === "playing";
   const rootRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const passageRef = useRef<HTMLDivElement>(null);
 
   const isWriting = module.id === "writing";
@@ -80,6 +82,7 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
+      audioRef.current?.pause();
       if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
     };
   }, []);
@@ -93,6 +96,7 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
   const finish = useCallback(() => {
     setConfirm(false);
     setPhase("done");
+    audioRef.current?.pause();
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
     setAudio((a) => (a === "playing" ? "ended" : a));
     if (document.fullscreenElement) void document.exitFullscreen().catch(() => undefined);
@@ -109,10 +113,46 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
     return () => window.clearInterval(t);
   }, [phase, endAt, finish]);
 
-  /** Plays the listening script once, as in the real test: no pause or replay. */
+  // The volume slider works while the recording plays.
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = volume;
+  }, [volume]);
+
+  /** Plays each part's recording once, in order, as in the real test: no pause or replay. */
+  const playRecordings = useCallback(
+    (vol: number) => {
+      if (module.id !== "listening") return false;
+      const tracks = module.parts.map((p) => p.audio);
+      if (!tracks.every(Boolean)) return false;
+      audioRef.current?.pause();
+      const el = new Audio();
+      audioRef.current = el;
+      el.preload = "auto";
+      el.volume = vol;
+      const play = (i: number) => {
+        el.src = tracks[i]!;
+        // Follow the recording: show the part that is being played.
+        setPartIdx(i);
+        const first = partNumbers(module.parts[i])[0];
+        if (first) setCurrent(first);
+        el.onended = () => (i + 1 < tracks.length ? play(i + 1) : setAudio("ended"));
+        el.play().catch(() => setAudio("unavailable"));
+        // Warm the cache for the next part so it starts without a gap.
+        if (i + 1 < tracks.length) void fetch(tracks[i + 1]!).catch(() => undefined);
+      };
+      el.onerror = () => setAudio("unavailable");
+      setAudio("playing");
+      play(0);
+      return true;
+    },
+    [module],
+  );
+
+  /** Fallback when a part has no recording: the browser reads the script aloud. */
   const playAudio = useCallback(
     (vol: number) => {
       if (module.id !== "listening") return;
+      if (playRecordings(vol)) return;
       if (!("speechSynthesis" in window)) {
         setAudio("unavailable");
         return;
@@ -121,7 +161,7 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
       const synth = window.speechSynthesis;
       synth.cancel();
       const voices = synth.getVoices().filter((v) => v.lang.startsWith("en"));
-      const lines = module.parts.flatMap((p) => p.script ?? []);
+      const lines = module.parts.flatMap((p) => p.script ?? []).filter((l) => l.who !== "N");
       lines.forEach((line, i) => {
         const u = new SpeechSynthesisUtterance(line.text);
         u.lang = "en-GB";
@@ -134,7 +174,7 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
         synth.speak(u);
       });
     },
-    [module],
+    [module, playRecordings],
   );
 
   function start() {
@@ -212,14 +252,15 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
         <div className="mx-auto max-w-2xl px-5 py-12">
           <p className="text-xs font-bold uppercase tracking-[.14em] text-[color:var(--muted)]">{testTitle}</p>
           <h1 className="mt-2 text-3xl font-black tracking-[-.02em]">IELTS {MODULE_NAME[module.id]}</h1>
-          <p className="mt-1 text-sm font-bold text-[color:var(--muted)]">Time: {module.minutes} minutes · örnek bölüm</p>
+          <p className="mt-1 text-sm font-bold text-[color:var(--muted)]">Time: {module.minutes} minutes</p>
           <div className="mt-6 rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-6 text-sm leading-7">
             <p className="font-extrabold">INSTRUCTIONS TO CANDIDATES</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               {module.id === "listening" ? (
                 <>
-                  <li>The recording plays once only. You cannot pause or replay it.</li>
-                  <li>Answer the questions while you listen. Use the volume control in the top bar.</li>
+                  <li>There are four parts. The recording plays once only. You cannot pause or replay it.</li>
+                  <li>Before each part you have time to read the questions. Answer them while you listen. Use the volume control in the top bar.</li>
+                  <li>At the end you have two minutes to check your answers.</li>
                 </>
               ) : null}
               {module.id === "reading" ? <li>Read the text on the left and answer the questions on the right. Select text and press the highlighter to mark it.</li> : null}
@@ -227,9 +268,6 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
               <li>Use the question numbers at the bottom of the screen to move between questions. Flag a question with “Review” to come back to it.</li>
               <li>The test ends automatically when time runs out.</li>
             </ul>
-            <p className="mt-4 rounded-xl bg-[color:var(--brand-soft)] px-4 py-3 text-[13px] font-semibold">
-              Bu kısa bir örnektir: gerçek sınav ekranının işleyişini gösterir. Tam testler kütüphaneye eklendikçe açılacak.
-            </p>
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
             <button type="button" onClick={start} className="primary-button">Start test</button>
@@ -481,18 +519,19 @@ function Group({ group, answers, setAnswer, current, setCurrent }: GroupProps) {
       ) : (
         <ol className="mt-4 space-y-5">
           {group.items.map((it) => {
-            const options = group.kind === "tfng" ? [...TFNG] : (it as { options: string[] }).options;
+            const fixed = group.kind === "tfng" ? TFNG : group.kind === "ynng" ? YNNG : null;
+            const options = fixed ? [...fixed] : (it as { options: string[] }).options;
             return (
               <li key={it.n} id={`ielts-q-${it.n}`} className={`p-1 ${ring(it.n)}`}>
                 <p className="text-[15px] font-semibold"><span className="mr-2 font-black">{it.n}</span>{it.text}</p>
                 <div className="mt-2 grid gap-1.5" role="radiogroup" aria-label={`Question ${it.n}`}>
                   {options.map((opt, oi) => {
-                    const value = group.kind === "tfng" ? opt : LETTERS[oi];
+                    const value = fixed ? opt : LETTERS[oi];
                     const checked = answers[it.n] === value;
                     return (
                       <label key={oi} className={`flex cursor-pointer items-start gap-3 rounded-lg border px-3 py-2 text-sm ${checked ? "border-[color:var(--accent)] bg-[color:var(--brand-soft)]" : "border-[color:var(--border)]"}`}>
                         <input type="radio" name={`q-${it.n}`} checked={checked} onFocus={() => setCurrent(it.n)} onChange={() => { setCurrent(it.n); setAnswer(String(it.n), value); }} className="mt-0.5 accent-[color:var(--accent)]" />
-                        {group.kind === "tfng" ? <span className="font-bold">{opt}</span> : <span><span className="mr-1.5 font-black">{LETTERS[oi]}</span>{opt}</span>}
+                        {fixed ? <span className="font-bold">{opt}</span> : <span><span className="mr-1.5 font-black">{LETTERS[oi]}</span>{opt}</span>}
                       </label>
                     );
                   })}
@@ -559,7 +598,7 @@ function ScoreTable({ parts, answers }: { parts: QuestionPart[]; answers: Record
           <p className="text-3xl font-black">{bandFor(correct, rows.length).toFixed(1)}</p>
         </div>
       </div>
-      <p className="mt-2 text-xs text-[color:var(--muted)]">Band, bu kısa örnekteki doğru oranının 40 soruluk ölçeğe çevrilmesiyle yaklaşık hesaplanır.</p>
+      <p className="mt-2 text-xs text-[color:var(--muted)]">Band, doğru sayısının resmî 40 soruluk ölçekteki yaklaşık karşılığıdır; gerçek sınav puanı değildir.</p>
       <table className="mt-6 w-full overflow-hidden rounded-xl border border-[color:var(--border)] text-sm">
         <thead className="bg-[color:var(--surface)] text-left">
           <tr><th className="px-3 py-2">#</th><th className="px-3 py-2">Senin cevabın</th><th className="px-3 py-2">Doğru cevap</th><th className="px-3 py-2"></th></tr>
