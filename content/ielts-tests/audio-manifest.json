@@ -1,0 +1,22 @@
+{
+  "/audio/ielts/academic-1/listening-part1.mp3": {
+    "hash": "96f7e613a3292c72",
+    "chars": 6842,
+    "seconds": 345
+  },
+  "/audio/ielts/academic-1/listening-part2.mp3": {
+    "hash": "77ce63921538551b",
+    "chars": 5566,
+    "seconds": 347.9
+  },
+  "/audio/ielts/academic-1/listening-part3.mp3": {
+    "hash": "3d6f1bdafabf9833",
+    "chars": 7439,
+    "seconds": 382.9
+  },
+  "/audio/ielts/academic-1/listening-part4.mp3": {
+    "hash": "5d06724a233db07c",
+    "chars": 4418,
+    "seconds": 271.9
+  }
+}

@@ -44,7 +44,7 @@ export default function IeltsLibraryPage() {
                       <h3 className="mt-1 text-lg font-black text-[color:var(--foreground)]">Practice Test {no}</h3>
                     </div>
                     <span className={`rounded-full px-3 py-1 text-xs font-bold ${test ? "bg-[color:var(--brand-soft)] text-[color:var(--foreground)]" : "border border-[color:var(--border)] text-[color:var(--muted)]"}`}>
-                      {test ? "Örnek · ücretsiz" : "Yakında"}
+                      {test ? "Tam test · ücretsiz" : "Yakında"}
                     </span>
                   </div>
                   <ul className="mt-4 divide-y divide-[color:var(--border)] rounded-xl border border-[color:var(--border)]">
@@ -59,7 +59,7 @@ export default function IeltsLibraryPage() {
                             <div>
                               <p className="text-sm font-extrabold">{meta.name}</p>
                               <p className="text-xs text-[color:var(--muted)]">
-                                {test && mod ? `${mod.minutes} dk · ${id === "writing" ? `${questionCount(test, id)} görev` : `${questionCount(test, id)} soru`} (örnek)` : `${meta.fullMinutes} dk · ${meta.fullQuestions}`}
+                                {test && mod ? `${mod.minutes} dk · ${id === "writing" ? `${questionCount(test, id)} görev` : `${questionCount(test, id)} soru`}` : `${meta.fullMinutes} dk · ${meta.fullQuestions}`}
                               </p>
                             </div>
                           </div>

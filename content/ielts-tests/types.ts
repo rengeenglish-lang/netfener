@@ -20,20 +20,33 @@ export type QuestionGroup =
       items: { n: number; text: string; answer: "TRUE" | "FALSE" | "NOT GIVEN" }[];
     }
   | {
+      /** Writer's views: YES / NO / NOT GIVEN. */
+      kind: "ynng";
+      instruction: string;
+      items: { n: number; text: string; answer: "YES" | "NO" | "NOT GIVEN" }[];
+    }
+  | {
       kind: "choice";
       instruction: string;
       items: { n: number; text: string; options: string[]; answer: number }[];
     };
 
-export type Line = { who: "A" | "B"; text: string };
+export type Speaker = "A" | "B" | "C";
+
+/** One line of a listening recording. "N" is the exam narrator; `pause` is silence after the line, in seconds. */
+export type Line = { who: "N" | Speaker; text: string; pause?: number };
 
 export type QuestionPart = {
   title: string;
   intro: string;
   /** Reading only: the passage shown in the left pane. */
   passage?: { title: string; paragraphs: string[] };
-  /** Listening only: what the audio says (read aloud by the browser). */
+  /** Listening only: what the recording says. */
   script?: Line[];
+  /** Listening only: Azure neural voice for each speaker (the narrator voice is set by the audio script). */
+  cast?: Partial<Record<Speaker, string>>;
+  /** Listening only: MP3 under /public, built from `script` by scripts/build-ielts-audio.mts. */
+  audio?: string;
   groups: QuestionGroup[];
 };
 
