@@ -1,7 +1,9 @@
 import { ACADEMIC_1 } from "./academic-1";
+import { ACADEMIC_2 } from "./academic-2";
+import { GENERAL_1 } from "./general-1";
 import type { IeltsModuleId, IeltsTest, IeltsTrack } from "./types";
 
-export const IELTS_TESTS: IeltsTest[] = [ACADEMIC_1];
+export const IELTS_TESTS: IeltsTest[] = [ACADEMIC_1, ACADEMIC_2, GENERAL_1];
 
 /** Library slots: released tests are open, the rest are shown as coming soon. */
 export const IELTS_LIBRARY: { track: IeltsTrack; name: string; slots: number }[] = [
