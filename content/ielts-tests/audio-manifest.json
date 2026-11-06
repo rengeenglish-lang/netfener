@@ -2028,5 +2028,20 @@
     "hash": "237f10dd22612706",
     "chars": 222,
     "seconds": 3.9
+  },
+  "/audio/toefl/toefl-6/listening/s1-02.mp3": {
+    "hash": "202998a724fa47fe",
+    "chars": 210,
+    "seconds": 2.7
+  },
+  "/audio/toefl/toefl-6/listening/s1-03.mp3": {
+    "hash": "dfc6e45cd3b83168",
+    "chars": 242,
+    "seconds": 4.3
+  },
+  "/audio/toefl/toefl-6/listening/s1-04.mp3": {
+    "hash": "063e63cea04e0d65",
+    "chars": 230,
+    "seconds": 3.5
   }
 }
