@@ -198,5 +198,805 @@
     "hash": "e477c0afdb3e4275",
     "chars": 3889,
     "seconds": 232.8
+  },
+  "/audio/ielts/academic-1/speaking/p1-intro.mp3": {
+    "hash": "1dbc7fc12de1adae",
+    "chars": 332,
+    "seconds": 13.1
+  },
+  "/audio/ielts/academic-1/speaking/p1-q1.mp3": {
+    "hash": "d4950106492fa457",
+    "chars": 213,
+    "seconds": 3
+  },
+  "/audio/ielts/academic-1/speaking/p1-q2.mp3": {
+    "hash": "85d987ae811da8e1",
+    "chars": 230,
+    "seconds": 4.1
+  },
+  "/audio/ielts/academic-1/speaking/p1-q3.mp3": {
+    "hash": "4a5260248bdd4e97",
+    "chars": 230,
+    "seconds": 3.6
+  },
+  "/audio/ielts/academic-1/speaking/p1-q4.mp3": {
+    "hash": "81967816c735595c",
+    "chars": 253,
+    "seconds": 6.4
+  },
+  "/audio/ielts/academic-1/speaking/p1-q5.mp3": {
+    "hash": "8aa1a1548f789540",
+    "chars": 216,
+    "seconds": 3.2
+  },
+  "/audio/ielts/academic-1/speaking/p1-q6.mp3": {
+    "hash": "8f0d6a4f014c8957",
+    "chars": 234,
+    "seconds": 4.2
+  },
+  "/audio/ielts/academic-1/speaking/p2-intro.mp3": {
+    "hash": "d81b5eefa9198d7a",
+    "chars": 467,
+    "seconds": 19
+  },
+  "/audio/ielts/academic-1/speaking/p2-q1.mp3": {
+    "hash": "85c3c4693154d1fa",
+    "chars": 339,
+    "seconds": 12.7
+  },
+  "/audio/ielts/academic-1/speaking/p2-q2.mp3": {
+    "hash": "ae29200c87b710ff",
+    "chars": 222,
+    "seconds": 4.4
+  },
+  "/audio/ielts/academic-1/speaking/p3-intro.mp3": {
+    "hash": "82df120a243efbe6",
+    "chars": 362,
+    "seconds": 11.5
+  },
+  "/audio/ielts/academic-1/speaking/p3-q1.mp3": {
+    "hash": "ba418e9a2438160b",
+    "chars": 217,
+    "seconds": 3.5
+  },
+  "/audio/ielts/academic-1/speaking/p3-q2.mp3": {
+    "hash": "94d714834559de34",
+    "chars": 253,
+    "seconds": 4.4
+  },
+  "/audio/ielts/academic-1/speaking/p3-q3.mp3": {
+    "hash": "088a45503aa8fd84",
+    "chars": 225,
+    "seconds": 3.5
+  },
+  "/audio/ielts/academic-1/speaking/p3-q4.mp3": {
+    "hash": "3cd80120f91ffa23",
+    "chars": 279,
+    "seconds": 6.8
+  },
+  "/audio/ielts/academic-1/speaking/outro.mp3": {
+    "hash": "18de4fe0fdef6796",
+    "chars": 238,
+    "seconds": 5.4
+  },
+  "/audio/ielts/academic-2/speaking/p1-intro.mp3": {
+    "hash": "74d689209a05fcca",
+    "chars": 339,
+    "seconds": 12.5
+  },
+  "/audio/ielts/academic-2/speaking/p1-q1.mp3": {
+    "hash": "4fa20af82635a309",
+    "chars": 214,
+    "seconds": 3
+  },
+  "/audio/ielts/academic-2/speaking/p1-q2.mp3": {
+    "hash": "b00a677285fee65f",
+    "chars": 213,
+    "seconds": 2.7
+  },
+  "/audio/ielts/academic-2/speaking/p1-q3.mp3": {
+    "hash": "9e5e08f350872865",
+    "chars": 232,
+    "seconds": 3.9
+  },
+  "/audio/ielts/academic-2/speaking/p1-q4.mp3": {
+    "hash": "38bdd34c6a512def",
+    "chars": 253,
+    "seconds": 5.3
+  },
+  "/audio/ielts/academic-2/speaking/p1-q5.mp3": {
+    "hash": "49649af9cf25eaf7",
+    "chars": 215,
+    "seconds": 2.7
+  },
+  "/audio/ielts/academic-2/speaking/p1-q6.mp3": {
+    "hash": "d5e3200682ea6fb1",
+    "chars": 237,
+    "seconds": 4.1
+  },
+  "/audio/ielts/academic-2/speaking/p2-intro.mp3": {
+    "hash": "e2a8bdb2dec139d0",
+    "chars": 483,
+    "seconds": 18.8
+  },
+  "/audio/ielts/academic-2/speaking/p2-q1.mp3": {
+    "hash": "cfdd546a1059635a",
+    "chars": 340,
+    "seconds": 11.5
+  },
+  "/audio/ielts/academic-2/speaking/p2-q2.mp3": {
+    "hash": "3c030debabff9172",
+    "chars": 243,
+    "seconds": 5
+  },
+  "/audio/ielts/academic-2/speaking/p3-intro.mp3": {
+    "hash": "4529ca6d8ad4c9e2",
+    "chars": 371,
+    "seconds": 11.4
+  },
+  "/audio/ielts/academic-2/speaking/p3-q1.mp3": {
+    "hash": "690ce2e925be94e8",
+    "chars": 241,
+    "seconds": 4.2
+  },
+  "/audio/ielts/academic-2/speaking/p3-q2.mp3": {
+    "hash": "59b3bef4f0053fb9",
+    "chars": 230,
+    "seconds": 3.7
+  },
+  "/audio/ielts/academic-2/speaking/p3-q3.mp3": {
+    "hash": "bf20fae57f39d59a",
+    "chars": 225,
+    "seconds": 3.8
+  },
+  "/audio/ielts/academic-2/speaking/p3-q4.mp3": {
+    "hash": "d2bbd97304d5850d",
+    "chars": 231,
+    "seconds": 3.6
+  },
+  "/audio/ielts/academic-2/speaking/outro.mp3": {
+    "hash": "7474e8b47abb535a",
+    "chars": 239,
+    "seconds": 4.9
+  },
+  "/audio/ielts/academic-3/speaking/p1-intro.mp3": {
+    "hash": "cfe85550dee57414",
+    "chars": 333,
+    "seconds": 12.9
+  },
+  "/audio/ielts/academic-3/speaking/p1-q1.mp3": {
+    "hash": "a4d4531decca8f35",
+    "chars": 205,
+    "seconds": 2.6
+  },
+  "/audio/ielts/academic-3/speaking/p1-q2.mp3": {
+    "hash": "e4cea9e19ab57223",
+    "chars": 224,
+    "seconds": 3.5
+  },
+  "/audio/ielts/academic-3/speaking/p1-q3.mp3": {
+    "hash": "b48387b20937378c",
+    "chars": 236,
+    "seconds": 4.2
+  },
+  "/audio/ielts/academic-3/speaking/p1-q4.mp3": {
+    "hash": "c50dfff650eed337",
+    "chars": 233,
+    "seconds": 4.9
+  },
+  "/audio/ielts/academic-3/speaking/p1-q5.mp3": {
+    "hash": "dc0853d8965227b3",
+    "chars": 215,
+    "seconds": 3.1
+  },
+  "/audio/ielts/academic-3/speaking/p1-q6.mp3": {
+    "hash": "f81159df43c7fcbb",
+    "chars": 229,
+    "seconds": 3.8
+  },
+  "/audio/ielts/academic-3/speaking/p2-intro.mp3": {
+    "hash": "d0202392f6fe5ab2",
+    "chars": 481,
+    "seconds": 19.9
+  },
+  "/audio/ielts/academic-3/speaking/p2-q1.mp3": {
+    "hash": "611962a3607436a8",
+    "chars": 341,
+    "seconds": 12.9
+  },
+  "/audio/ielts/academic-3/speaking/p2-q2.mp3": {
+    "hash": "dc9bc8f4d55ca680",
+    "chars": 253,
+    "seconds": 5.6
+  },
+  "/audio/ielts/academic-3/speaking/p3-intro.mp3": {
+    "hash": "deacb0158bada1d1",
+    "chars": 376,
+    "seconds": 12.4
+  },
+  "/audio/ielts/academic-3/speaking/p3-q1.mp3": {
+    "hash": "7bf475ad1a3f9625",
+    "chars": 236,
+    "seconds": 4.4
+  },
+  "/audio/ielts/academic-3/speaking/p3-q2.mp3": {
+    "hash": "c576e8067f5dbcb7",
+    "chars": 248,
+    "seconds": 4.8
+  },
+  "/audio/ielts/academic-3/speaking/p3-q3.mp3": {
+    "hash": "c142043fbeaae5cb",
+    "chars": 235,
+    "seconds": 4.2
+  },
+  "/audio/ielts/academic-3/speaking/p3-q4.mp3": {
+    "hash": "bd9a6ac5b32436d3",
+    "chars": 251,
+    "seconds": 4.8
+  },
+  "/audio/ielts/academic-3/speaking/outro.mp3": {
+    "hash": "571a52ce9fc29d8d",
+    "chars": 240,
+    "seconds": 5.4
+  },
+  "/audio/ielts/academic-4/speaking/p1-intro.mp3": {
+    "hash": "8523910b58209a7f",
+    "chars": 337,
+    "seconds": 15.2
+  },
+  "/audio/ielts/academic-4/speaking/p1-q1.mp3": {
+    "hash": "d04347b2c4f9a247",
+    "chars": 218,
+    "seconds": 3.4
+  },
+  "/audio/ielts/academic-4/speaking/p1-q2.mp3": {
+    "hash": "ca32d6819304f5b8",
+    "chars": 250,
+    "seconds": 5.7
+  },
+  "/audio/ielts/academic-4/speaking/p1-q3.mp3": {
+    "hash": "ffec666baf7d26e2",
+    "chars": 249,
+    "seconds": 4.9
+  },
+  "/audio/ielts/academic-4/speaking/p1-q4.mp3": {
+    "hash": "7bf12071f78304c5",
+    "chars": 244,
+    "seconds": 6.1
+  },
+  "/audio/ielts/academic-4/speaking/p1-q5.mp3": {
+    "hash": "f66d862ebe36f360",
+    "chars": 202,
+    "seconds": 2.6
+  },
+  "/audio/ielts/academic-4/speaking/p1-q6.mp3": {
+    "hash": "c2022aecbbd0afda",
+    "chars": 236,
+    "seconds": 4.4
+  },
+  "/audio/ielts/academic-4/speaking/p2-intro.mp3": {
+    "hash": "3b18c6d2f0b81b22",
+    "chars": 470,
+    "seconds": 21.7
+  },
+  "/audio/ielts/academic-4/speaking/p2-q1.mp3": {
+    "hash": "38742d8b346c7a0d",
+    "chars": 340,
+    "seconds": 13.8
+  },
+  "/audio/ielts/academic-4/speaking/p2-q2.mp3": {
+    "hash": "0c8a79ea442f685b",
+    "chars": 237,
+    "seconds": 5.3
+  },
+  "/audio/ielts/academic-4/speaking/p3-intro.mp3": {
+    "hash": "ccf1139f3d4f62e4",
+    "chars": 349,
+    "seconds": 12.8
+  },
+  "/audio/ielts/academic-4/speaking/p3-q1.mp3": {
+    "hash": "9c590bdbc3abc403",
+    "chars": 216,
+    "seconds": 3.3
+  },
+  "/audio/ielts/academic-4/speaking/p3-q2.mp3": {
+    "hash": "f24fd049d3577dea",
+    "chars": 240,
+    "seconds": 4.6
+  },
+  "/audio/ielts/academic-4/speaking/p3-q3.mp3": {
+    "hash": "d076f12cd7d53513",
+    "chars": 219,
+    "seconds": 3.8
+  },
+  "/audio/ielts/academic-4/speaking/p3-q4.mp3": {
+    "hash": "9b46231b7733db82",
+    "chars": 228,
+    "seconds": 4.6
+  },
+  "/audio/ielts/academic-4/speaking/outro.mp3": {
+    "hash": "e7167205d8867a34",
+    "chars": 239,
+    "seconds": 5.8
+  },
+  "/audio/ielts/academic-5/speaking/p1-intro.mp3": {
+    "hash": "858ea6bf94bc7a33",
+    "chars": 327,
+    "seconds": 12.7
+  },
+  "/audio/ielts/academic-5/speaking/p1-q1.mp3": {
+    "hash": "75a030a74ac210d2",
+    "chars": 211,
+    "seconds": 2.7
+  },
+  "/audio/ielts/academic-5/speaking/p1-q2.mp3": {
+    "hash": "680bfa28134b58d6",
+    "chars": 223,
+    "seconds": 3.4
+  },
+  "/audio/ielts/academic-5/speaking/p1-q3.mp3": {
+    "hash": "2e9f9036d0f9ff96",
+    "chars": 225,
+    "seconds": 3.6
+  },
+  "/audio/ielts/academic-5/speaking/p1-q4.mp3": {
+    "hash": "16a0b48d349186a5",
+    "chars": 233,
+    "seconds": 5.2
+  },
+  "/audio/ielts/academic-5/speaking/p1-q5.mp3": {
+    "hash": "d7ca60d63dcd4d96",
+    "chars": 214,
+    "seconds": 3
+  },
+  "/audio/ielts/academic-5/speaking/p1-q6.mp3": {
+    "hash": "fd065bde5195f71f",
+    "chars": 225,
+    "seconds": 3.6
+  },
+  "/audio/ielts/academic-5/speaking/p2-intro.mp3": {
+    "hash": "d16c90c7e88e8194",
+    "chars": 469,
+    "seconds": 18.9
+  },
+  "/audio/ielts/academic-5/speaking/p2-q1.mp3": {
+    "hash": "184ea02a71faa478",
+    "chars": 341,
+    "seconds": 12.7
+  },
+  "/audio/ielts/academic-5/speaking/p2-q2.mp3": {
+    "hash": "00af9d4ee8f9c8e6",
+    "chars": 241,
+    "seconds": 5.4
+  },
+  "/audio/ielts/academic-5/speaking/p3-intro.mp3": {
+    "hash": "9a8d577bfe4430ea",
+    "chars": 355,
+    "seconds": 11.2
+  },
+  "/audio/ielts/academic-5/speaking/p3-q1.mp3": {
+    "hash": "de056e45e120bd55",
+    "chars": 241,
+    "seconds": 4.6
+  },
+  "/audio/ielts/academic-5/speaking/p3-q2.mp3": {
+    "hash": "8b6dd8d4a0ab0f80",
+    "chars": 241,
+    "seconds": 4.2
+  },
+  "/audio/ielts/academic-5/speaking/p3-q3.mp3": {
+    "hash": "0ee2181f5cd788bf",
+    "chars": 237,
+    "seconds": 4.4
+  },
+  "/audio/ielts/academic-5/speaking/p3-q4.mp3": {
+    "hash": "7f9795df2dbc110f",
+    "chars": 244,
+    "seconds": 4.2
+  },
+  "/audio/ielts/academic-5/speaking/outro.mp3": {
+    "hash": "51bb614608dd8728",
+    "chars": 240,
+    "seconds": 5.3
+  },
+  "/audio/ielts/academic-6/speaking/p1-intro.mp3": {
+    "hash": "e7c4d46a2db30ca1",
+    "chars": 328,
+    "seconds": 11.9
+  },
+  "/audio/ielts/academic-6/speaking/p1-q1.mp3": {
+    "hash": "d4696dadf07c7558",
+    "chars": 210,
+    "seconds": 2.5
+  },
+  "/audio/ielts/academic-6/speaking/p1-q2.mp3": {
+    "hash": "3b9a0598045d7ce3",
+    "chars": 224,
+    "seconds": 3.6
+  },
+  "/audio/ielts/academic-6/speaking/p1-q3.mp3": {
+    "hash": "e92acd0b78a4ce50",
+    "chars": 230,
+    "seconds": 3.4
+  },
+  "/audio/ielts/academic-6/speaking/p1-q4.mp3": {
+    "hash": "63320b3faf994142",
+    "chars": 251,
+    "seconds": 5.5
+  },
+  "/audio/ielts/academic-6/speaking/p1-q5.mp3": {
+    "hash": "a74390f22737ff25",
+    "chars": 222,
+    "seconds": 3.1
+  },
+  "/audio/ielts/academic-6/speaking/p1-q6.mp3": {
+    "hash": "327949eab01178d2",
+    "chars": 226,
+    "seconds": 3.4
+  },
+  "/audio/ielts/academic-6/speaking/p2-intro.mp3": {
+    "hash": "75092f4c7cec2c9a",
+    "chars": 479,
+    "seconds": 18.8
+  },
+  "/audio/ielts/academic-6/speaking/p2-q1.mp3": {
+    "hash": "c6525985b150896d",
+    "chars": 341,
+    "seconds": 11.6
+  },
+  "/audio/ielts/academic-6/speaking/p2-q2.mp3": {
+    "hash": "9decff4f9e942367",
+    "chars": 236,
+    "seconds": 4.5
+  },
+  "/audio/ielts/academic-6/speaking/p3-intro.mp3": {
+    "hash": "dbfb31af9e6cf41a",
+    "chars": 369,
+    "seconds": 11.7
+  },
+  "/audio/ielts/academic-6/speaking/p3-q1.mp3": {
+    "hash": "50b4313fe452286b",
+    "chars": 236,
+    "seconds": 3.9
+  },
+  "/audio/ielts/academic-6/speaking/p3-q2.mp3": {
+    "hash": "053c78e6646cfe6f",
+    "chars": 214,
+    "seconds": 3
+  },
+  "/audio/ielts/academic-6/speaking/p3-q3.mp3": {
+    "hash": "e9809b364d03016a",
+    "chars": 247,
+    "seconds": 4.5
+  },
+  "/audio/ielts/academic-6/speaking/p3-q4.mp3": {
+    "hash": "364ee87fcdfbfb8a",
+    "chars": 222,
+    "seconds": 3.5
+  },
+  "/audio/ielts/academic-6/speaking/outro.mp3": {
+    "hash": "edeba56efd01693d",
+    "chars": 240,
+    "seconds": 4.9
+  },
+  "/audio/ielts/general-1/speaking/p1-intro.mp3": {
+    "hash": "38532a01186586f4",
+    "chars": 336,
+    "seconds": 13.1
+  },
+  "/audio/ielts/general-1/speaking/p1-q1.mp3": {
+    "hash": "e70a7b40be8a8b1e",
+    "chars": 212,
+    "seconds": 2.8
+  },
+  "/audio/ielts/general-1/speaking/p1-q2.mp3": {
+    "hash": "c5df4d3edfe6b58c",
+    "chars": 216,
+    "seconds": 3
+  },
+  "/audio/ielts/general-1/speaking/p1-q3.mp3": {
+    "hash": "947156682d58312c",
+    "chars": 246,
+    "seconds": 4.3
+  },
+  "/audio/ielts/general-1/speaking/p1-q4.mp3": {
+    "hash": "0be5bbef51e994b3",
+    "chars": 245,
+    "seconds": 6
+  },
+  "/audio/ielts/general-1/speaking/p1-q5.mp3": {
+    "hash": "dbb6e0a5f506097e",
+    "chars": 231,
+    "seconds": 4.4
+  },
+  "/audio/ielts/general-1/speaking/p1-q6.mp3": {
+    "hash": "0efeb8f2a3dcf597",
+    "chars": 230,
+    "seconds": 3.9
+  },
+  "/audio/ielts/general-1/speaking/p2-intro.mp3": {
+    "hash": "2fbb66f10568ae4b",
+    "chars": 467,
+    "seconds": 19.2
+  },
+  "/audio/ielts/general-1/speaking/p2-q1.mp3": {
+    "hash": "a32c370d31a88c84",
+    "chars": 339,
+    "seconds": 12.8
+  },
+  "/audio/ielts/general-1/speaking/p2-q2.mp3": {
+    "hash": "c53a850cc692cb8d",
+    "chars": 236,
+    "seconds": 5.6
+  },
+  "/audio/ielts/general-1/speaking/p3-intro.mp3": {
+    "hash": "b29f7f91b3eff0db",
+    "chars": 361,
+    "seconds": 11.4
+  },
+  "/audio/ielts/general-1/speaking/p3-q1.mp3": {
+    "hash": "4db3be66fbca794e",
+    "chars": 222,
+    "seconds": 3.8
+  },
+  "/audio/ielts/general-1/speaking/p3-q2.mp3": {
+    "hash": "76d9333757f242cc",
+    "chars": 238,
+    "seconds": 4.4
+  },
+  "/audio/ielts/general-1/speaking/p3-q3.mp3": {
+    "hash": "f193d170280afe41",
+    "chars": 233,
+    "seconds": 3.9
+  },
+  "/audio/ielts/general-1/speaking/p3-q4.mp3": {
+    "hash": "fd4f2d9e89573185",
+    "chars": 224,
+    "seconds": 3.7
+  },
+  "/audio/ielts/general-1/speaking/outro.mp3": {
+    "hash": "4ce7052772513562",
+    "chars": 238,
+    "seconds": 5.3
+  },
+  "/audio/ielts/general-2/speaking/p1-intro.mp3": {
+    "hash": "7e796c0100c28822",
+    "chars": 329,
+    "seconds": 13.3
+  },
+  "/audio/ielts/general-2/speaking/p1-q1.mp3": {
+    "hash": "0af276e463e88ae6",
+    "chars": 226,
+    "seconds": 3.9
+  },
+  "/audio/ielts/general-2/speaking/p1-q2.mp3": {
+    "hash": "7770f6c3159f2e1d",
+    "chars": 222,
+    "seconds": 3.6
+  },
+  "/audio/ielts/general-2/speaking/p1-q3.mp3": {
+    "hash": "5c1f7e71dff0e027",
+    "chars": 226,
+    "seconds": 3.4
+  },
+  "/audio/ielts/general-2/speaking/p1-q4.mp3": {
+    "hash": "c7d23a510cb73738",
+    "chars": 234,
+    "seconds": 5.3
+  },
+  "/audio/ielts/general-2/speaking/p1-q5.mp3": {
+    "hash": "1c4bf88649de813e",
+    "chars": 205,
+    "seconds": 2.6
+  },
+  "/audio/ielts/general-2/speaking/p1-q6.mp3": {
+    "hash": "4bae3182b4ec2087",
+    "chars": 235,
+    "seconds": 4
+  },
+  "/audio/ielts/general-2/speaking/p2-intro.mp3": {
+    "hash": "90f3f09d3d0f4a84",
+    "chars": 479,
+    "seconds": 20.2
+  },
+  "/audio/ielts/general-2/speaking/p2-q1.mp3": {
+    "hash": "a54dbdae5cce81e4",
+    "chars": 341,
+    "seconds": 13.6
+  },
+  "/audio/ielts/general-2/speaking/p2-q2.mp3": {
+    "hash": "e3cefad6a6af64b1",
+    "chars": 235,
+    "seconds": 5.3
+  },
+  "/audio/ielts/general-2/speaking/p3-intro.mp3": {
+    "hash": "83f36b66cff99eb3",
+    "chars": 365,
+    "seconds": 12
+  },
+  "/audio/ielts/general-2/speaking/p3-q1.mp3": {
+    "hash": "23cd1d1be4e4d7f0",
+    "chars": 226,
+    "seconds": 3.9
+  },
+  "/audio/ielts/general-2/speaking/p3-q2.mp3": {
+    "hash": "4018b665d20f9e13",
+    "chars": 254,
+    "seconds": 5.6
+  },
+  "/audio/ielts/general-2/speaking/p3-q3.mp3": {
+    "hash": "3ab73d90f7bdce1f",
+    "chars": 229,
+    "seconds": 4.2
+  },
+  "/audio/ielts/general-2/speaking/p3-q4.mp3": {
+    "hash": "e4a28bf11b5e2d2f",
+    "chars": 243,
+    "seconds": 4.6
+  },
+  "/audio/ielts/general-2/speaking/outro.mp3": {
+    "hash": "4c03f071b44e9f4b",
+    "chars": 240,
+    "seconds": 5.6
+  },
+  "/audio/ielts/general-3/speaking/p1-intro.mp3": {
+    "hash": "ce0ddff1a856e49d",
+    "chars": 331,
+    "seconds": 13.4
+  },
+  "/audio/ielts/general-3/speaking/p1-q1.mp3": {
+    "hash": "d12389bcd9243127",
+    "chars": 208,
+    "seconds": 2.9
+  },
+  "/audio/ielts/general-3/speaking/p1-q2.mp3": {
+    "hash": "1f681964d0308160",
+    "chars": 222,
+    "seconds": 3.4
+  },
+  "/audio/ielts/general-3/speaking/p1-q3.mp3": {
+    "hash": "8d2cecd2e9cd3bab",
+    "chars": 224,
+    "seconds": 3.7
+  },
+  "/audio/ielts/general-3/speaking/p1-q4.mp3": {
+    "hash": "b10c8204f51159df",
+    "chars": 246,
+    "seconds": 5.8
+  },
+  "/audio/ielts/general-3/speaking/p1-q5.mp3": {
+    "hash": "780ac06fd06a5476",
+    "chars": 233,
+    "seconds": 4.1
+  },
+  "/audio/ielts/general-3/speaking/p1-q6.mp3": {
+    "hash": "5caa61c13031cbfd",
+    "chars": 219,
+    "seconds": 3.5
+  },
+  "/audio/ielts/general-3/speaking/p2-intro.mp3": {
+    "hash": "61b0943fb2c92b37",
+    "chars": 470,
+    "seconds": 19.8
+  },
+  "/audio/ielts/general-3/speaking/p2-q1.mp3": {
+    "hash": "1cca065ba80d1cf1",
+    "chars": 341,
+    "seconds": 13.1
+  },
+  "/audio/ielts/general-3/speaking/p2-q2.mp3": {
+    "hash": "002850f4fa839ae6",
+    "chars": 247,
+    "seconds": 5.8
+  },
+  "/audio/ielts/general-3/speaking/p3-intro.mp3": {
+    "hash": "59da7d0ee235ba35",
+    "chars": 363,
+    "seconds": 11.8
+  },
+  "/audio/ielts/general-3/speaking/p3-q1.mp3": {
+    "hash": "d9a87b0a834e4123",
+    "chars": 227,
+    "seconds": 3.9
+  },
+  "/audio/ielts/general-3/speaking/p3-q2.mp3": {
+    "hash": "184cc291a4d3ecc4",
+    "chars": 232,
+    "seconds": 3.8
+  },
+  "/audio/ielts/general-3/speaking/p3-q3.mp3": {
+    "hash": "2f03695fae127117",
+    "chars": 230,
+    "seconds": 3.6
+  },
+  "/audio/ielts/general-3/speaking/p3-q4.mp3": {
+    "hash": "11f93729af87b071",
+    "chars": 227,
+    "seconds": 3.7
+  },
+  "/audio/ielts/general-3/speaking/outro.mp3": {
+    "hash": "0bc7f91c57d1ce50",
+    "chars": 240,
+    "seconds": 5.4
+  },
+  "/audio/ielts/general-4/speaking/p1-intro.mp3": {
+    "hash": "acb5f94ecffd6d66",
+    "chars": 325,
+    "seconds": 11.9
+  },
+  "/audio/ielts/general-4/speaking/p1-q1.mp3": {
+    "hash": "f373cdf135ae19d0",
+    "chars": 204,
+    "seconds": 2.3
+  },
+  "/audio/ielts/general-4/speaking/p1-q2.mp3": {
+    "hash": "f6e45700df1f69a0",
+    "chars": 217,
+    "seconds": 2.8
+  },
+  "/audio/ielts/general-4/speaking/p1-q3.mp3": {
+    "hash": "9a60c8f170501949",
+    "chars": 230,
+    "seconds": 4
+  },
+  "/audio/ielts/general-4/speaking/p1-q4.mp3": {
+    "hash": "8871734b50e4a40e",
+    "chars": 250,
+    "seconds": 5.4
+  },
+  "/audio/ielts/general-4/speaking/p1-q5.mp3": {
+    "hash": "db5eff3c703301be",
+    "chars": 218,
+    "seconds": 3.2
+  },
+  "/audio/ielts/general-4/speaking/p1-q6.mp3": {
+    "hash": "0f76be53c5e6d1d7",
+    "chars": 248,
+    "seconds": 4.8
+  },
+  "/audio/ielts/general-4/speaking/p2-intro.mp3": {
+    "hash": "7e2401dbe46b5cad",
+    "chars": 475,
+    "seconds": 18.9
+  },
+  "/audio/ielts/general-4/speaking/p2-q1.mp3": {
+    "hash": "8347debd78cc9c34",
+    "chars": 338,
+    "seconds": 11.5
+  },
+  "/audio/ielts/general-4/speaking/p2-q2.mp3": {
+    "hash": "19512cd3b894df9e",
+    "chars": 230,
+    "seconds": 4.3
+  },
+  "/audio/ielts/general-4/speaking/p3-intro.mp3": {
+    "hash": "7061e70f8fd9ed57",
+    "chars": 356,
+    "seconds": 10.9
+  },
+  "/audio/ielts/general-4/speaking/p3-q1.mp3": {
+    "hash": "45a2355bdac6aeaf",
+    "chars": 239,
+    "seconds": 4.5
+  },
+  "/audio/ielts/general-4/speaking/p3-q2.mp3": {
+    "hash": "a10eb957fc43201e",
+    "chars": 235,
+    "seconds": 4.1
+  },
+  "/audio/ielts/general-4/speaking/p3-q3.mp3": {
+    "hash": "ba82d447e01d9548",
+    "chars": 241,
+    "seconds": 4.9
+  },
+  "/audio/ielts/general-4/speaking/p3-q4.mp3": {
+    "hash": "3297e5288ba3bf1f",
+    "chars": 230,
+    "seconds": 3.9
+  },
+  "/audio/ielts/general-4/speaking/outro.mp3": {
+    "hash": "81f3f0f1cde538ce",
+    "chars": 237,
+    "seconds": 4.9
   }
 }

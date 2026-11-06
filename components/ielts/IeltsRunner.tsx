@@ -3,9 +3,9 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Eye, EyeOff, Flag, Highlighter, Maximize2, Minimize2, Volume2, Wifi } from "lucide-react";
-import type { IeltsModule, QuestionGroup, QuestionPart, WritingTask } from "@/content/ielts-tests/types";
+import type { IeltsModule, QuestionGroup, QuestionPart, SpeakingModule, WritingTask } from "@/content/ielts-tests/types";
 
-type Props = { testTitle: string; module: IeltsModule; candidate: string; libraryHref: string };
+type Props = { testTitle: string; module: Exclude<IeltsModule, SpeakingModule>; candidate: string; libraryHref: string };
 type Phase = "intro" | "test" | "done";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
@@ -453,7 +453,7 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
   );
 }
 
-function TopBar({ candidate, children }: { candidate: string; children?: React.ReactNode }) {
+export function TopBar({ candidate, children }: { candidate: string; children?: React.ReactNode }) {
   return (
     <header className="flex min-h-12 flex-wrap items-center justify-between gap-3 bg-[#1d2733] px-4 py-2 text-white">
       <div className="flex items-center gap-3">
