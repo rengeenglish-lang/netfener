@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpen, Clock, Headphones, Lock, Mic2, Monitor, PenLine, type LucideIcon } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
+import { practiceTestAccess } from "@/server/services/practice-test-access.service";
+import { PRACTICE_PLANS_HREF, isFreePracticeTest } from "@/lib/practice-test-access";
 import { IELTS_LIBRARY, IELTS_TESTS, MODULE_META, ieltsTestHref, questionCount } from "@/content/ielts-tests/registry";
 import type { IeltsModuleId } from "@/content/ielts-tests/types";
 
@@ -14,7 +16,8 @@ export const metadata: Metadata = {
 const ICONS: Record<IeltsModuleId, LucideIcon> = { listening: Headphones, reading: BookOpen, writing: PenLine, speaking: Mic2 };
 const ORDER: IeltsModuleId[] = ["listening", "reading", "writing", "speaking"];
 
-export default function IeltsLibraryPage() {
+export default async function IeltsLibraryPage() {
+  const { gate } = await practiceTestAccess();
   return (
     <main className="inner-page mx-auto w-full max-w-[1320px] px-4 py-14 sm:px-6 lg:px-8">
       <PageHero>
@@ -36,6 +39,7 @@ export default function IeltsLibraryPage() {
           <div className="mt-4 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {Array.from({ length: shelf.slots }, (_, i) => i + 1).map((no) => {
               const test = IELTS_TESTS.find((t) => t.track === shelf.track && t.no === no);
+              const lock = test ? gate(no) : "open";
               return (
                 <article key={no} className={`panel flex flex-col ${test ? "" : "opacity-70"}`}>
                   <div className="flex items-start justify-between gap-3">
@@ -44,7 +48,7 @@ export default function IeltsLibraryPage() {
                       <h3 className="mt-1 text-lg font-black text-[color:var(--foreground)]">Practice Test {no}</h3>
                     </div>
                     <span className={`rounded-full px-3 py-1 text-xs font-bold ${test ? "bg-[color:var(--brand-soft)] text-[color:var(--foreground)]" : "border border-[color:var(--border)] text-[color:var(--muted)]"}`}>
-                      {test ? "Tam test · ücretsiz" : "Yakında"}
+                      {!test ? "Yakında" : isFreePracticeTest(no) ? "Ücretsiz önizleme" : lock === "open" ? "Tam test · planında" : "Premium"}
                     </span>
                   </div>
                   <ul className="mt-4 divide-y divide-[color:var(--border)] rounded-xl border border-[color:var(--border)]">
@@ -64,7 +68,11 @@ export default function IeltsLibraryPage() {
                             </div>
                           </div>
                           {test && mod ? (
-                            <Link href={ieltsTestHref(test.id, id)} className="primary-button !px-4 !py-1.5 text-sm">Başla</Link>
+                            lock === "open" ? (
+                          <Link href={ieltsTestHref(test.id, id)} className="primary-button !px-4 !py-1.5 text-sm">Başla</Link>
+                        ) : (
+                          <Link href={lock === "sign-in" ? `/sign-in?next=${encodeURIComponent(ieltsTestHref(test.id, id))}` : PRACTICE_PLANS_HREF} className="inline-flex items-center gap-1 rounded-full border border-[color:var(--border)] px-3 py-1.5 text-xs font-bold"><Lock size={13} aria-hidden="true" /> Kilidi aç</Link>
+                        )
                           ) : (
                             <span className="inline-flex items-center gap-1 text-xs font-bold text-[color:var(--muted)]"><Lock size={13} aria-hidden="true" /> Kapalı</span>
                           )}
