@@ -20,7 +20,7 @@ export default function IeltsLibraryPage() {
       <PageHero>
         <p className="eyebrow">IELTS</p>
         <h1 className="page-title">IELTS test kütüphanesi</h1>
-        <p className="page-copy">Bir modül seç ve başla.</p>
+        <p className="page-copy">Testler gerçek sınav arayüzü simülasyonuyla hazırlandı. Bir modül seç ve başla.</p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm font-bold">
           <span className="inline-flex items-center gap-2 rounded-2xl border border-[color:var(--border)] px-4 py-2"><Monitor size={16} aria-hidden="true" /> Bilgisayar ekranı</span>
           <span className="inline-flex items-center gap-2 rounded-2xl border border-[color:var(--border)] px-4 py-2"><Clock size={16} aria-hidden="true" /> Gerçek süre akışı</span>
