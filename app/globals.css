@@ -325,6 +325,56 @@ a {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
+/* Student sidebar: frosted-glass panels over a soft glow. Colours derive from --brand so every palette works. */
+.dashboard-sidebar--glass {
+  background-color: var(--brand);
+  background-image:
+    radial-gradient(260px 220px at 0% 0%, color-mix(in srgb, #fff 20%, transparent), transparent 70%),
+    radial-gradient(280px 260px at 100% 100%, color-mix(in srgb, var(--gold) 28%, transparent), transparent 70%);
+}
+.glass-card,
+.glass-today,
+.glass-item-active {
+  background: color-mix(in srgb, #fff 11%, transparent);
+  border: 0.5px solid color-mix(in srgb, #fff 26%, transparent);
+  box-shadow: inset 0 0.5px 0 color-mix(in srgb, #fff 30%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+.glass-card,
+.glass-today { border-radius: 16px; }
+.glass-today { padding: 11px 12px; transition: background 0.2s; }
+.glass-today:hover { background: color-mix(in srgb, #fff 18%, transparent); }
+.glass-item {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 12px;
+  border-radius: 14px;
+  padding: 8px 11px;
+  border: 0.5px solid transparent;
+  color: color-mix(in srgb, #fff 90%, transparent);
+  transition: background 0.2s, color 0.2s;
+}
+.glass-item:hover { background: color-mix(in srgb, #fff 10%, transparent); color: #fff; }
+.glass-item:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.glass-item-active { color: #fff; }
+.glass-item-small { min-height: 40px; border-radius: 12px; padding: 6px 11px; }
+.glass-desc { display: block; font-size: 12px; line-height: 1.3; color: color-mix(in srgb, #fff 68%, transparent); }
+.glass-button {
+  border-radius: 11px;
+  border: 0.5px solid color-mix(in srgb, #fff 35%, transparent);
+  background: color-mix(in srgb, #fff 20%, transparent);
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  transition: background 0.2s;
+}
+.glass-button:hover { background: color-mix(in srgb, #fff 30%, transparent); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-card, .glass-today, .glass-item-active { background: color-mix(in srgb, #fff 18%, var(--brand)); }
+}
 .dashboard-main {
   padding-bottom: 64px;
 }
