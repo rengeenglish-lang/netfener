@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAuthContext } from "@/server/auth/context";
+import { practiceTestAccess } from "@/server/services/practice-test-access.service";
+import { LockedPracticeTest } from "@/components/practice/LockedPracticeTest";
 import { ToeflRunner } from "@/components/toefl/ToeflRunner";
 import { IeltsSpeakingRunner } from "@/components/ielts/IeltsSpeakingRunner";
-import { SECTION_META, findToeflTest, toeflSpeakingModule } from "@/content/toefl-tests/registry";
+import { SECTION_META, findToeflTest, toeflSpeakingModule, toeflTestHref } from "@/content/toefl-tests/registry";
 import type { ToeflSectionId } from "@/content/toefl-tests/types";
 
 type Props = { params: Promise<{ testId: string; section: string }> };
@@ -21,9 +22,13 @@ export default async function ToeflTestPage({ params }: Props) {
   const test = findToeflTest(testId);
   if (!test || !isSection(section)) notFound();
   const library = "/toefl/testler";
+  const { user, gate } = await practiceTestAccess();
+  const lock = gate(test.no);
+  if (lock !== "open") {
+    return <LockedPracticeTest gate={lock} exam="TOEFL" testTitle={test.title} returnTo={toeflTestHref(test.id, section)} libraryHref={library} freeHref={toeflTestHref("toefl-1", section)} />;
+  }
 
   if (section === "speaking") {
-    const user = await getAuthContext();
     return (
       <IeltsSpeakingRunner
         brand="toefl"
