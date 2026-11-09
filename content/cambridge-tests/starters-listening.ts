@@ -18,7 +18,7 @@ const ex = (w: string, g: string, wFirst = true): Line[] =>
   wFirst ? [{ who: "W", text: w }, { who: "G", text: g, pause: GAP }] : [{ who: "G", text: g }, { who: "W", text: w, pause: GAP }];
 const q = (n: string, text: string): Line => ({ who: "N", text: `${n}. ${text}`, pause: 0.6 });
 
-const P1 = "Listen and look. Match each name to a person in the picture. There are two extra people.";
+const P1 = "Listen and draw lines. Tap a name, then tap the person in the picture. There are two extra people.";
 const P2 = "Listen and write a name or a number.";
 const P3 = "Listen and choose the right picture.";
 const P4 = "Listen and colour. Choose the object and the colour.";
