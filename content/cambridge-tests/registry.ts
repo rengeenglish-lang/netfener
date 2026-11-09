@@ -4,8 +4,13 @@ import { MOVERS_1 } from "./movers-1";
 import { FLYERS_1 } from "./flyers-1";
 import { KEY_1 } from "./key-1";
 import { PRELIMINARY_1 } from "./preliminary-1";
+import { STARTERS_2 } from "./starters-2";
+import { MOVERS_2 } from "./movers-2";
+import { FLYERS_2 } from "./flyers-2";
+import { KEY_2 } from "./key-2";
+import { PRELIMINARY_2 } from "./preliminary-2";
 
-export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1];
+export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2];
 
 /** Five tests are planned per level; slots not yet released are shown as coming soon. */
 export const CAMBRIDGE_SLOTS = 5;
