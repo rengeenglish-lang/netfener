@@ -48,6 +48,7 @@ export function Footer() {
             {PLATFORM_EXAMS.map((exam) => (
               <li key={exam.slug}><Link href={`/exams/${exam.slug}`} className="transition hover:text-white">{exam.name}</Link></li>
             ))}
+            <li><Link href="/cambridge/testler" className="transition hover:text-white">Cambridge (YLE, KET, PET)</Link></li>
           </ul>
         </div>
         <div>

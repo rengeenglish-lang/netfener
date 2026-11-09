@@ -71,6 +71,10 @@ export async function Navbar() {
                   </div>
                 </div>)}
               </div>
+              <Link href="/cambridge/testler" className="mx-2 mb-2 flex items-center justify-between rounded-2xl bg-amber-50 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-amber-100">
+                <span><span className="font-bold text-amber-700">Cambridge</span> · Starters, Movers, Flyers, A2 Key, B1 Preliminary</span>
+                <span aria-hidden="true">→</span>
+              </Link>
             </div>
           </div>
           {NAV_LINKS.filter((link) => link.href !== "/exams").map((link) => (
@@ -157,7 +161,7 @@ export async function Navbar() {
             isSignedIn={Boolean(session?.user)}
             cartCount={cartCount}
             favoriteCount={favoriteCount}
-            examLinks={PLATFORM_EXAMS.map((exam) => ({ href: `/exams/${exam.slug}`, label: exam.name }))}
+            examLinks={[...PLATFORM_EXAMS.map((exam) => ({ href: `/exams/${exam.slug}`, label: exam.name })), { href: "/cambridge/testler", label: "Cambridge (YLE, KET, PET)" }]}
             yokdilLinks={YOKDIL_LINKS}
             resourceLinks={RESOURCE_LINKS}
           />
