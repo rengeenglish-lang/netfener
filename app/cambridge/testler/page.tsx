@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, Clock, PenLine, Sparkles } from "lucide-react";
+import { BookOpen, Clock, Headphones, PenLine, Sparkles } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { CAMBRIDGE_SLOTS, CAMBRIDGE_TESTS, LEVELS, cambridgeTestHref, taskItems } from "@/content/cambridge-tests/registry";
 
@@ -18,7 +18,7 @@ export default function CambridgeLibraryPage() {
         <h1 className="page-title">Cambridge sınavları test kütüphanesi</h1>
         <p className="page-copy">
           Young Learners (Starters, Movers, Flyers) ile A2 Key ve B1 Preliminary için gerçek sınav bölümlerini izleyen pratik testler. Resimli kartlar, renkli sahneler ve
-          anında geri bildirim: çocuklar doğru cevabı hemen görür, büyükler Cambridge ölçeğinde tahmini puan alır. Listening ve Speaking bölümleri yakında eklenecek.
+          anında geri bildirim: çocuklar doğru cevabı hemen görür, büyükler Cambridge ölçeğinde tahmini puan alır. Pre A1 Starters testlerinde Listening de var; diğer seviyelerin Listening ve Speaking bölümleri yakında eklenecek.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm font-bold">
           <span className="inline-flex items-center gap-2 rounded-2xl border border-[color:var(--border)] px-4 py-2"><Sparkles size={16} aria-hidden="true" /> Resimli görevler</span>
@@ -52,7 +52,7 @@ export default function CambridgeLibraryPage() {
                           const items = paper.parts.reduce((n, p) => n + taskItems(p.task), 0);
                           return (
                             <li key={paper.id} className="flex flex-wrap items-center gap-x-2">
-                              {paper.id === "writing" ? <PenLine size={15} aria-hidden="true" /> : <BookOpen size={15} aria-hidden="true" />}
+                              {paper.id === "writing" ? <PenLine size={15} aria-hidden="true" /> : paper.id === "listening" ? <Headphones size={15} aria-hidden="true" /> : <BookOpen size={15} aria-hidden="true" />}
                               <span className="font-bold">{paper.name}</span>
                               <span className="text-[color:var(--muted)]">· {paper.minutes} min{items ? ` · ${items} Q` : ""}</span>
                             </li>

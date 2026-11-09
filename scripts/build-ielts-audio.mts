@@ -1,9 +1,10 @@
 /**
- * Builds the MP3 recordings for the IELTS and TOEFL practice tests with Azure Speech (neural TTS).
+ * Builds the MP3 recordings for the IELTS, TOEFL and Cambridge (Pre A1 Starters) practice tests with Azure Speech (neural TTS).
  *
  *   npx tsx scripts/build-ielts-audio.mts            # build parts whose script changed
  *   npx tsx scripts/build-ielts-audio.mts --dry      # characters the next build would use, no API calls
  *   npx tsx scripts/build-ielts-audio.mts --force    # rebuild everything
+ *   npx tsx scripts/build-ielts-audio.mts --only starters-   # only jobs whose label starts with this
  *
  * Listening: each part with an `audio` path is turned into one SSML document: the narrator (British) reads the
  * exam instructions, `pause` becomes real silence, and each speaker uses the voice in `cast`.
@@ -20,9 +21,11 @@ import { dirname, join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { IELTS_TESTS } from "../content/ielts-tests/registry";
 import { TOEFL_TESTS, toeflSpeakingModule } from "../content/toefl-tests/registry";
-import type { Line, SpeakingModule } from "../content/ielts-tests/types";
+import { CAMBRIDGE_TESTS } from "../content/cambridge-tests/registry";
+import type { SpeakingModule } from "../content/ielts-tests/types";
 
 /** Anything read from a script with a cast: an IELTS listening part or a TOEFL listening set. */
+type Line = { who: string; text: string; pause?: number };
 type Scripted = { title: string; cast?: Partial<Record<string, string>>; script?: Line[] };
 
 const REGION = process.env.AZURE_SPEECH_REGION ?? "swedencentral";
@@ -33,7 +36,9 @@ const ROOT = join(import.meta.dirname, "..");
 const MANIFEST = join(ROOT, "content/ielts-tests/audio-manifest.json");
 
 type Entry = { hash: string; chars: number; seconds: number };
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv);
+const only = argv.includes("--only") ? argv[argv.indexOf("--only") + 1] : undefined;
 const dry = args.has("--dry");
 const force = args.has("--force");
 
@@ -102,6 +107,7 @@ function examinerSsml(voice: string, text: string) {
 type Job = { label: string; audio: string; ssml: string };
 
 const TOEFL_NARRATOR = "en-US-BrianNeural";
+const CAMBRIDGE_NARRATOR = "en-GB-SoniaNeural";
 
 /** Speaking: every examiner line (part intros, questions, closing) is its own short clip. */
 function speakingJobs(out: Job[], testId: string, m: SpeakingModule) {
@@ -137,7 +143,15 @@ function jobs(): Job[] {
     }
     speakingJobs(out, test.id, toeflSpeakingModule(test));
   }
-  return out;
+  // Cambridge listening: a gentle British narrator, as in the young learners' exams.
+  for (const test of CAMBRIDGE_TESTS) {
+    for (const paper of test.papers.filter((p) => p.id === "listening")) {
+      for (const part of paper.parts) {
+        if (part.audio && part.script?.length) out.push({ label: `${test.id} Listening ${part.title}`, audio: part.audio, ssml: partSsml(part, CAMBRIDGE_NARRATOR) });
+      }
+    }
+  }
+  return only ? out.filter((j) => j.label.startsWith(only)) : out;
 }
 
 // The free (F0) tier allows 20 requests a minute, so requests are spaced out.

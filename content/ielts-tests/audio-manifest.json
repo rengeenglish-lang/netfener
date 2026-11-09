@@ -3048,5 +3048,105 @@
     "hash": "f04be6a776dc7f80",
     "chars": 222,
     "seconds": 2.7
+  },
+  "/audio/cambridge/starters-1/part-1.mp3": {
+    "hash": "7fca129d57d4fc35",
+    "chars": 1509,
+    "seconds": 59.3
+  },
+  "/audio/cambridge/starters-1/part-2.mp3": {
+    "hash": "7992b6d2e994bf56",
+    "chars": 1729,
+    "seconds": 59.1
+  },
+  "/audio/cambridge/starters-1/part-3.mp3": {
+    "hash": "bccde1a716239622",
+    "chars": 2133,
+    "seconds": 82.2
+  },
+  "/audio/cambridge/starters-1/part-4.mp3": {
+    "hash": "8e74805e05f7684b",
+    "chars": 1554,
+    "seconds": 68.7
+  },
+  "/audio/cambridge/starters-2/part-1.mp3": {
+    "hash": "4a95fb13c266915d",
+    "chars": 1479,
+    "seconds": 57.3
+  },
+  "/audio/cambridge/starters-2/part-2.mp3": {
+    "hash": "6011af7c1b49a4d3",
+    "chars": 1581,
+    "seconds": 56.2
+  },
+  "/audio/cambridge/starters-2/part-3.mp3": {
+    "hash": "3b99131cd9cb935e",
+    "chars": 2126,
+    "seconds": 81.4
+  },
+  "/audio/cambridge/starters-2/part-4.mp3": {
+    "hash": "48d79a8ace373deb",
+    "chars": 1513,
+    "seconds": 66.3
+  },
+  "/audio/cambridge/starters-3/part-1.mp3": {
+    "hash": "ad8299149cccf812",
+    "chars": 1494,
+    "seconds": 58.2
+  },
+  "/audio/cambridge/starters-3/part-2.mp3": {
+    "hash": "930de0b18d457143",
+    "chars": 1599,
+    "seconds": 55.7
+  },
+  "/audio/cambridge/starters-3/part-3.mp3": {
+    "hash": "1418969c776b30d7",
+    "chars": 2106,
+    "seconds": 78.3
+  },
+  "/audio/cambridge/starters-3/part-4.mp3": {
+    "hash": "489b8e960e8ad9cb",
+    "chars": 1492,
+    "seconds": 63.2
+  },
+  "/audio/cambridge/starters-4/part-1.mp3": {
+    "hash": "faae8fcf5a4d32e4",
+    "chars": 1511,
+    "seconds": 59.2
+  },
+  "/audio/cambridge/starters-4/part-2.mp3": {
+    "hash": "596b13c01f0582e3",
+    "chars": 1575,
+    "seconds": 55.3
+  },
+  "/audio/cambridge/starters-4/part-3.mp3": {
+    "hash": "56d5f13bde005e3b",
+    "chars": 2056,
+    "seconds": 77.8
+  },
+  "/audio/cambridge/starters-4/part-4.mp3": {
+    "hash": "252e1062ffb0a373",
+    "chars": 1505,
+    "seconds": 64.9
+  },
+  "/audio/cambridge/starters-5/part-1.mp3": {
+    "hash": "2e06a6a3c7a48f28",
+    "chars": 1485,
+    "seconds": 58.1
+  },
+  "/audio/cambridge/starters-5/part-2.mp3": {
+    "hash": "de02c1efba4b06f4",
+    "chars": 1642,
+    "seconds": 58.2
+  },
+  "/audio/cambridge/starters-5/part-3.mp3": {
+    "hash": "885b6f4d763bc07d",
+    "chars": 2112,
+    "seconds": 78.2
+  },
+  "/audio/cambridge/starters-5/part-4.mp3": {
+    "hash": "dc4546244ca796a3",
+    "chars": 1488,
+    "seconds": 64.3
   }
 }

@@ -1,7 +1,7 @@
 /**
  * Cambridge English practice tests (Pre A1 Starters, A1 Movers, A2 Flyers, A2 Key, B1 Preliminary).
  * Original Netfener content: only the papers' task types and order follow the real exams.
- * Listening and Speaking are not included yet (they need recorded audio).
+ * Listening is built for Pre A1 Starters (Azure neural voices); Speaking is not included yet.
  */
 
 export type CambridgeLevel = "starters" | "movers" | "flyers" | "key" | "preliminary";
@@ -10,7 +10,7 @@ export type CambridgeLevel = "starters" | "movers" | "flyers" | "key" | "prelimi
 export type Pic = { e: string; label?: string };
 
 /** A scene: emoji placed on a background at x/y percentages (0–100). */
-export type Scene = { bg: "park" | "room" | "beach" | "kitchen" | "classroom" | "street" | "garden" | "farm"; items: { e: string; x: number; y: number; size?: number }[] };
+export type Scene = { bg: "park" | "room" | "beach" | "kitchen" | "classroom" | "street" | "garden" | "farm"; items: { e: string; x: number; y: number; size?: number; /** letter shown on the item, for listening tasks */ tag?: string }[] };
 
 /** Starters 1: a picture and a sentence; is the sentence right? */
 export type PictureYesNo = { kind: "picture-yesno"; instruction: string; items: { pic: Pic; text: string; answer: boolean }[] };
@@ -93,11 +93,30 @@ export type Writing = {
   sample: string;
 };
 
-export type Task = PictureYesNo | SceneYesNo | Spell | WordBank | ShortAnswer | Definitions | Dialogue | Mcq | ClozeMc | OpenCloze | Matching | GappedText | Writing;
+/** Starters Listening 1: listen and match each name to a person in the picture (by tag). */
+export type ListenLines = { kind: "listen-lines"; instruction: string; scene: Scene; items: { name: string; answer: string }[] };
 
-export type Part = { title: string; task: Task };
+/** Starters Listening 3: listen and choose the right picture of three. */
+export type ListenTick = { kind: "listen-tick"; instruction: string; items: { question: string; pics: Pic[]; answer: number }[] };
+
+/** Starters Listening 4: listen and colour; each instruction names one tagged object and a colour. */
+export type ListenColour = { kind: "listen-colour"; instruction: string; scene: Scene; colours: string[]; items: { answer: string; colour: string }[] };
+
+export type Task = ListenLines | ListenTick | ListenColour | PictureYesNo | SceneYesNo | Spell | WordBank | ShortAnswer | Definitions | Dialogue | Mcq | ClozeMc | OpenCloze | Matching | GappedText | Writing;
+
+/** One line of a listening script: N is the narrator; other speakers are voiced through `cast`. */
+export type Line = { who: string; text: string; pause?: number };
+
+export type Part = {
+  title: string;
+  task: Task;
+  /** Listening only: the MP3 under /public, its script and the voice for each speaker. */
+  audio?: string;
+  cast?: Partial<Record<string, string>>;
+  script?: Line[];
+};
 
 /** One paper: Reading & Writing for the young learners and Key; Reading or Writing for Preliminary. */
-export type Paper = { id: "reading-writing" | "reading" | "writing"; name: string; minutes: number; parts: Part[] };
+export type Paper = { id: "reading-writing" | "reading" | "writing" | "listening"; name: string; minutes: number; parts: Part[] };
 
 export type CambridgeTest = { id: string; level: CambridgeLevel; no: number; title: string; papers: Paper[] };
