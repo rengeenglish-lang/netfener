@@ -14,8 +14,18 @@ import { MOVERS_3 } from "./movers-3";
 import { FLYERS_3 } from "./flyers-3";
 import { KEY_3 } from "./key-3";
 import { PRELIMINARY_3 } from "./preliminary-3";
+import { STARTERS_4 } from "./starters-4";
+import { MOVERS_4 } from "./movers-4";
+import { FLYERS_4 } from "./flyers-4";
+import { KEY_4 } from "./key-4";
+import { PRELIMINARY_4 } from "./preliminary-4";
+import { STARTERS_5 } from "./starters-5";
+import { MOVERS_5 } from "./movers-5";
+import { FLYERS_5 } from "./flyers-5";
+import { KEY_5 } from "./key-5";
+import { PRELIMINARY_5 } from "./preliminary-5";
 
-export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2, STARTERS_3, MOVERS_3, FLYERS_3, KEY_3, PRELIMINARY_3];
+export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2, STARTERS_3, MOVERS_3, FLYERS_3, KEY_3, PRELIMINARY_3, STARTERS_4, MOVERS_4, FLYERS_4, KEY_4, PRELIMINARY_4, STARTERS_5, MOVERS_5, FLYERS_5, KEY_5, PRELIMINARY_5];
 
 /** Five tests are planned per level; slots not yet released are shown as coming soon. */
 export const CAMBRIDGE_SLOTS = 5;
