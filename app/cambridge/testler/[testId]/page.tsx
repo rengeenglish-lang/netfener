@@ -15,7 +15,7 @@ export default async function CambridgeTestPage({ params, searchParams }: Props)
   const test = findCambridgeTest(testId);
   if (!test) notFound();
   const paper = test.papers.find((p) => p.id === paperId) ?? test.papers[0];
-  const other = test.papers.find((p) => p.id !== paper.id);
+  const others = test.papers.filter((p) => p.id !== paper.id).map((p) => ({ href: cambridgeTestHref(test.id, p.id), name: p.name }));
   const meta = levelMeta(test.level);
   return (
     <CambridgeRunner
@@ -26,8 +26,7 @@ export default async function CambridgeTestPage({ params, searchParams }: Props)
       colour={meta.colour}
       paper={paper}
       libraryHref={`/cambridge/testler#${test.level}`}
-      otherPaperHref={other ? cambridgeTestHref(test.id, other.id) : undefined}
-      otherPaperName={other?.name}
+      otherPapers={others}
     />
   );
 }

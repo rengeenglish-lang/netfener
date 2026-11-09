@@ -4,7 +4,7 @@ import { CAMBRIDGE_TESTS, CAMBRIDGE_SLOTS, LEVELS, gapNumbers, normalise, scaleE
 import type { Task } from "@/content/cambridge-tests/types";
 
 const PARTS: Record<string, Record<string, number>> = {
-  starters: { "reading-writing": 5 },
+  starters: { "reading-writing": 5, listening: 4 },
   movers: { "reading-writing": 6 },
   flyers: { "reading-writing": 7 },
   key: { "reading-writing": 7 },
@@ -30,7 +30,35 @@ function checkTask(t: Task, tag: string) {
     assert.ok(distinct(opts), `${tag} ${what}: duplicate options`);
     assert.ok(answer >= 0 && answer < opts.length, `${tag} ${what}: answer index`);
   };
+  const tagsOf = (items: { tag?: string }[]) => items.flatMap((i) => (i.tag ? [i.tag] : []));
   switch (t.kind) {
+    case "listen-lines": {
+      const tags = tagsOf(t.scene.items);
+      assert.equal(new Set(tags).size, tags.length, `${tag}: tags unique`);
+      assert.ok(distinct(t.items.map((i) => i.answer)) && distinct(t.items.map((i) => i.name)), `${tag}: names and answers distinct`);
+      for (const i of t.items) assert.ok(tags.includes(i.answer), `${tag}: ${i.name} → ${i.answer} is a tagged person`);
+      assert.ok(tags.length >= t.items.length + 2, `${tag}: two extra people`);
+      break;
+    }
+    case "listen-tick":
+      t.items.forEach((i, k) => {
+        assert.equal(i.pics.length, 3, `${tag} #${k + 1}: three pictures`);
+        assert.ok(distinct(i.pics.map((pic) => pic.e)), `${tag} #${k + 1}: different pictures`);
+        assert.ok(i.answer >= 0 && i.answer < 3, `${tag} #${k + 1}: answer index`);
+      });
+      assert.ok(new Set(t.items.map((i) => i.answer)).size >= 2, `${tag}: answers in different positions`);
+      break;
+    case "listen-colour": {
+      const tags = tagsOf(t.scene.items);
+      assert.equal(new Set(tags).size, tags.length, `${tag}: tags unique`);
+      assert.ok(distinct(t.items.map((i) => i.answer)) && distinct(t.items.map((i) => i.colour)), `${tag}: objects and colours distinct`);
+      for (const i of t.items) {
+        assert.ok(tags.includes(i.answer), `${tag}: ${i.answer} is a tagged object`);
+        assert.ok(t.colours.includes(i.colour), `${tag}: ${i.colour} is offered`);
+      }
+      assert.ok(tags.length > t.items.length, `${tag}: extra objects`);
+      break;
+    }
     case "picture-yesno":
     case "scene-yesno":
       assert.ok(t.items.length >= 5, tag);
@@ -106,7 +134,10 @@ test("results: shields for young learners, scale estimates for Key and Prelimina
 /** Official Cambridge English Reading & Writing layouts: [task kind, scored items, options per question]. */
 type Spec = [Task["kind"], number, number?];
 const FORMAT: Record<string, Record<string, Spec[]>> = {
-  starters: { "reading-writing": [["picture-yesno", 5], ["scene-yesno", 5], ["spell", 5], ["word-bank", 5], ["short-answer", 5]] },
+  starters: {
+    "reading-writing": [["picture-yesno", 5], ["scene-yesno", 5], ["spell", 5], ["word-bank", 5], ["short-answer", 5]],
+    listening: [["listen-lines", 5], ["short-answer", 5], ["listen-tick", 5], ["listen-colour", 5]],
+  },
   movers: { "reading-writing": [["definitions", 5], ["dialogue", 6, 3], ["word-bank", 6], ["cloze-mc", 5, 3], ["short-answer", 7], ["writing", 0]] },
   flyers: { "reading-writing": [["definitions", 10], ["dialogue", 5], ["word-bank", 6], ["cloze-mc", 10, 3], ["short-answer", 7], ["open-cloze", 5], ["writing", 0]] },
   key: { "reading-writing": [["mcq", 6, 3], ["matching", 7, 3], ["mcq", 5, 3], ["cloze-mc", 6, 3], ["open-cloze", 6], ["writing", 0], ["writing", 0]] },
@@ -144,6 +175,27 @@ test("every test follows the official Cambridge part layout, question counts and
         assert.equal(taskItems(part.task), items, `${tag}: questions`);
         if (opts) for (const n of optionCounts(part.task)) assert.equal(n, opts, `${tag}: options`);
       });
+    }
+  }
+});
+
+const spoken = (part: { script?: { text: string }[] }) => normalise((part.script ?? []).map((l) => l.text).join(" ")).replace(/[^a-z0-9 ]/g, " ");
+
+test("listening parts have audio, a voiced script, and every answer is actually said", () => {
+  for (const ct of CAMBRIDGE_TESTS) {
+    for (const paper of ct.papers.filter((p) => p.id === "listening")) {
+      for (const part of paper.parts) {
+        const tag = `${ct.id} listening ${part.title}`;
+        assert.match(part.audio ?? "", new RegExp(`^/audio/cambridge/${ct.id}/part-\\d\\.mp3$`), `${tag}: audio path`);
+        assert.ok(part.script?.length, `${tag}: script`);
+        for (const l of part.script ?? []) assert.ok(l.who === "N" || part.cast?.[l.who], `${tag}: voice for ${l.who}`);
+        const said = ` ${spoken(part)} `;
+        const t = part.task;
+        const has = (w: string) => said.includes(` ${normalise(w)} `);
+        if (t.kind === "listen-lines") for (const i of t.items) assert.ok(has(i.name), `${tag}: '${i.name}' is said`);
+        if (t.kind === "listen-colour") for (const i of t.items) assert.ok(has(i.colour), `${tag}: '${i.colour}' is said`);
+        if (t.kind === "short-answer") for (const i of t.items) assert.ok(i.answers.some(has), `${tag}: an answer to '${i.question}' is said`);
+      }
     }
   }
 });

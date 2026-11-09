@@ -37,15 +37,45 @@ export function PicCard({ pic, i = 0, size = "lg" }: { pic: Pic; i?: number; siz
   );
 }
 
-/** A simple picture made of emoji placed on a coloured background. */
-export function SceneView({ scene, label }: { scene: Scene; label: string }) {
+/** Colour names used in the colouring task, as CSS colours. */
+export const COLOUR_CSS: Record<string, string> = {
+  red: "#ef4444",
+  blue: "#3b82f6",
+  green: "#22c55e",
+  yellow: "#facc15",
+  orange: "#f97316",
+  purple: "#a855f7",
+  pink: "#ec4899",
+  brown: "#92400e",
+  grey: "#6b7280",
+  black: "#111827",
+};
+
+/**
+ * A simple picture made of emoji placed on a coloured background.
+ * Tagged items (listening tasks) get a letter badge; `marks` rings an item in the colour the learner chose.
+ */
+export function SceneView({ scene, label, marks }: { scene: Scene; label: string; marks?: Record<string, string> }) {
   return (
     <div role="img" aria-label={label} className="relative mx-auto aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-3xl border-4 border-white shadow-md" style={{ background: SCENE_BG[scene.bg] }}>
-      {scene.items.map((it, k) => (
-        <span key={k} className="absolute -translate-x-1/2 -translate-y-1/2 leading-none" style={{ left: `${it.x}%`, top: `${it.y}%`, fontSize: `${it.size ?? 2}rem` }} aria-hidden="true">
-          {it.e}
-        </span>
-      ))}
+      {scene.items.map((it, k) => {
+        const ring = it.tag && marks?.[it.tag] ? COLOUR_CSS[marks[it.tag]] : undefined;
+        return (
+          <span
+            key={k}
+            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full leading-none"
+            style={{ left: `${it.x}%`, top: `${it.y}%`, fontSize: `${it.size ?? 2}rem`, boxShadow: ring ? `0 0 0 0.12em ${ring}, 0 0 0 0.2em white` : undefined, background: ring ? `${ring}55` : undefined }}
+            aria-hidden="true"
+          >
+            {it.e}
+            {it.tag ? (
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-slate-800 text-[11px] font-black text-white" style={{ fontSize: "11px" }}>
+                {it.tag}
+              </span>
+            ) : null}
+          </span>
+        );
+      })}
     </div>
   );
 }

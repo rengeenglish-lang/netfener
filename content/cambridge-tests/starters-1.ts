@@ -1,4 +1,5 @@
 import type { CambridgeTest } from "./types";
+import { STARTERS_LISTENING } from "./starters-listening";
 
 /** Pre A1 Starters practice test 1. Original Netfener content. */
 export const STARTERS_1: CambridgeTest = {
@@ -120,5 +121,6 @@ export const STARTERS_1: CambridgeTest = {
         },
       ],
     },
+    STARTERS_LISTENING[0],
   ],
 };

@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock, RotateCcw, Shield, XCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Headphones, RotateCcw, Shield, XCircle } from "lucide-react";
 import type { CambridgeLevel, Paper, Part, Task } from "@/content/cambridge-tests/types";
 import { normalise, scaleEstimate, shields, taskItems } from "@/content/cambridge-tests/registry";
-import { PicCard, SceneView } from "./Pictures";
+import { COLOUR_CSS, PicCard, SceneView } from "./Pictures";
 
 type Answers = Record<string, string>;
 
-type Props = { testTitle: string; level: CambridgeLevel; levelName: string; colour: string; paper: Paper; libraryHref: string; otherPaperHref?: string; otherPaperName?: string };
+type Props = { testTitle: string; level: CambridgeLevel; levelName: string; colour: string; paper: Paper; libraryHref: string; otherPapers: { href: string; name: string }[] };
 
 const LETTERS = "ABCDEFGH";
 
@@ -92,6 +92,78 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
   const t = part.task;
   const a = (i: number | string) => answers[key(p, i)];
   switch (t.kind) {
+    case "listen-lines": {
+      const tags = t.scene.items.flatMap((it) => (it.tag ? [it.tag] : []));
+      return (
+        <div className="space-y-5">
+          <SceneView scene={t.scene} label="Picture for this part" />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {t.items.map((it, i) => (
+              <div key={i} className="flex flex-wrap items-center gap-3 rounded-2xl bg-white p-3 shadow-sm">
+                <p className="min-w-20 text-lg font-black">{i + 1}. {it.name}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {tags.map((tag) => (
+                    <button key={tag} type="button" aria-pressed={a(i) === tag} aria-label={`${it.name} is ${tag}`} onClick={() => set(key(p, i), tag)} className={`h-10 w-10 rounded-xl border-2 font-black ${a(i) === tag ? "border-[color:var(--cam)] bg-[color:var(--cam-soft)]" : "border-slate-200 bg-white"}`}>
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    case "listen-tick":
+      return (
+        <div className="space-y-4">
+          {t.items.map((it, i) => (
+            <div key={i} className="space-y-3 rounded-3xl bg-white p-4 shadow-sm">
+              <p className="text-lg font-bold">{i + 1}. {it.question}</p>
+              <div className="flex flex-wrap gap-3">
+                {it.pics.map((pic, k) => (
+                  <button key={k} type="button" aria-pressed={a(i) === String(k)} aria-label={`Picture ${LETTERS[k]}`} onClick={() => set(key(p, i), String(k))} className={`relative rounded-[1.7rem] border-4 ${a(i) === String(k) ? "border-[color:var(--cam)]" : "border-transparent"}`}>
+                    <PicCard pic={pic} i={k} size="md" />
+                    <span className="absolute left-1 top-1 rounded-md bg-white/90 px-1.5 text-xs font-black">{LETTERS[k]}</span>
+                    {a(i) === String(k) ? <span className="absolute -right-1 -top-1 rounded-full bg-[color:var(--cam)] px-1.5 text-sm font-black text-white">✔</span> : null}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    case "listen-colour": {
+      const tags = t.scene.items.flatMap((it) => (it.tag ? [it.tag] : []));
+      const marks: Record<string, string> = {};
+      t.items.forEach((_, i) => {
+        if (a(i) && a(`c${i}`)) marks[a(i)] = a(`c${i}`);
+      });
+      return (
+        <div className="space-y-5">
+          <SceneView scene={t.scene} label="Picture to colour" marks={marks} />
+          <div className="space-y-3">
+            {t.items.map((_, i) => (
+              <div key={i} className="flex flex-wrap items-center gap-3 rounded-2xl bg-white p-3 shadow-sm">
+                <span className="text-lg font-black">{i + 1}.</span>
+                <div className="flex flex-wrap gap-1.5" aria-label={`Object for ${i + 1}`}>
+                  {tags.map((tag) => (
+                    <button key={tag} type="button" aria-pressed={a(i) === tag} onClick={() => set(key(p, i), tag)} className={`h-9 w-9 rounded-xl border-2 font-black ${a(i) === tag ? "border-[color:var(--cam)] bg-[color:var(--cam-soft)]" : "border-slate-200 bg-white"}`}>
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-1.5" aria-label={`Colour for ${i + 1}`}>
+                  {t.colours.map((c) => (
+                    <button key={c} type="button" aria-pressed={a(`c${i}`) === c} aria-label={c} title={c} onClick={() => set(key(p, `c${i}`), c)} className={`h-9 w-9 rounded-full border-4 ${a(`c${i}`) === c ? "border-slate-800" : "border-white"} shadow`} style={{ background: COLOUR_CSS[c] }} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
     case "picture-yesno":
       return (
         <div className="grid gap-4 sm:grid-cols-2">
@@ -379,6 +451,12 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
 function mark(task: Task, p: number, answers: Answers, seed: string): { ok: boolean; right: string; given: string }[] {
   const a = (i: number | string) => answers[key(p, i)] ?? "";
   switch (task.kind) {
+    case "listen-lines":
+      return task.items.map((it, i) => ({ ok: a(i) === it.answer, right: `${it.name} → ${it.answer}`, given: a(i) ? `${it.name} → ${a(i)}` : "" }));
+    case "listen-tick":
+      return task.items.map((it, i) => ({ ok: a(i) === String(it.answer), right: `${LETTERS[it.answer]} ${it.pics[it.answer].e}`, given: a(i) ? `${LETTERS[Number(a(i))]} ${it.pics[Number(a(i))].e}` : "" }));
+    case "listen-colour":
+      return task.items.map((it, i) => ({ ok: a(i) === it.answer && a(`c${i}`) === it.colour, right: `${it.answer} – ${it.colour}`, given: a(i) || a(`c${i}`) ? `${a(i) || "?"} – ${a(`c${i}`) || "?"}` : "" }));
     case "picture-yesno":
     case "scene-yesno":
       return task.items.map((it, i) => ({ ok: a(i) === (it.answer ? "yes" : "no"), right: it.answer ? "yes ✔" : "no ✘", given: a(i) }));
@@ -411,7 +489,7 @@ function mark(task: Task, p: number, answers: Answers, seed: string): { ok: bool
   }
 }
 
-export function CambridgeRunner({ testTitle, level, levelName, colour, paper, libraryHref, otherPaperHref, otherPaperName }: Props) {
+export function CambridgeRunner({ testTitle, level, levelName, colour, paper, libraryHref, otherPapers }: Props) {
   const [phase, setPhase] = useState<"intro" | "test" | "done">("intro");
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
@@ -456,6 +534,7 @@ export function CambridgeRunner({ testTitle, level, levelName, colour, paper, li
             <span className="rounded-full bg-slate-100 px-4 py-2">{paper.minutes} minutes</span>
             {scored ? <span className="rounded-full bg-slate-100 px-4 py-2">{scored} questions</span> : null}
           </div>
+          {paper.id === "listening" ? <p className="font-bold text-slate-700" lang="tr">🎧 Kulaklık tak. Her bölümün başında bir kayıt var; gerçek sınavdaki gibi her kaydı iki kez dinleyebilirsin.</p> : null}
           <p className="text-slate-600" lang="tr">Süre bittiğinde test kapanmaz; kendi hızında devam edebilirsin. Bitirdiğinde cevapların puanlanır{young ? " ve kalkan (shield) sayın gösterilir" : ""}. Yazma görevlerini örnek cevapla karşılaştırırsın.</p>
           <button type="button" onClick={start} className="rounded-full px-8 py-3 text-lg font-black text-white shadow" style={{ background: colour }}>Start ▶</button>
           <p><Link href={libraryHref} className="text-sm font-bold underline" lang="tr">← Test kütüphanesi</Link></p>
@@ -492,7 +571,9 @@ export function CambridgeRunner({ testTitle, level, levelName, colour, paper, li
             )}
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <button type="button" onClick={restart} className="inline-flex items-center gap-2 rounded-full border-2 border-slate-200 px-5 py-2 font-bold"><RotateCcw size={16} aria-hidden="true" /> Try again</button>
-              {otherPaperHref ? <Link href={otherPaperHref} className="rounded-full px-5 py-2 font-bold text-white" style={{ background: colour }}>Go to {otherPaperName} →</Link> : null}
+              {otherPapers.map((o) => (
+                <Link key={o.href} href={o.href} className="rounded-full px-5 py-2 font-bold text-white" style={{ background: colour }}>Go to {o.name} →</Link>
+              ))}
               <Link href={libraryHref} className="rounded-full border-2 border-slate-200 px-5 py-2 font-bold" lang="tr">Kütüphane</Link>
             </div>
           </section>
@@ -553,6 +634,15 @@ export function CambridgeRunner({ testTitle, level, levelName, colour, paper, li
           <h2 className="text-2xl font-black text-slate-800">{part.title}</h2>
           <p className="mt-1 text-lg font-semibold text-slate-600">{part.task.instruction}</p>
         </div>
+        {part.audio ? (
+          <div className="flex flex-wrap items-center gap-3 rounded-3xl bg-white p-4 shadow-sm">
+            <Headphones size={22} aria-hidden="true" style={{ color: colour }} />
+            <audio key={part.audio} controls preload="none" src={part.audio} className="w-full max-w-md">
+              Your browser cannot play this recording.
+            </audio>
+            <span className="text-sm font-bold text-slate-500">Listen twice.</span>
+          </div>
+        ) : null}
         <PartView part={part} p={idx} answers={answers} set={set} seed={testTitle} />
         <div className="flex justify-between pt-4">
           <button type="button" disabled={idx === 0} onClick={() => setIdx(idx - 1)} className="inline-flex items-center gap-2 rounded-full border-2 border-slate-300 bg-white px-5 py-2.5 font-black disabled:opacity-40"><ArrowLeft size={18} aria-hidden="true" /> Back</button>
