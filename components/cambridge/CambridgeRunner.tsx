@@ -317,7 +317,8 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
           </div>
         </div>
       );
-    case "gapped-text":
+    case "gapped-text": {
+      const shown = order(t.sentences.length, `${seed}-${p}-sentences`);
       return (
         <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
           <div className="rounded-3xl bg-white p-5 shadow-sm">
@@ -327,20 +328,21 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
               render={(g) => (
                 <select className={inputCls} value={a(g - 1) ?? ""} onChange={(e) => set(key(p, g - 1), e.target.value)} aria-label={`Gap ${g}`}>
                   <option value="">({g}) …</option>
-                  {t.sentences.map((_, k) => (
-                    <option key={k} value={String(k)}>{LETTERS[k]}</option>
+                  {shown.map((orig, k) => (
+                    <option key={orig} value={String(orig)}>{LETTERS[k]}</option>
                   ))}
                 </select>
               )}
             />
           </div>
           <ol className="space-y-2">
-            {t.sentences.map((s, k) => (
-              <li key={k} className="rounded-2xl bg-white p-3 shadow-sm"><span className="mr-2 font-black text-[color:var(--cam)]">{LETTERS[k]}</span>{s}</li>
+            {shown.map((orig, k) => (
+              <li key={orig} className="rounded-2xl bg-white p-3 shadow-sm"><span className="mr-2 font-black text-[color:var(--cam)]">{LETTERS[k]}</span>{t.sentences[orig]}</li>
             ))}
           </ol>
         </div>
       );
+    }
     case "writing": {
       const text = a("w") ?? "";
       return (
@@ -374,7 +376,7 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
 }
 
 /** Marks every scored item: [correct?, the right answer to show]. */
-function mark(task: Task, p: number, answers: Answers): { ok: boolean; right: string; given: string }[] {
+function mark(task: Task, p: number, answers: Answers, seed: string): { ok: boolean; right: string; given: string }[] {
   const a = (i: number | string) => answers[key(p, i)] ?? "";
   switch (task.kind) {
     case "picture-yesno":
@@ -400,8 +402,10 @@ function mark(task: Task, p: number, answers: Answers): { ok: boolean; right: st
       return task.answers.map((acc, i) => ({ ok: acc.includes(normalise(a(i))), right: acc.join(" / "), given: a(i) }));
     case "matching":
       return task.items.map((it, i) => ({ ok: a(i) === String(it.answer), right: LETTERS[it.answer], given: a(i) ? LETTERS[Number(a(i))] : "" }));
-    case "gapped-text":
-      return task.answers.map((ans, i) => ({ ok: a(i) === String(ans), right: LETTERS[ans], given: a(i) ? LETTERS[Number(a(i))] : "" }));
+    case "gapped-text": {
+      const pos = (orig: number) => LETTERS[order(task.sentences.length, `${seed}-${p}-sentences`).indexOf(orig)];
+      return task.answers.map((ans, i) => ({ ok: a(i) === String(ans), right: `${pos(ans)} – ${task.sentences[ans]}`, given: a(i) ? pos(Number(a(i))) : "" }));
+    }
     case "writing":
       return [];
   }
@@ -461,7 +465,7 @@ export function CambridgeRunner({ testTitle, level, levelName, colour, paper, li
   }
 
   if (phase === "done") {
-    const rows = paper.parts.map((pt, p) => ({ pt, p, marks: mark(pt.task, p, answers) }));
+    const rows = paper.parts.map((pt, p) => ({ pt, p, marks: mark(pt.task, p, answers, testTitle) }));
     const right = rows.reduce((n, r) => n + r.marks.filter((m) => m.ok).length, 0);
     const share = scored ? right / scored : 0;
     const estimate = !young && scored ? scaleEstimate(level as "key" | "preliminary", share) : null;
