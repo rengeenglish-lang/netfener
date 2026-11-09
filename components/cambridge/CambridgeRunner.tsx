@@ -5,6 +5,7 @@ import { Fragment, useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Headphones, RotateCcw, Shield, XCircle } from "lucide-react";
 import type { CambridgeLevel, Paper, Part, Task } from "@/content/cambridge-tests/types";
 import { normalise, scaleEstimate, shields, taskItems } from "@/content/cambridge-tests/registry";
+import { LinesBoard } from "./LinesBoard";
 import { COLOUR_CSS, PicCard, SceneView } from "./Pictures";
 
 type Answers = Record<string, string>;
@@ -92,28 +93,15 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
   const t = part.task;
   const a = (i: number | string) => answers[key(p, i)];
   switch (t.kind) {
-    case "listen-lines": {
-      const tags = t.scene.items.flatMap((it) => (it.tag ? [it.tag] : []));
+    case "listen-lines":
       return (
-        <div className="space-y-5">
-          <SceneView scene={t.scene} label="Picture for this part" />
-          <div className="grid gap-3 sm:grid-cols-2">
-            {t.items.map((it, i) => (
-              <div key={i} className="flex flex-wrap items-center gap-3 rounded-2xl bg-white p-3 shadow-sm">
-                <p className="min-w-20 text-lg font-black">{i + 1}. {it.name}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {tags.map((tag) => (
-                    <button key={tag} type="button" aria-pressed={a(i) === tag} aria-label={`${it.name} is ${tag}`} onClick={() => set(key(p, i), tag)} className={`h-10 w-10 rounded-xl border-2 font-black ${a(i) === tag ? "border-[color:var(--cam)] bg-[color:var(--cam-soft)]" : "border-slate-200 bg-white"}`}>
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <LinesBoard
+          scene={t.scene}
+          names={t.items.map((it) => it.name)}
+          value={t.items.map((_, i) => a(i))}
+          onChange={(i, tag) => set(key(p, i), tag ?? "")}
+        />
       );
-    }
     case "listen-tick":
       return (
         <div className="space-y-4">
@@ -580,6 +568,12 @@ export function CambridgeRunner({ testTitle, level, levelName, colour, paper, li
           {rows.map(({ pt, p, marks }) => (
             <section key={p} className="rounded-3xl bg-white p-6 shadow-sm">
               <h2 className="text-lg font-black">{pt.title}{marks.length ? ` · ${marks.filter((m) => m.ok).length}/${marks.length}` : ""}</h2>
+              {pt.task.kind === "listen-lines" ? (
+                <div className="mt-3 space-y-1">
+                  <p className="text-sm font-semibold text-slate-500" lang="tr">Yeşil çizgiler doğru, kırmızı kesikli çizgiler yanlış; gri noktalı çizgi doğru kişiyi gösterir.</p>
+                  <LinesBoard scene={pt.task.scene} names={pt.task.items.map((it) => it.name)} value={pt.task.items.map((_, i) => answers[key(p, i)] || undefined)} onChange={() => {}} marks={marks.map((m) => m.ok)} correct={pt.task.items.map((it) => it.answer)} />
+                </div>
+              ) : null}
               {marks.length ? (
                 <ol className="mt-3 space-y-1.5">
                   {marks.map((m, k) => (

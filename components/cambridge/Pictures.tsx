@@ -1,6 +1,6 @@
 import type { Pic, Scene } from "@/content/cambridge-tests/types";
 
-const SCENE_BG: Record<Scene["bg"], string> = {
+export const SCENE_BG: Record<Scene["bg"], string> = {
   park: "linear-gradient(#bfe6ff 0%, #bfe6ff 45%, #9bd67a 45%, #7cc35a 100%)",
   garden: "linear-gradient(#cdeeff 0%, #cdeeff 40%, #a6dd84 40%, #86c766 100%)",
   farm: "linear-gradient(#d6f0ff 0%, #d6f0ff 42%, #e8d38a 42%, #cdb46a 100%)",
