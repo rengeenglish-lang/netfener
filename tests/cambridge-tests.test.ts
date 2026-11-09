@@ -102,3 +102,48 @@ test("results: shields for young learners, scale estimates for Key and Prelimina
   assert.equal(scaleEstimate("preliminary", 0.5).grade, "Grade C (B1)");
   assert.equal(normalise("  His T-Shirt. "), "his t-shirt");
 });
+
+/** Official Cambridge English Reading & Writing layouts: [task kind, scored items, options per question]. */
+type Spec = [Task["kind"], number, number?];
+const FORMAT: Record<string, Record<string, Spec[]>> = {
+  starters: { "reading-writing": [["picture-yesno", 5], ["scene-yesno", 5], ["spell", 5], ["word-bank", 5], ["short-answer", 5]] },
+  movers: { "reading-writing": [["definitions", 5], ["dialogue", 6, 3], ["word-bank", 6], ["cloze-mc", 5, 3], ["short-answer", 7], ["writing", 0]] },
+  flyers: { "reading-writing": [["definitions", 10], ["dialogue", 5], ["word-bank", 6], ["cloze-mc", 10, 3], ["short-answer", 7], ["open-cloze", 5], ["writing", 0]] },
+  key: { "reading-writing": [["mcq", 6, 3], ["matching", 7, 3], ["mcq", 5, 3], ["cloze-mc", 6, 3], ["open-cloze", 6], ["writing", 0], ["writing", 0]] },
+  preliminary: {
+    reading: [["mcq", 5, 3], ["matching", 5, 8], ["mcq", 5, 4], ["gapped-text", 5, 8], ["cloze-mc", 6, 4], ["open-cloze", 6]],
+    writing: [["writing", 0], ["writing", 0], ["writing", 0]],
+  },
+};
+
+function optionCounts(t: Task): number[] {
+  switch (t.kind) {
+    case "mcq":
+    case "dialogue":
+      return t.items.map((i) => i.options.length);
+    case "cloze-mc":
+      return t.gaps.map((g) => g.options.length);
+    case "matching":
+      return [t.options.length];
+    case "gapped-text":
+      return [t.sentences.length];
+    default:
+      return [];
+  }
+}
+
+test("every test follows the official Cambridge part layout, question counts and option counts", () => {
+  for (const ct of CAMBRIDGE_TESTS) {
+    for (const paper of ct.papers) {
+      const spec = FORMAT[ct.level][paper.id];
+      assert.ok(spec, `${ct.id}/${paper.id}: no format`);
+      paper.parts.forEach((part, i) => {
+        const [kind, items, opts] = spec[i];
+        const tag = `${ct.id}/${paper.id} ${part.title}`;
+        assert.equal(part.task.kind, kind, `${tag}: kind`);
+        assert.equal(taskItems(part.task), items, `${tag}: questions`);
+        if (opts) for (const n of optionCounts(part.task)) assert.equal(n, opts, `${tag}: options`);
+      });
+    }
+  }
+});
