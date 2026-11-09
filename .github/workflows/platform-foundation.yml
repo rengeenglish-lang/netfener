@@ -49,6 +49,6 @@ jobs:
       - name: E-book review rewards and email sign-in regressions
         run: node --conditions=react-server --import tsx --test --test-concurrency=1 tests/ebook-review-access.test.ts
       - name: IELTS and TOEFL content, Speaking teacher-review regressions
-        run: node --conditions=react-server --import tsx --test --test-concurrency=1 tests/ielts-tests.test.ts tests/toefl-tests.test.ts tests/practice-test-access.test.ts tests/ielts-speaking-database.test.ts
+        run: node --conditions=react-server --import tsx --test --test-concurrency=1 tests/ielts-tests.test.ts tests/toefl-tests.test.ts tests/practice-test-access.test.ts tests/cambridge-tests.test.ts tests/ielts-speaking-database.test.ts
       - name: Production build against isolated database
         run: npm run build
