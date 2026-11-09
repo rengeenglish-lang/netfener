@@ -9,8 +9,13 @@ import { MOVERS_2 } from "./movers-2";
 import { FLYERS_2 } from "./flyers-2";
 import { KEY_2 } from "./key-2";
 import { PRELIMINARY_2 } from "./preliminary-2";
+import { STARTERS_3 } from "./starters-3";
+import { MOVERS_3 } from "./movers-3";
+import { FLYERS_3 } from "./flyers-3";
+import { KEY_3 } from "./key-3";
+import { PRELIMINARY_3 } from "./preliminary-3";
 
-export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2];
+export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2, STARTERS_3, MOVERS_3, FLYERS_3, KEY_3, PRELIMINARY_3];
 
 /** Five tests are planned per level; slots not yet released are shown as coming soon. */
 export const CAMBRIDGE_SLOTS = 5;
