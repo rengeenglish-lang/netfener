@@ -722,12 +722,12 @@ export const FEN_20: YokdilDeneme = {
       sentences: [
         "Icebreakers are ships designed to travel through frozen seas.",
         "Their strong, rounded hulls ride up onto the ice and break it with their weight.",
-        "Arctic foxes change the colour of their fur in winter.",
+        "Arctic foxes grow thick white coats as the days shorten.",
         "Some are powered by nuclear reactors, allowing them to operate for long periods.",
         "They keep shipping routes open in the Arctic during winter.",
       ],
       odd: 2,
-      why: "Parça buzkıran gemileri anlatır. Kutup tilkilerinin kışın kürk rengini değiştirdiğini söyleyen III. cümle konu dışıdır.",
+      why: "Parça buzkıran gemileri anlatır. Kutup tilkilerinin günler kısaldıkça kalın beyaz kürk geliştirdiğini söyleyen III. cümle konu dışıdır.",
     },
     {
       sentences: [
