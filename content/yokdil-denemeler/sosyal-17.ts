@@ -141,7 +141,7 @@ export const SOSYAL_17: YokdilDeneme = {
     },
     {
       text:
-        "When people estimate an unknown quantity, they are often influenced by a number they have just seen, even if it is obviously irrelevant. Psychologists call this 'anchoring'. In a famous experiment in the 1970s, Amos Tversky and Daniel Kahneman spun a wheel of fortune that stopped at either 10 or 65 and then asked participants to estimate the percentage of African countries in the United Nations. Those who had seen the higher number gave much higher estimates, {1} they knew the wheel was random. Anchoring has important effects in everyday life, {2} in negotiations. The first price mentioned in a discussion about a car or a salary tends to shape the final agreement. Experienced negotiators therefore often try to make the first offer {3} than wait for the other side. Judges, too, have been shown to be influenced by anchors, such as the sentence requested by the prosecution. Researchers have found that the effect is difficult to avoid, {4} it can be reduced by deliberately considering reasons why the anchor might be wrong. Being aware of the bias does not, unfortunately, make people {5} immune to it.",
+        "When people estimate an unknown quantity, they are often influenced by a number they have just seen, even if it is obviously irrelevant. Psychologists call this 'anchoring'. In a famous experiment in the 1970s, Amos Tversky and Daniel Kahneman spun a wheel of fortune that stopped at either 10 or 65 and then asked participants to guess what share of the UN's members were African states. Those who had seen the higher number gave much higher estimates, {1} they knew the wheel was random. Anchoring has important effects in everyday life, {2} in negotiations. The first price mentioned in a discussion about a car or a salary tends to shape the final agreement. Experienced negotiators therefore often try to make the first offer {3} than wait for the other side. Judges, too, have been shown to be influenced by anchors, such as the sentence requested by the prosecution. Researchers have found that the effect is difficult to avoid, {4} it can be reduced by deliberately considering reasons why the anchor might be wrong. Being aware of the bias does not, unfortunately, make people {5} immune to it.",
       blanks: [
         [
           "(26) ----",
@@ -197,7 +197,7 @@ export const SOSYAL_17: YokdilDeneme = {
     [
       "The librarians hid the manuscripts in rice sacks and metal boxes ----.",
       [
-        "so that they could be carried out of the city without attracting attention",
+        "so that they could leave the city unnoticed",
         "because the armed groups wanted to study them carefully",
         "although nobody was interested in the old documents",
         "unless the government asked them to stay in the library",
@@ -219,7 +219,7 @@ export const SOSYAL_17: YokdilDeneme = {
     [
       "Unless the islanders had seen the soldiers' airfields, ----.",
       [
-        "they would not have known what to imitate in their rituals",
+        "they would not have known what to imitate",
         "the cargo will arrive on the next aeroplane",
         "most anthropologists study cultures in Europe",
         "the war had ended in the Pacific in 1945",
@@ -230,7 +230,7 @@ export const SOSYAL_17: YokdilDeneme = {
     [
       "Many employers introduced time clocks in the nineteenth century ----.",
       [
-        "in order to record exactly when each worker arrived and left",
+        "in order to record when each worker arrived",
         "because workers had asked for shorter working days",
         "although they had no interest in punctuality",
         "unless the factory was closed for the holidays",
@@ -241,7 +241,7 @@ export const SOSYAL_17: YokdilDeneme = {
     [
       "Kahneman and Tversky showed that even experts ----.",
       [
-        "can be influenced by numbers that are obviously irrelevant",
+        "can be swayed by irrelevant numbers",
         "had studied economics at famous universities",
         "would have estimated the figures correctly",
         "will never make mistakes in their judgements",
@@ -274,7 +274,7 @@ export const SOSYAL_17: YokdilDeneme = {
     [
       "Once the Spanish had established control over the mines, ----.",
       [
-        "they forced thousands of Indigenous men to work there",
+        "they forced Indigenous men to work there",
         "the silver will be shipped to China",
         "the price of silver would have risen",
         "most workers had lived in the mountains",
@@ -451,7 +451,7 @@ export const SOSYAL_17: YokdilDeneme = {
           [
             "feared that the armed groups would destroy them",
             "wanted to sell them to foreign collectors",
-            "had been ordered to do so by the armed groups",
+            "had been told to move them by the armed groups",
             "needed more space for new manuscripts",
             "had finished digitising them",
           ],
@@ -664,7 +664,7 @@ export const SOSYAL_17: YokdilDeneme = {
     [
       "When speakers of different languages need to communicate, for example in trading ports, they sometimes develop a simplified language known as a pidgin. ---- Linguists call such a fully developed language a creole.",
       [
-        "If children grow up speaking a pidgin as their first language, it becomes more complex.",
+        "When children learn it as their mother tongue, it becomes richer.",
         "Trading ports have often been home to people from many different countries.",
         "Many people today learn English in order to communicate with foreigners.",
         "Some languages have very complicated systems of grammar and spelling.",
@@ -675,7 +675,7 @@ export const SOSYAL_17: YokdilDeneme = {
     [
       "The Bayeux Tapestry is a strip of embroidered cloth almost seventy metres long that tells the story of the Norman conquest of England in 1066. ---- For historians, it is a valuable source on weapons, clothing, ships and daily life in the eleventh century.",
       [
-        "Its scenes show the events leading up to the Battle of Hastings and the battle itself.",
+        "It shows the events leading to the Battle of Hastings.",
         "Bayeux is a small town in Normandy in the north-west of France.",
         "Embroidery has been practised in many cultures for thousands of years.",
         "The Normans were descended from Scandinavian settlers in northern France.",
@@ -686,7 +686,7 @@ export const SOSYAL_17: YokdilDeneme = {
     [
       "Hospitality to strangers has traditionally been an important value among the Bedouin of the Arabian desert. ---- In such a harsh environment, this custom helped to ensure that travellers could survive their journeys.",
       [
-        "A guest could expect food and shelter for several days without being asked questions.",
+        "A guest received food and shelter for days, with no questions asked.",
         "The Arabian desert is one of the hottest and driest places on Earth.",
         "Camels were the main form of transport for desert peoples for centuries.",
         "Many Bedouin today live in towns and work in a variety of jobs.",
@@ -711,7 +711,7 @@ export const SOSYAL_17: YokdilDeneme = {
       sentences: [
         "In Mexico, the Day of the Dead is celebrated at the beginning of November.",
         "Families build altars decorated with flowers, candles and photographs of deceased relatives.",
-        "Mexico City is one of the largest cities in the Americas.",
+        "Mexico City was built on the site of the Aztec capital.",
         "They also prepare the favourite foods of the dead, who are believed to return for a short visit.",
         "The festival combines Indigenous traditions with Catholic beliefs.",
       ],
@@ -721,28 +721,28 @@ export const SOSYAL_17: YokdilDeneme = {
     {
       sentences: [
         "The first zoos in Europe were private collections owned by kings and nobles.",
+        "Many children enjoy reading books about wild animals.",
         "Exotic animals were kept as symbols of their owners' power and wealth.",
         "In the nineteenth century, zoos began to open to the public.",
-        "Many children enjoy reading books about wild animals.",
         "Today, many zoos describe their main purpose as conservation and education.",
       ],
-      odd: 3,
-      why: "Parça hayvanat bahçelerinin tarihini anlatır. Pek çok çocuğun vahşi hayvanlarla ilgili kitap okumaktan hoşlandığını söyleyen IV. cümle akışı bozar.",
+      odd: 1,
+      why: "Parça hayvanat bahçelerinin tarihini anlatır. Pek çok çocuğun vahşi hayvanlarla ilgili kitap okumaktan hoşlandığını söyleyen II. cümle akışı bozar.",
     },
     {
       sentences: [
         "Economists have studied how children learn to use pocket money.",
         "Some parents give a regular amount, while others pay children for doing household tasks.",
         "Research suggests that managing money from an early age can improve financial skills.",
+        "The effects, however, depend greatly on how parents discuss money with their children.",
         "Banks were first established in medieval Italy.",
-        "However, the effects depend greatly on how parents discuss money with their children.",
       ],
-      odd: 3,
-      why: "Parça çocukların harçlık kullanmayı öğrenmesini anlatır. Bankaların orta çağ İtalya'sında kurulduğunu söyleyen IV. cümle konu dışıdır.",
+      odd: 4,
+      why: "Parça çocukların harçlık kullanmayı öğrenmesini anlatır. Bankaların orta çağ İtalya'sında kurulduğunu söyleyen V. cümle konu dışıdır.",
     },
     {
       sentences: [
-        "The simit, a ring of bread covered in sesame seeds, is one of Istanbul's most popular street foods.",
+        "Sesame-covered bread rings called simit are a favourite street snack in Istanbul.",
         "It has been sold by street vendors in the city for centuries.",
         "Ottoman records from the sixteenth century mention its price and the rules for making it.",
         "Sesame is grown in many warm countries around the world.",
