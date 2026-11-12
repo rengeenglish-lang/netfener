@@ -711,12 +711,12 @@ export const FEN_16: YokdilDeneme = {
       sentences: [
         "Discarded electronic devices are piling up around the world.",
         "Old phones and laptops hold small amounts of precious metals.",
-        "Gold has been used to make jewellery for thousands of years.",
+        "Some people collect old coins as a hobby.",
         "However, they also contain toxic substances such as lead and mercury.",
         "Only a small proportion of electronic waste is currently recycled.",
       ],
       odd: 2,
-      why: "Parça elektronik atıkları anlatır. Altının binlerce yıldır takı yapımında kullanıldığını söyleyen III. cümle konu dışıdır.",
+      why: "Parça elektronik atıkları anlatır. Bazı insanların hobi olarak eski bozuk para biriktirdiğini söyleyen III. cümle konu dışıdır.",
     },
     {
       sentences: [
