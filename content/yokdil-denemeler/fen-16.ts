@@ -709,14 +709,14 @@ export const FEN_16: YokdilDeneme = {
     },
     {
       sentences: [
-        "Discarded electronic devices are piling up around the world.",
-        "Old phones and laptops hold small amounts of precious metals.",
-        "Some people collect old coins as a hobby.",
-        "However, they also contain toxic substances such as lead and mercury.",
-        "Only a small proportion of electronic waste is currently recycled.",
+        "Traditional hard drives store data on spinning metal disks.",
+        "A tiny arm moves across the surface to read and write information.",
+        "Many offices now encourage staff to work from home.",
+        "Solid-state drives, by contrast, have no moving parts.",
+        "As a result, they are faster, quieter and less likely to be damaged if dropped.",
       ],
       odd: 2,
-      why: "Parça elektronik atıkları anlatır. Bazı insanların hobi olarak eski bozuk para biriktirdiğini söyleyen III. cümle konu dışıdır.",
+      why: "Parça sabit diskler ile katı hâl sürücülerini karşılaştırır. Pek çok ofisin çalışanları evden çalışmaya teşvik ettiğini söyleyen III. cümle konu dışıdır.",
     },
     {
       sentences: [
