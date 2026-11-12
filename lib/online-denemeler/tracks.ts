@@ -24,9 +24,9 @@ export type Track = {
 
 export const TRACKS: Track[] = [
   { slug: "yds", base: 0, name: "YDS", short: "YDS", examSlug: "yds", examCode: "YDS", family: "yds", planned: 100 },
-  { slug: "yokdil-sosyal-bilimler", base: 1000, name: "YÖKDİL Sosyal Bilimler", short: "YÖKDİL Sosyal", examSlug: "yokdil-sosyal-bilimler", examCode: "YOKDIL_SOSYAL", family: "yokdil", field: "sosyal", planned: 10 },
-  { slug: "yokdil-saglik-bilimleri", base: 2000, name: "YÖKDİL Sağlık Bilimleri", short: "YÖKDİL Sağlık", examSlug: "yokdil-saglik-bilimleri", examCode: "YOKDIL_SAGLIK", family: "yokdil", field: "saglik", planned: 10 },
-  { slug: "yokdil-fen-bilimleri", base: 3000, name: "YÖKDİL Fen Bilimleri", short: "YÖKDİL Fen", examSlug: "yokdil-fen-bilimleri", examCode: "YOKDIL_FEN", family: "yokdil", field: "fen", planned: 10 },
+  { slug: "yokdil-sosyal-bilimler", base: 1000, name: "YÖKDİL Sosyal Bilimler", short: "YÖKDİL Sosyal", examSlug: "yokdil-sosyal-bilimler", examCode: "YOKDIL_SOSYAL", family: "yokdil", field: "sosyal", planned: 100 },
+  { slug: "yokdil-saglik-bilimleri", base: 2000, name: "YÖKDİL Sağlık Bilimleri", short: "YÖKDİL Sağlık", examSlug: "yokdil-saglik-bilimleri", examCode: "YOKDIL_SAGLIK", family: "yokdil", field: "saglik", planned: 100 },
+  { slug: "yokdil-fen-bilimleri", base: 3000, name: "YÖKDİL Fen Bilimleri", short: "YÖKDİL Fen", examSlug: "yokdil-fen-bilimleri", examCode: "YOKDIL_FEN", family: "yokdil", field: "fen", planned: 100 },
 ];
 
 export const DENEME_BASE_PATH = "/dashboard/yds-denemeleri";
