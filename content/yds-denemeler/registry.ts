@@ -89,6 +89,22 @@ export const DENEME_LOADERS: Record<number, () => Promise<Deneme>> = {
   82: () => import("./deneme-82").then((m) => m.DENEME_82),
   83: () => import("./deneme-83").then((m) => m.DENEME_83),
   84: () => import("./deneme-84").then((m) => m.DENEME_84),
+  85: () => import("./deneme-85").then((m) => m.DENEME_85),
+  86: () => import("./deneme-86").then((m) => m.DENEME_86),
+  87: () => import("./deneme-87").then((m) => m.DENEME_87),
+  88: () => import("./deneme-88").then((m) => m.DENEME_88),
+  89: () => import("./deneme-89").then((m) => m.DENEME_89),
+  90: () => import("./deneme-90").then((m) => m.DENEME_90),
+  91: () => import("./deneme-91").then((m) => m.DENEME_91),
+  92: () => import("./deneme-92").then((m) => m.DENEME_92),
+  93: () => import("./deneme-93").then((m) => m.DENEME_93),
+  94: () => import("./deneme-94").then((m) => m.DENEME_94),
+  95: () => import("./deneme-95").then((m) => m.DENEME_95),
+  96: () => import("./deneme-96").then((m) => m.DENEME_96),
+  97: () => import("./deneme-97").then((m) => m.DENEME_97),
+  98: () => import("./deneme-98").then((m) => m.DENEME_98),
+  99: () => import("./deneme-99").then((m) => m.DENEME_99),
+  100: () => import("./deneme-100").then((m) => m.DENEME_100),
 };
 
 /** How many online denemeler are planned in total (released in batches of ten). */
