@@ -95,6 +95,8 @@ export const DENEME_LOADERS: Record<number, () => Promise<Deneme>> = {
   88: () => import("./deneme-88").then((m) => m.DENEME_88),
   89: () => import("./deneme-89").then((m) => m.DENEME_89),
   90: () => import("./deneme-90").then((m) => m.DENEME_90),
+  91: () => import("./deneme-91").then((m) => m.DENEME_91),
+  92: () => import("./deneme-92").then((m) => m.DENEME_92),
 };
 
 /** How many online denemeler are planned in total (released in batches of ten). */
