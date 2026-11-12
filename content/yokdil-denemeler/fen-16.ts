@@ -710,7 +710,7 @@ export const FEN_16: YokdilDeneme = {
     {
       sentences: [
         "Discarded electronic devices are piling up around the world.",
-        "Old phones and computers contain valuable metals such as gold and copper.",
+        "Old phones and laptops hold small amounts of precious metals.",
         "Gold has been used to make jewellery for thousands of years.",
         "However, they also contain toxic substances such as lead and mercury.",
         "Only a small proportion of electronic waste is currently recycled.",
