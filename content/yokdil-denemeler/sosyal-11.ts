@@ -77,9 +77,9 @@ export const SOSYAL_11: YokdilDeneme = {
       "Kuram önerilen bir şeydir; edilgen anlamlı geçmiş ortaç 'proposed' gerekir.",
     ],
     [
-      "Some sociologists insist that the number of stable relationships a person can maintain ---- about one hundred and fifty.",
+      "Some sociologists claim that the number of stable relationships a person can maintain ---- about one hundred and fifty.",
       ["is", "be", "being", "are", "to be"],
-      "Öznesi 'the number' olan cümle tekil fiil alır; 'insist that' burada bir iddiayı aktarır: 'is'.",
+      "Öznesi 'the number' olan cümle tekil fiil alır; 'claim that' bir iddiayı aktarır: 'is'.",
     ],
     [
       "Not only ---- the factory study change management theory, but it also gave its name to a well-known effect.",
