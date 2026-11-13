@@ -156,7 +156,7 @@ export const SOSYAL_37: YokdilDeneme = {
         [
           "(28) ----",
           ["at", "in", "on", "by", "for"],
-          "'at this time' kalıbı: 'at'.",
+          "'Bu dönemde' anlamındaki 'at this time' kalıbında 'at' edatı kullanılır.",
         ],
         [
           "(29) ----",
