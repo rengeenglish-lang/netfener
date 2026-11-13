@@ -755,8 +755,8 @@ export const SOSYAL_57: YokdilDeneme = {
       sentences: [
         "In 1937, London introduced the world's first emergency telephone number, 999.",
         "It followed a fire in which neighbours had been unable to get through to the fire brigade.",
-        "Telephones were becoming common in homes at the time.",
         "Calls to the number triggered a light and a buzzer at the exchange so that operators would answer them first.",
+        "Similar numbers were later adopted in many other countries.",
         "Many people enjoy chatting on the phone.",
       ],
       odd: 4,
