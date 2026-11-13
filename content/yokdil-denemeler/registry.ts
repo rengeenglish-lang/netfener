@@ -152,5 +152,6 @@ export const YOKDIL_LOADERS: Record<YokdilField, Record<number, () => Promise<Yo
     43: () => import("./fen-43").then((m) => m.FEN_43),
     44: () => import("./fen-44").then((m) => m.FEN_44),
     45: () => import("./fen-45").then((m) => m.FEN_45),
+    46: () => import("./fen-46").then((m) => m.FEN_46),
   },
 };
