@@ -141,7 +141,7 @@ export const SOSYAL_36: YokdilDeneme = {
     },
     {
       text:
-        "In September 1991, two German hikers crossing a high pass in the Ötztal Alps spotted a brown figure lying in melting ice. They took it for a climber {1} had died in a recent accident, but scientists soon established that the man had lived about 5,300 years ago. Nicknamed Ötzi, he is the most ancient natural mummy yet discovered in Europe. He was carrying a copper axe, a bow, a quiver of arrows and a small bag of tools, and he was dressed in clothes made from the skins of several animals. His body bears more than sixty tattoos, {2} were made by rubbing charcoal into small cuts, and some researchers think they may have been a form of treatment for joint pain. For ten years, it was believed that Ötzi had died of cold. {3}, in 2001 an X-ray revealed a stone arrowhead in his left shoulder, suggesting that he had been shot from behind. Analysis of his stomach showed {4} he had eaten a meal of meat and grain only a short time before his death. Today his body is kept at a carefully controlled temperature in a museum in Bolzano, Italy, {5} it is visited by thousands of people every year.",
+        "In September 1991, two German hikers crossing a high pass in the Ötztal Alps spotted a brown figure lying in melting ice. They took it for a climber {1} had died in a recent accident, but scientists soon established that the man had lived about 5,300 years ago. Nicknamed Ötzi, he is the most ancient natural mummy yet discovered in Europe. He was carrying a copper axe, a bow, a quiver of arrows and a small bag of tools, and he was dressed in clothes made from the skins of several animals. His body bears more than sixty tattoos, {2} were made by rubbing charcoal into small cuts, and some researchers think they may have been a form of treatment for joint pain. For ten years, it was believed that Ötzi had died of cold. {3}, in 2001 a scan showed a flint arrowhead lodged in his left shoulder, suggesting that he had been shot from behind. Analysis of his stomach showed {4} he had eaten a meal of meat and grain only a short time before his death. Today his body is kept at a carefully controlled temperature in a museum in Bolzano, Italy, {5} it is visited by thousands of people every year.",
       blanks: [
         [
           "(26) ----",
@@ -722,7 +722,7 @@ export const SOSYAL_36: YokdilDeneme = {
       sentences: [
         "Cahokia, near present-day St Louis, was the biggest pre-Columbian settlement in what is now the United States.",
         "Around AD 1100, when it was at its peak, its population was perhaps ten to twenty thousand.",
-        "Its central earthwork, Monks Mound, covers an area larger than that of the Great Pyramid of Giza.",
+        "Its central earthwork, Monks Mound, has a bigger base than the Great Pyramid of Giza.",
         "St Louis was an important stop for travellers heading west in the nineteenth century.",
         "By around 1350 the city had been largely abandoned, possibly because of floods and changes in climate.",
       ],
