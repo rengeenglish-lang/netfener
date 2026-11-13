@@ -64,6 +64,7 @@ export const YOKDIL_LOADERS: Record<YokdilField, Record<number, () => Promise<Yo
     27: () => import("./saglik-27").then((m) => m.SAGLIK_27),
     28: () => import("./saglik-28").then((m) => m.SAGLIK_28),
     29: () => import("./saglik-29").then((m) => m.SAGLIK_29),
+    30: () => import("./saglik-30").then((m) => m.SAGLIK_30),
   },
   fen: {
     1: () => import("./fen-01").then((m) => m.FEN_01),
