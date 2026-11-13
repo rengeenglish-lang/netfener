@@ -753,14 +753,14 @@ export const SOSYAL_57: YokdilDeneme = {
     },
     {
       sentences: [
-        "The world's first separate court for children was set up in Chicago in 1899.",
-        "Reformers argued that young offenders should be helped rather than simply punished.",
-        "The court's hearings were less formal than those in adult courts.",
-        "Its aim was to guide children towards better lives.",
-        "Chicago is located on the shore of a large lake.",
+        "In 1937, London introduced the world's first emergency telephone number, 999.",
+        "It followed a fire in which neighbours had been unable to get through to the fire brigade.",
+        "Telephones were becoming common in homes at the time.",
+        "Calls to the number triggered a light and a buzzer at the exchange so that operators would answer them first.",
+        "Many people enjoy chatting on the phone.",
       ],
       odd: 4,
-      why: "Parça ilk çocuk mahkemesini anlatır. Chicago'nun büyük bir gölün kıyısında olduğunu söyleyen V. cümle konu dışıdır.",
+      why: "Parça ilk acil durum telefon numarasının kuruluşunu anlatır. Pek çok kişinin telefonda sohbet etmekten hoşlandığını söyleyen V. cümle konu dışıdır.",
     },
   ],
 };
