@@ -125,7 +125,7 @@ export const SAGLIK_39: YokdilDeneme = {
         [
           "(23) ----",
           ["If", "Unless", "Although", "Whereas", "Until"],
-          "Koşul bildiren bağlaç: 'If'.",
+          "Bebeğin kanında madde yüksekse bakterilerin ürediği anlatılır; koşul bildiren bağlaç: 'If'.",
         ],
         [
           "(24) ----",

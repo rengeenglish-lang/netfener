@@ -166,7 +166,7 @@ export const SAGLIK_38: YokdilDeneme = {
         [
           "(30) ----",
           ["in", "on", "at", "by", "since"],
-          "Yıl ile 'in 1981': 'in'.",
+          "Yıllardan önce 'in' edatı kullanılır; ödülü 1981'de paylaştıkları anlatılır: 'in'.",
         ],
       ],
     },
