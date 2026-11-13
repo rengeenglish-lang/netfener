@@ -753,14 +753,14 @@ export const SOSYAL_56: YokdilDeneme = {
     },
     {
       sentences: [
-        "In 1967, Kathrine Switzer became the first woman to run the Boston Marathon as an officially registered competitor.",
-        "She had entered using her initials.",
-        "During the race, an official tried to remove her from the course.",
-        "Her boyfriend pushed him away, and she finished the race.",
-        "Boston is home to many universities.",
+        "The first official Olympic mascot appeared at the 1972 Games in Munich.",
+        "It was a colourful dachshund named Waldi.",
+        "The route of the marathon at those Games was even designed in the shape of the dog.",
+        "Since then, every Olympic Games has had its own mascot.",
+        "Dachshunds were originally bred to hunt badgers.",
       ],
       odd: 4,
-      why: "Parça Kathrine Switzer'ın Boston Maratonu'nu anlatır. Boston'da pek çok üniversite bulunduğunu söyleyen V. cümle konu dışıdır.",
+      why: "Parça ilk resmî Olimpiyat maskotunu anlatır. Dachshund'ların aslen porsuk avlamak için yetiştirildiğini söyleyen V. cümle konu dışıdır.",
     },
   ],
 };
