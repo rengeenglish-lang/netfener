@@ -146,7 +146,7 @@ export const FEN_37: YokdilDeneme = {
         [
           "(26) ----",
           ["but", "so", "because", "or", "unless"],
-          "Kimsenin yol bulamaması ile kimsenin imkânsızlığı kanıtlayamaması zıt değil ama ekleme yapan zıtlık bildirir: 'but'.",
+          "Kimse yolu bulamamıştı, ama kimse bunun imkânsız olduğunu da kanıtlayamamıştı; karşıtlık bildiren 'but' gerekir.",
         ],
         [
           "(27) ----",
