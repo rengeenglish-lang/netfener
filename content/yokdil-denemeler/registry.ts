@@ -30,6 +30,7 @@ export const YOKDIL_LOADERS: Record<YokdilField, Record<number, () => Promise<Yo
     25: () => import("./sosyal-25").then((m) => m.SOSYAL_25),
     26: () => import("./sosyal-26").then((m) => m.SOSYAL_26),
     27: () => import("./sosyal-27").then((m) => m.SOSYAL_27),
+    28: () => import("./sosyal-28").then((m) => m.SOSYAL_28),
   },
   saglik: {
     1: () => import("./saglik-01").then((m) => m.SAGLIK_01),
