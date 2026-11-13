@@ -42,9 +42,9 @@ export const SAGLIK_42: YokdilDeneme = {
       "Veba müdahalesine liderlik etmesi istenmeden önce tamamlanmış eylem: 'had studied'.",
     ],
     [
-      "By the time investigators identified the bacterium, the outbreak ---- for six months.",
-      ["had been over", "is over", "will be over", "has been over", "was being over"],
-      "Geçmişteki bir andan önce tamamlanmış durum: 'had been over'.",
+      "By the time the epidemic ended in 1911, it ---- around sixty thousand people.",
+      ["had killed", "kills", "will kill", "is killing", "has been killed"],
+      "Geçmişteki bir andan önce tamamlanmış eylem: 'had killed'.",
     ],
     [
       "If the sewage had been treated properly, the epidemic ----.",
