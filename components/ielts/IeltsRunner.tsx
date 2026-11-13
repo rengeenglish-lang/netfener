@@ -57,6 +57,15 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [partIdx, setPartIdx] = useState(0);
   const [current, setCurrent] = useState<number>(1);
+  const navStripRef = useRef<HTMLDivElement>(null);
+  // keep the current question visible in the horizontally scrolling navigation strip
+  useEffect(() => {
+    const strip = navStripRef.current;
+    const btn = strip?.querySelector<HTMLElement>(`[data-qnav="${current}"]`);
+    if (!strip || !btn) return;
+    const left = btn.offsetLeft - strip.clientWidth / 2 + btn.clientWidth / 2;
+    strip.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+  }, [current, partIdx]);
   const [endAt, setEndAt] = useState(0);
   const [now, setNow] = useState(() => Date.now());
   const [hideTime, setHideTime] = useState(false);
@@ -381,16 +390,15 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
         )}
       </div>
 
-      {/* bottom navigation */}
-      <nav aria-label="Question navigation" className="flex flex-wrap items-center gap-3 border-t border-[color:var(--border)] bg-[color:var(--surface)] px-4 py-2.5">
-        <label className="inline-flex cursor-pointer items-center gap-2 text-sm font-bold">
-          <input type="checkbox" checked={flagged.has(flagKey)} onChange={() => toggleFlag(flagKey)} className="size-4 accent-[color:var(--accent)]" />
-          <Flag size={14} aria-hidden="true" /> Review
-        </label>
-        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-5 gap-y-2">
+      {/* bottom navigation: two rows on small screens (scrollable question strip, then actions), one row on wide screens */}
+      <nav
+        aria-label="Question navigation"
+        className="shrink-0 border-t border-[color:var(--border)] bg-[color:var(--surface)] px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-4 lg:flex lg:items-center lg:gap-4 lg:py-2.5"
+      >
+        <div ref={navStripRef} className="relative -mx-1 flex min-w-0 items-center gap-x-4 overflow-x-auto px-1 pb-1 lg:order-2 lg:flex-1 lg:pb-0">
           {isWriting
             ? tasks.map((t, i) => (
-                <button key={i} type="button" onClick={() => setPartIdx(i)} className={`rounded-md px-3 py-1.5 text-sm font-bold ${i === partIdx ? "bg-[color:var(--foreground)] text-[color:var(--background)]" : "border border-[color:var(--border)]"}`}>
+                <button key={i} type="button" onClick={() => setPartIdx(i)} className={`shrink-0 whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-bold ${i === partIdx ? "bg-[color:var(--foreground)] text-[color:var(--background)]" : "border border-[color:var(--border)]"}`}>
                   {t.title} {flagged.has(`w${i}`) ? "⚑" : ""}
                   <span className="ml-2 text-xs font-semibold opacity-75">{wordCount(answers[`w${i}`] ?? "")} words</span>
                 </button>
@@ -398,20 +406,26 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
             : parts.map((p, pi) => {
                 const nums = partNumbers(p);
                 const done = nums.filter((n) => answers[n]).length;
+                const active = pi === partIdx;
                 return (
-                  <div key={pi} className="flex flex-wrap items-center gap-1.5">
-                    <button type="button" onClick={() => goTo(nums[0])} className="mr-1 text-sm font-extrabold">
-                      {p.title} <span className="ml-1 font-semibold text-[color:var(--muted)]">{done} of {nums.length}</span>
+                  <div key={pi} className="flex shrink-0 items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => goTo(nums[0])}
+                      className={`shrink-0 whitespace-nowrap rounded-md px-2 py-1 text-sm font-extrabold ${active ? "" : "border border-[color:var(--border)]"}`}
+                    >
+                      {p.title} <span className="ml-1 font-semibold text-[color:var(--muted)]">{done}/{nums.length}</span>
                     </button>
-                    {pi === partIdx
+                    {active
                       ? nums.map((n) => (
                           <button
                             key={n}
                             type="button"
+                            data-qnav={n}
                             onClick={() => goTo(n)}
                             aria-label={`Question ${n}${answers[n] ? ", answered" : ""}${flagged.has(String(n)) ? ", flagged for review" : ""}`}
                             aria-current={n === current ? "true" : undefined}
-                            className={`relative grid size-8 place-items-center rounded-md border text-sm font-bold transition ${
+                            className={`relative grid size-9 shrink-0 place-items-center rounded-md border text-sm font-bold transition sm:size-8 ${
                               n === current ? "border-[color:var(--accent)] ring-2 ring-[color:var(--accent)]" : "border-[color:var(--border)]"
                             } ${answers[n] ? "bg-[color:var(--foreground)] text-[color:var(--background)]" : ""} ${flagged.has(String(n)) ? "rounded-full" : ""}`}
                           >
@@ -423,12 +437,18 @@ export function IeltsRunner({ testTitle, module, candidate, libraryHref }: Props
                 );
               })}
         </div>
-        <div className="flex items-center gap-1.5">
-          <button type="button" onClick={() => step(-1)} aria-label="Previous" className="grid size-9 place-items-center rounded-md border border-[color:var(--border)]"><ArrowLeft size={16} /></button>
-          <button type="button" onClick={() => step(1)} aria-label="Next" className="grid size-9 place-items-center rounded-md bg-[color:var(--foreground)] text-[color:var(--background)]"><ArrowRight size={16} /></button>
-          <button type="button" onClick={() => setConfirm(true)} className="ml-2 inline-flex h-9 items-center gap-1.5 rounded-md bg-[color:var(--accent)] px-3 text-sm font-bold text-[color:var(--on-accent)]">
-            <Check size={16} aria-hidden="true" /> Submit
-          </button>
+        <div className="mt-2 flex items-center justify-between gap-2 lg:contents">
+          <label className="inline-flex shrink-0 cursor-pointer items-center gap-2 text-sm font-bold lg:order-1">
+            <input type="checkbox" checked={flagged.has(flagKey)} onChange={() => toggleFlag(flagKey)} className="size-4 accent-[color:var(--accent)]" />
+            <Flag size={14} aria-hidden="true" /> Review
+          </label>
+          <div className="flex shrink-0 items-center gap-1.5 lg:order-3">
+            <button type="button" onClick={() => step(-1)} aria-label="Previous" className="grid size-10 place-items-center rounded-md border border-[color:var(--border)] sm:size-9"><ArrowLeft size={16} /></button>
+            <button type="button" onClick={() => step(1)} aria-label="Next" className="grid size-10 place-items-center rounded-md bg-[color:var(--foreground)] text-[color:var(--background)] sm:size-9"><ArrowRight size={16} /></button>
+            <button type="button" onClick={() => setConfirm(true)} className="ml-1 inline-flex h-10 items-center gap-1.5 rounded-md bg-[color:var(--accent)] px-3 text-sm font-bold text-[color:var(--on-accent)] sm:h-9">
+              <Check size={16} aria-hidden="true" /> Submit
+            </button>
+          </div>
         </div>
       </nav>
 
