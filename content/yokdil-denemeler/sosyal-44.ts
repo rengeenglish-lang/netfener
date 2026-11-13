@@ -734,11 +734,11 @@ export const SOSYAL_44: YokdilDeneme = {
         "At eighteen, the Mexican painter Frida Kahlo was badly injured when a tram crashed into the bus she was travelling in.",
         "During her long recovery in bed, she began to paint using a mirror fixed above her.",
         "Many of her later works are self-portraits that reflect her physical pain.",
-        "Mexico City was built on the site of an Aztec capital.",
+        "Mexican cuisine is famous for its use of chillies.",
         "She once said that she painted herself because she was so often alone.",
       ],
       odd: 3,
-      why: "Parça Frida Kahlo'nun yaralanmasını ve otoportrelerini anlatır. Mexico City'nin bir Aztek başkentinin yerine kurulduğunu söyleyen IV. cümle konu dışıdır.",
+      why: "Parça Frida Kahlo'nun yaralanmasını ve otoportrelerini anlatır. Meksika mutfağının acı biber kullanımıyla ünlü olduğunu söyleyen IV. cümle konu dışıdır.",
     },
     {
       sentences: [
