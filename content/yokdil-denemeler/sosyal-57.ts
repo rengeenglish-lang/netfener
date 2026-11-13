@@ -753,14 +753,14 @@ export const SOSYAL_57: YokdilDeneme = {
     },
     {
       sentences: [
-        "In ancient Athens, many legal cases were decided by very large juries of ordinary citizens.",
-        "Some juries had five hundred or more members.",
-        "Jurors were chosen by lot using a stone machine with slots and coloured balls.",
-        "The large numbers made it difficult to bribe the jury.",
-        "Athens is famous for its ancient temples.",
+        "The world's first separate court for children was set up in Chicago in 1899.",
+        "Reformers argued that young offenders should be helped rather than simply punished.",
+        "The court's hearings were less formal than those in adult courts.",
+        "Its aim was to guide children towards better lives.",
+        "Chicago is located on the shore of a large lake.",
       ],
       odd: 4,
-      why: "Parça antik Atina'daki büyük jürileri anlatır. Atina'nın antik tapınaklarıyla ünlü olduğunu söyleyen V. cümle konu dışıdır.",
+      why: "Parça ilk çocuk mahkemesini anlatır. Chicago'nun büyük bir gölün kıyısında olduğunu söyleyen V. cümle konu dışıdır.",
     },
   ],
 };
