@@ -755,12 +755,12 @@ export const FEN_65: YokdilDeneme = {
       sentences: [
         "Some modern pigments change colour with temperature.",
         "They are used in mugs that reveal a picture when hot drinks are poured in.",
-        "They are also used in labels that show when food has become too warm.",
         "Hot drinks are popular in winter.",
+        "They are also used in labels that show when food has become too warm.",
         "Such pigments contain substances that change their structure at a particular temperature.",
       ],
-      odd: 3,
-      why: "Parça sıcaklıkla renk değiştiren pigmentleri anlatır. Sıcak içeceklerin kışın popüler olduğunu söyleyen IV. cümle konu dışıdır.",
+      odd: 2,
+      why: "Parça sıcaklıkla renk değiştiren pigmentleri anlatır. Sıcak içeceklerin kışın popüler olduğunu söyleyen III. cümle konu dışıdır.",
     },
   ],
 };
