@@ -734,7 +734,7 @@ export const FEN_62: YokdilDeneme = {
         "Element 112 was first made in Germany in 1996.",
         "In 2010, it was named copernicium after the astronomer Nicolaus Copernicus.",
         "The name was announced on his birthday.",
-        "Copernicus argued that the Earth moves around the Sun.",
+        "Its most stable form decays by half in about thirty seconds.",
         "Astronomers today use powerful telescopes.",
       ],
       odd: 4,
