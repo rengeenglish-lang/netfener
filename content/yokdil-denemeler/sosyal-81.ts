@@ -712,11 +712,11 @@ export const SOSYAL_81: YokdilDeneme = {
         "The Roman Empire operated a state postal service for carrying official messages.",
         "Messengers used a network of roads and stations where they could change horses.",
         "Ordinary citizens were not usually allowed to use it.",
-        "Roman roads were built with several layers of stone.",
         "The system allowed the government to communicate across a vast empire.",
+        "Roman roads were built with several layers of stone.",
       ],
-      odd: 3,
-      why: "Parça Roma İmparatorluğu'nun devlet posta hizmetini anlatır. Roma yollarının birkaç taş katmanıyla yapıldığını söyleyen IV. cümle konu dışıdır.",
+      odd: 4,
+      why: "Parça Roma İmparatorluğu'nun devlet posta hizmetini anlatır. Roma yollarının birkaç taş katmanıyla yapıldığını söyleyen V. cümle konu dışıdır.",
     },
     {
       sentences: [
