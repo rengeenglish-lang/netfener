@@ -77,9 +77,9 @@ export const SOSYAL_72: YokdilDeneme = {
       "'The more ..., the more ...' paralel yapısı: 'the more'.",
     ],
     [
-      "Local residents demanded that the number of short-term rentals ---- limited.",
+      "The villagers demanded that more hostels ---- built along the route.",
       ["be", "is", "was", "to be", "being"],
-      "'demand that' sonrası yalın fiil (subjunctive): 'be limited'.",
+      "'demand that' sonrası yalın fiil (subjunctive), edilgen: 'be built'.",
     ],
     [
       "The camp is said ---- thousands of visitors in its first summer.",
@@ -684,15 +684,15 @@ export const SOSYAL_72: YokdilDeneme = {
       "Boşluk kalabalığın büyüklüğünü anlatıp geçici kente bağlanan bir cümle gerektirir; boşluğa festival sırasında on milyonlarca hacının günahlarını arındırdığına inandıkları suda yıkanmaya geldiğini söyleyen cümle gelmelidir.",
     ],
     [
-      "In 2007, two young designers in San Francisco could not afford their rent, so they placed air mattresses on their floor and offered them to visitors attending a conference. ---- Critics argue that in some cities, such services have reduced the number of homes available for local residents.",
+      "In 1909, Richard Schirrmann, a German schoolteacher, was caught in a storm while taking his pupils on a walking trip and had to shelter in an empty school. ---- The idea spread across Europe, and today there are thousands of youth hostels around the world.",
       [
-        "The idea grew into an online platform that now allows people to rent out rooms and homes to travellers around the world.",
-        "San Francisco is famous for its bridges.",
-        "Conferences attract many visitors.",
-        "Some cities have introduced rules limiting short-term rentals.",
-        "Air mattresses are easy to store.",
+        "The experience gave him the idea of creating cheap places where young walkers could stay overnight, and in 1912 he opened the first permanent hostel in a castle.",
+        "Germany has many forests.",
+        "Storms can be dangerous.",
+        "Many hostels have shared rooms with bunk beds.",
+        "Teachers often take pupils on trips.",
       ],
-      "Boşluk fikrin büyüyüşünü anlatıp eleştiriye bağlanan bir cümle gerektirir; boşluğa fikrin insanların dünya çapında gezginlere oda ve ev kiralamasını sağlayan çevrimiçi bir platforma dönüştüğünü söyleyen cümle gelmelidir.",
+      "Boşluk fırtına deneyiminden yaygınlaşmaya geçişi sağlayan bir cümle gerektirir; boşluğa bu deneyimin genç yürüyüşçüler için ucuz konaklama yerleri yaratma fikrini verdiğini ve 1912'de bir şatoda ilk kalıcı pansiyonu açtığını söyleyen cümle gelmelidir.",
     ],
   ],
   irrelevant: [
@@ -753,14 +753,14 @@ export const SOSYAL_72: YokdilDeneme = {
     },
     {
       sentences: [
-        "Some popular cities now charge tourists a daily fee to enter their historic centres.",
-        "The aim is to reduce crowding and pay for the cost of cleaning and maintenance.",
-        "Historic centres often contain old churches.",
-        "Critics say the fees may not reduce the number of visitors.",
-        "Other cities have limited the number of cruise ships allowed to dock.",
+        "In 1981, an American airline introduced a programme that rewarded passengers for flying with it regularly.",
+        "Travellers collected points that could be exchanged for free flights.",
+        "Airports are often far from city centres.",
+        "Other airlines quickly copied the idea.",
+        "Today, such programmes have hundreds of millions of members.",
       ],
       odd: 2,
-      why: "Parça turistlerden alınan giriş ücretlerini anlatır. Tarihi merkezlerin çoğunlukla eski kiliseler içerdiğini söyleyen III. cümle konu dışıdır.",
+      why: "Parça sık uçan yolcu programlarını anlatır. Havaalanlarının çoğunlukla kent merkezlerinden uzak olduğunu söyleyen III. cümle konu dışıdır.",
     },
   ],
 };
