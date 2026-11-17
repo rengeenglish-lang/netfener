@@ -82,9 +82,9 @@ export const SOSYAL_84: YokdilDeneme = {
       "'demand that' sonrası yalın fiil (subjunctive), edilgen: 'be controlled'.",
     ],
     [
-      "The chef is said ---- the salad when his kitchen was running short of supplies.",
-      ["to have invented", "inventing", "to be invented", "invented", "having invent"],
-      "Geçmişte yapılan eylem için mastarın geçmiş biçimi: 'to have invented'.",
+      "The dessert is said ---- after a ballerina who toured the region in the 1920s.",
+      ["to have been named", "naming", "to name", "named", "having name"],
+      "Geçmişe ait edilgen eylem için mastarın geçmiş edilgen biçimi: 'to have been named'.",
     ],
     [
       "The cabbage is salted ---- it will keep for many months.",
@@ -629,15 +629,15 @@ export const SOSYAL_84: YokdilDeneme = {
   ],
   paragraph: [
     [
-      "The Caesar salad is named not after the Roman general but after Caesar Cardini, an Italian immigrant who ran a restaurant in the Mexican city of Tijuana in the 1920s. ---- The salad later became a fixture on menus in the United States and beyond.",
+      "The pavlova, a dessert made of a crisp meringue shell topped with cream and fruit, was named after the Russian ballerina Anna Pavlova, who toured Australia and New Zealand in the 1920s. ---- Food historians have since found that similar meringue cakes were described in earlier recipe books from other countries.",
       [
-        "According to his family, he invented it one busy weekend when supplies ran low and he combined the ingredients he had left.",
-        "Mexico borders the United States.",
-        "Salads are eaten in many countries.",
-        "Many Americans visited Tijuana at the time to avoid laws banning alcohol in their own country.",
-        "Restaurants are busy at weekends.",
+        "For decades, the two countries have argued over which of them invented the dessert.",
+        "Ballet is performed in theatres.",
+        "Fruit is rich in vitamins.",
+        "Cooks often decorate it with kiwifruit, strawberries and passion fruit.",
+        "Cream is made from milk.",
       ],
-      "Boşluk salatanın nasıl icat edildiğini anlatıp sonradan yayılmasına bağlanan bir cümle gerektirir; boşluğa ailesine göre malzemeler azaldığı yoğun bir hafta sonunda elinde kalanları birleştirerek onu icat ettiğini söyleyen cümle gelmelidir.",
+      "Boşluk iki ülkenin tartışmasını anlatıp tarihçilerin bulgusuna bağlanan bir cümle gerektirir; boşluğa iki ülkenin on yıllardır tatlıyı hangisinin icat ettiğini tartıştığını söyleyen cümle gelmelidir.",
     ],
     [
       "In 2022, UNESCO added the skills and culture associated with the French baguette to its list of intangible heritage. ---- Supporters hoped that the decision would help to protect traditional bakeries, many of which have closed in recent decades.",
