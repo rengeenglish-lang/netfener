@@ -753,14 +753,14 @@ export const SOSYAL_75: YokdilDeneme = {
     },
     {
       sentences: [
-        "Night shifts became common with the spread of electric lighting in factories.",
-        "Working at night can disturb the body's natural rhythms.",
-        "Studies have linked long-term night work to health problems.",
-        "Electric lights were invented in the nineteenth century.",
-        "Some countries limit the number of night shifts a worker can do.",
+        "In many industrial towns, a loud steam whistle or siren announced the start and end of each shift.",
+        "Workers who arrived after it sounded could lose part of their pay.",
+        "Steam engines were invented in the eighteenth century.",
+        "Some residents set their daily routines by the sound.",
+        "Most of these signals fell silent as factories closed or modernised.",
       ],
-      odd: 3,
-      why: "Parça gece vardiyasının yaygınlaşmasını ve etkilerini anlatır. Elektrik lambalarının on dokuzuncu yüzyılda icat edildiğini söyleyen IV. cümle konu dışıdır.",
+      odd: 2,
+      why: "Parça fabrika düdüklerinin vardiyaları duyurmasını anlatır. Buhar makinelerinin on sekizinci yüzyılda icat edildiğini söyleyen III. cümle konu dışıdır.",
     },
   ],
 };
