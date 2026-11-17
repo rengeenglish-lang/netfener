@@ -742,14 +742,14 @@ export const SAGLIK_77: YokdilDeneme = {
     },
     {
       sentences: [
-        "In medieval Persia, a medical school and hospital flourished in the city of Gundishapur.",
-        "Scholars there worked in several languages.",
-        "Students learned from Greek, Indian and Persian traditions.",
-        "Persian carpets are famous around the world.",
-        "Some of its physicians later served at the court of the caliphs in Baghdad.",
+        "In the third century, the Chinese physician Wang Shuhe wrote a book devoted entirely to the pulse.",
+        "He described two dozen types of pulse and what each was thought to reveal.",
+        "Doctors felt the pulse at several points on both wrists.",
+        "Wrist watches became common in the twentieth century.",
+        "Pulse diagnosis remains central to traditional Chinese medicine today.",
       ],
       odd: 3,
-      why: "Parça Cündişapur'daki tıp okulunu anlatır. İran halılarının dünyaca ünlü olduğunu söyleyen IV. cümle konu dışıdır.",
+      why: "Parça Wang Shuhe'nin nabız üzerine kitabını ve nabız tanısını anlatır. Kol saatlerinin yirminci yüzyılda yaygınlaştığını söyleyen IV. cümle konu dışıdır.",
     },
     {
       sentences: [
