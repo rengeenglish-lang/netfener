@@ -731,14 +731,14 @@ export const SAGLIK_80: YokdilDeneme = {
     },
     {
       sentences: [
-        "Many babies cry for long periods without any obvious reason.",
-        "This is often called colic.",
-        "It usually begins in the first few weeks and ends by around four months.",
-        "Parents may find it very stressful.",
-        "Babies are born with around three hundred bones.",
+        "Many parents notice that their child walks with the toes pointing inwards.",
+        "This is very common in toddlers and young children.",
+        "In most cases, it corrects itself as the child grows.",
+        "Doctors rarely recommend special shoes or braces.",
+        "Shoes for children are sold in many different sizes.",
       ],
       odd: 4,
-      why: "Parça bebeklerdeki uzun ağlama krizlerini (kolik) anlatır. Bebeklerin yaklaşık üç yüz kemikle doğduğunu söyleyen V. cümle konu dışıdır.",
+      why: "Parça çocuklarda ayak parmaklarının içe dönük yürümesini anlatır. Çocuk ayakkabılarının pek çok farklı numarada satıldığını söyleyen V. cümle konu dışıdır.",
     },
     {
       sentences: [
