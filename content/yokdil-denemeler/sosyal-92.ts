@@ -272,15 +272,15 @@ export const SOSYAL_92: YokdilDeneme = {
       "'No sooner ... than' yapısı: dört bilim insanı çevirilerini karşılaştırır karşılaştırmaz çivi yazısının gerçekten çözüldüğü anlaşıldı.",
     ],
     [
-      "While the sound values of many signs in the Minoan script can be guessed, ----.",
+      "While the meaning of some signs in the Proto-Elamite script can be guessed, ----.",
       [
         "the language they record remains unknown",
-        "Crete is an island",
+        "Iran is a country",
         "the signs are on clay",
         "many tablets exist",
         "the script is now read as easily as modern Greek by most scholars",
       ],
-      "'While' zıtlık bildirir: Minos yazısındaki birçok işaretin ses değeri tahmin edilebilse de kaydettikleri dil hâlâ bilinmemektedir.",
+      "'While' zıtlık bildirir: Proto-Elam yazısındaki işaretlerin bir kısmının anlamı tahmin edilebilse de kaydettikleri dil hâlâ bilinmemektedir.",
     ],
     [
       "The storeroom contained so many fragments ----.",
@@ -629,15 +629,15 @@ export const SOSYAL_92: YokdilDeneme = {
   ],
   paragraph: [
     [
-      "Linear A is a form of writing found on the island of Crete, dating from the second millennium BC and appearing mainly on clay tablets recording goods. ---- Because the language it records is unknown, however, the texts themselves remain largely unreadable.",
+      "Ogham is an alphabet in which the oldest known Irish texts were written, mainly between the fourth and seventh centuries. ---- Most of the surviving inscriptions are short and record little more than a person's name and family.",
       [
-        "Since a later script that has been deciphered developed from it, scholars can estimate how many of its signs were pronounced.",
-        "Crete is the largest Greek island.",
-        "Clay was used in many ancient societies.",
-        "Most of the tablets were discovered by British archaeologists in the early twentieth century.",
-        "Writing was invented in Mesopotamia.",
+        "Its letters consist of groups of short lines cut along the edge of a standing stone.",
+        "Ireland is an island in western Europe.",
+        "Stones are found in many fields.",
+        "Several hundred such stones have also been found in Wales and Scotland.",
+        "Irish is still spoken today.",
       ],
-      "Boşluk 'however' ile karşıtlık kurulacak olumlu bir bilgi gerektirir; boşluğa daha sonra çözülen bir yazının ondan geliştiği için işaretlerin okunuşunun tahmin edilebildiğini söyleyen cümle gelmelidir.",
+      "Boşluk alfabenin nasıl yazıldığını açıklayıp yazıtların içeriğine bağlanan bir cümle gerektirir; boşluğa harflerin dikili bir taşın kenarı boyunca kesilmiş kısa çizgi gruplarından oluştuğunu söyleyen cümle gelmelidir.",
     ],
     [
       "In 1868, a missionary was shown a large inscribed stone in a village in what is now Jordan, which recorded the victories of a king named Mesha in the ninth century BC. ---- Fortunately, a scholar had already made a paper impression of the inscription, which allowed it to be reconstructed.",
