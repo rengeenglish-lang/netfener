@@ -122,7 +122,11 @@ export function IeltsSpeakingRunner({ testId, testTitle, module, candidate, libr
     const next = () => {
       if (runRef.current === run) done();
     };
+    let fellBack = false;
     const speakInstead = () => {
+      // A missing clip fires both the error event and the rejected play(); read the line only once.
+      if (fellBack) return;
+      fellBack = true;
       if (typeof window.speechSynthesis === "undefined") return void window.setTimeout(next, 1500);
       const u = new SpeechSynthesisUtterance(text);
       u.lang = "en-GB";

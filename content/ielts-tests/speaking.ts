@@ -74,6 +74,13 @@ function build(testId: string, spec: Spec): SpeakingModule {
   };
 }
 
+/**
+ * Tests whose examiner MP3s have not been built yet (Azure Speech is unavailable). The Speaking runner
+ * reads each line with the browser's own voice when a clip is missing. Run scripts/build-ielts-audio.mts
+ * and remove the ids from this list once the clips exist.
+ */
+export const SPEAKING_AUDIO_PENDING = new Set(["academic-7", "academic-8", "academic-9", "academic-10", "general-5", "general-6", "general-7", "general-8"]);
+
 export const SPEAKING: Record<string, SpeakingModule> = {
   "academic-1": build("academic-1", {
     examiner: "en-GB-RyanNeural",
@@ -451,6 +458,310 @@ export const SPEAKING: Record<string, SpeakingModule> = {
         ["What are the advantages of growing up in a large family?", "Children in large families always have someone to play with, and they learn to share and cooperate from an early age. There's also a strong support network, since there are many people to help in difficult times."],
         ["Who should take care of elderly people: families or the state?", "Ideally, I think families should play the main role, because elderly people usually prefer to be with people they love. But the state also needs to provide good care homes and support, because not every family is able to look after an elderly relative, especially if they have serious health needs."],
         ["Do you think the role of grandparents is important?", "Yes, very important. In many families, grandparents help with childcare, which allows parents to work. They also pass on family history and traditions, and they often have more time and patience than busy parents."],
+      ],
+    },
+  }),
+
+  "academic-7": build("academic-7", {
+    examiner: "en-GB-AlfieNeural",
+    p1: [
+      {
+        topic: "your free time",
+        qs: [
+          ["What do you usually do in your free time?", "It depends on how much time I have. On weekday evenings I usually just read or watch a series, but at weekends I like to get out of the house, so I often meet friends or go for a long walk by the sea."],
+          ["Do you prefer to spend your free time alone or with other people?", "A bit of both, really. I need some time on my own to relax after a busy week, but if I spend a whole weekend alone I start to feel a little bored, so I try to find a balance."],
+          ["Do you think people have less free time than in the past?", "In some ways, yes. Many people work longer hours now, and phones mean that work messages follow us home. But we also have more ways to use the free time we do have, so it probably feels different rather than simply shorter."],
+        ],
+      },
+      {
+        topic: "art",
+        qs: [
+          ["Do you like visiting art galleries?", "I do, although I don't go as often as I'd like. I especially enjoy small galleries showing local artists, because they're usually quiet and you can take your time looking at the work."],
+          ["Did you do art at school?", "Yes, we had art lessons until I was about fourteen. I wasn't particularly talented, but I remember enjoying painting with watercolours, because it felt very different from the rest of the timetable."],
+          ["Is there a kind of art you would like to learn?", "I'd like to learn photography properly. At the moment I just take pictures on my phone, but I'd love to understand how to use light and composition to make photos that really tell a story."],
+        ],
+      },
+    ],
+    p2: {
+      topic: "Describe a skill you learned that you are proud of.",
+      describe: "a skill you learned that you are proud of",
+      points: ["what the skill is", "when and how you learned it", "how difficult it was to learn", "and explain why you are proud of learning this skill"],
+      sample: "The skill I'm proudest of is swimming, which might sound surprising because most people learn it as children. I didn't, though. I grew up in a city far from the sea, and somehow I never had lessons, so by the time I was twenty I still couldn't swim at all, which was quite embarrassing on holidays with friends. Two years ago I finally decided to do something about it and signed up for an adult beginners' course at a local pool. The first few weeks were genuinely hard. I was nervous in deep water, and I remember holding on to the side of the pool while children much younger than me swam past. Our instructor was very patient, though, and she broke everything down into small steps: first floating, then kicking, then breathing properly. After about three months I swam a full length without stopping, and I was so happy I almost cried. Now I swim twice a week. I'm proud of it not because it's an impressive skill, but because I overcame a real fear, and it taught me that it's never too late to learn something new.",
+      followUp: ["Do you think it is easier to learn new skills when you are young?", "In some ways, yes, because children have more time and they aren't afraid of looking silly. But adults often have more motivation, because they've chosen to learn something rather than being told to."],
+    },
+    p3: {
+      theme: "learning new skills",
+      qs: [
+        ["What skills do you think young people need most today?", "I'd say the ability to keep learning is the most important one, because jobs are changing so quickly. Beyond that, practical skills like managing money and communicating clearly are really valuable, and I don't think schools always teach them well."],
+        ["Is it better to learn a skill from a teacher or by yourself, for example online?", "It depends on the skill. For something like a language or a musical instrument, a teacher can correct mistakes before they become habits. But for many practical things, online videos are excellent, and they let people learn at their own pace and for free."],
+        ["Why do some people give up when they are learning something new?", "Usually because progress is slower than they expected. At the beginning you improve quickly, but then there's often a long period where you don't seem to get any better, and that's when many people lose motivation."],
+        ["Should employers pay for their staff to learn new skills?", "I think they should, at least for skills related to the job. It benefits the company directly, because staff become more productive, and it also makes people more loyal, since they feel the employer is investing in them."],
+      ],
+    },
+  }),
+
+  "academic-8": build("academic-8", {
+    examiner: "en-GB-BellaNeural",
+    p1: [
+      {
+        topic: "colours",
+        qs: [
+          ["What is your favourite colour?", "I've always liked dark green. It reminds me of forests, and I find it calming. A lot of my clothes are green, and my friends tease me about it."],
+          ["Are there any colours you don't like?", "I'm not a big fan of very bright orange. It's fine on a sunset, but on clothes or walls I find it a bit too loud and tiring to look at."],
+          ["Do colours have special meanings in your culture?", "Yes, some do. Red is often linked with celebrations, especially weddings, and white is traditionally associated with purity. Blue beads are also used to protect people from bad luck, which you see everywhere here."],
+        ],
+      },
+      {
+        topic: "sleep",
+        qs: [
+          ["How many hours do you usually sleep?", "About seven hours on weekdays, which is probably slightly less than I need. At weekends I try to catch up, but I've read that this doesn't really work very well."],
+          ["Do you ever have a nap during the day?", "Only occasionally, usually on Sunday afternoons. If I sleep for longer than twenty minutes, I wake up feeling worse, so I try to keep it short."],
+          ["What do you do if you can't get to sleep?", "I try not to look at my phone, because that only wakes me up more. Usually I read a few pages of a book or listen to some quiet music until I start to feel sleepy."],
+        ],
+      },
+    ],
+    p2: {
+      topic: "Describe a time when you were very busy.",
+      describe: "a time when you were very busy",
+      points: ["when it was", "what you had to do", "how you managed your time", "and explain how you felt during this busy period"],
+      sample: "The busiest time I can remember was last spring, when several big things happened at the same time. I was in the final term of my degree, so I had to finish my dissertation, and at the same time I'd started a part-time job at a language school, teaching evening classes three times a week. On top of that, my sister was getting married, and because I'm good at organising things, the family asked me to help plan the wedding. For about six weeks, I hardly had a free minute. To cope, I became very strict with my time. I made a weekly plan every Sunday evening, and I divided my days into blocks: mornings for the dissertation, afternoons for preparing lessons and wedding phone calls, and evenings for teaching. I also stopped using social media almost completely, which saved me a surprising amount of time. Honestly, I felt exhausted and a bit stressed, especially in the last week before my deadline. But I also felt quite proud, because I managed to do everything reasonably well, and the wedding was wonderful. It taught me that I can work under pressure, although I wouldn't want to live like that all the time.",
+      followUp: ["Do you usually plan your time carefully?", "Not as carefully as I did then, to be honest. I keep a calendar for important things, but day to day I'm a little more relaxed about it."],
+    },
+    p3: {
+      theme: "work and free time",
+      qs: [
+        ["Why do many people feel that they are always busy nowadays?", "Partly because technology means we're always reachable, so work and personal life mix together. There's also a kind of social pressure to be productive all the time, and some people even seem proud of being busy."],
+        ["Is it possible to have a good balance between work and private life?", "I think it's possible, but it takes effort, and it depends a lot on the job. Flexible hours and the option to work from home can help, as long as people are disciplined about switching off at the end of the day."],
+        ["Should companies limit the number of hours their employees work?", "To some extent, yes. Research suggests that people become much less productive after a certain number of hours, and overwork can lead to illness. Some countries have laws on this, and I think that's sensible."],
+        ["How do you think working life will change in the future?", "I expect more tasks to be automated, so people may spend less time on routine work and more on things that need creativity or human contact. Some people predict a shorter working week too, although I'm not sure how soon that will happen."],
+      ],
+    },
+  }),
+
+  "academic-9": build("academic-9", {
+    examiner: "en-GB-EthanNeural",
+    p1: [
+      {
+        topic: "birthdays",
+        qs: [
+          ["How do you usually celebrate your birthday?", "Nothing too big. I normally have dinner with my family, and then at the weekend I'll go out with a few close friends, maybe to a restaurant or a café."],
+          ["Do you think birthdays are more important for children or adults?", "Probably for children. They really look forward to their parties and presents, whereas many adults see a birthday as just another day, or even something they'd rather forget."],
+          ["What was the best birthday you have had?", "I think my eighteenth. My friends organised a surprise picnic in a park by the river, and I genuinely had no idea. It was a lovely sunny day, and everyone I cared about was there."],
+        ],
+      },
+      {
+        topic: "walking",
+        qs: [
+          ["Do you walk much in your daily life?", "Yes, quite a lot. I walk to the metro station every morning, which takes about fifteen minutes, and I often walk home too if the weather is good."],
+          ["Where do you like to go for a walk?", "My favourite place is along the coast, where there's a long path by the water. It's especially nice early in the evening, when the light is beautiful and it's not too crowded."],
+          ["Do you think people walk less than they used to?", "I'm sure they do in most places. Cars and delivery services mean that many people hardly need to walk anywhere, and that's probably one reason why health problems linked to inactivity are increasing."],
+        ],
+      },
+    ],
+    p2: {
+      topic: "Describe an interesting old building you have visited.",
+      describe: "an interesting old building you have visited",
+      points: ["where the building is", "when you visited it", "what it looks like", "and explain why you found it interesting"],
+      sample: "I'd like to talk about an old stone caravanserai I visited a couple of years ago, on a trip through central Anatolia with my parents. A caravanserai was a kind of roadside inn where merchants travelling on the old trade routes could stay overnight with their camels and goods, and this one was built in the thirteenth century. From the outside it looks almost like a fortress, with thick, high walls and very few windows, which was for protection against thieves. The most impressive part is the entrance, a huge doorway decorated with incredibly detailed carved patterns in the stone. Inside, there's a large open courtyard with a small prayer room in the middle, and around it are rooms where travellers slept and stables for the animals. There's also a long, dark hall with stone columns, which would have been used in winter. What I found fascinating was imagining what it must have been like eight hundred years ago, full of traders from different countries speaking different languages and exchanging news. It made history feel very real to me, much more than reading about it in a textbook. I also admired the skill of the builders, because the building has survived earthquakes and centuries of weather.",
+      followUp: ["Do you prefer old buildings or modern ones?", "I generally prefer old buildings, because they have more character and you can see the craftsmanship. But I appreciate that modern buildings are usually more comfortable and practical to live in."],
+    },
+    p3: {
+      theme: "history and heritage",
+      qs: [
+        ["Why is it important to protect old buildings?", "They're a direct connection to the past, and they show us how people lived and what they valued. Once they're destroyed, they can't really be replaced. They also give cities their character and attract tourists, which helps the local economy."],
+        ["Who should pay for the protection of historic buildings?", "I think the government should cover most of the cost, since these buildings belong to the whole nation's heritage. But money from tourism, such as ticket sales, can also contribute, and private donations or sponsorship can help with specific projects."],
+        ["Is it better to turn old buildings into museums or to use them for other purposes?", "Not every old building needs to be a museum. Sometimes the best way to keep a building alive is to give it a new use, like turning an old factory into flats or an old school into a library, as long as the important features are preserved."],
+        ["Do young people today know enough about their country's history?", "I think many know the main events from school, but they often find history lessons boring because they focus on dates. Visiting historical sites or using things like documentaries and games can make young people much more interested."],
+      ],
+    },
+  }),
+
+  "academic-10": build("academic-10", {
+    examiner: "en-GB-AbbiNeural",
+    p1: [
+      {
+        topic: "noise",
+        qs: [
+          ["Is the place where you live usually quiet or noisy?", "It's fairly noisy, to be honest. I live on a main road, so there's traffic most of the day, and there's a café downstairs that stays open quite late."],
+          ["Are there any noises that you find relaxing?", "Yes, I love the sound of rain on the window, especially when I'm inside reading. The sound of waves is also very calming for me."],
+          ["Do you think cities are becoming noisier?", "I think they are, because there's more traffic and more construction work. On the other hand, electric cars are much quieter, so perhaps in the future some streets will actually become quieter."],
+        ],
+      },
+      {
+        topic: "handwriting",
+        qs: [
+          ["Do you often write by hand?", "Not as often as I used to. I type almost everything now, but I still write shopping lists and notes in meetings by hand, because I find it helps me remember things."],
+          ["Is your handwriting easy to read?", "When I'm writing slowly, yes, but when I'm in a hurry it becomes quite messy. My teachers used to complain about it in exams."],
+          ["Do you think children should still learn handwriting at school?", "Yes, I do. Research suggests that writing by hand helps children learn to read and remember information, and there will always be situations where you need to write something down without a device."],
+        ],
+      },
+    ],
+    p2: {
+      topic: "Describe a useful piece of advice you received.",
+      describe: "a useful piece of advice you received",
+      points: ["who gave you the advice", "what the advice was", "when you received it", "and explain why it was useful to you"],
+      sample: "One of the most useful pieces of advice I've ever been given came from my grandfather, when I was about sixteen and very worried about my exams. I was the kind of student who wanted everything to be perfect, and I would spend hours on a single piece of homework, rewriting it again and again, and I'd often get so anxious that I couldn't sleep. One evening, he noticed how stressed I was and sat down with me. He told me that he had been a carpenter all his life, and that the first thing he had learned was that a finished table is better than a perfect plan. In other words, it's more important to complete something well than to keep trying to make it perfect. At the time, I thought it was just a nice saying, but over the years I've come back to it again and again. It helped me during my university studies, when I had lots of deadlines, and it still helps me at work. Whenever I notice myself getting stuck on small details, I remember his words and remind myself to finish the task first and improve it later if necessary. It's made me much more productive and a lot less stressed.",
+      followUp: ["Do you often ask other people for advice?", "Yes, especially for big decisions. I usually ask my family or close friends, because they know me well, but I try to make the final decision myself."],
+    },
+    p3: {
+      theme: "advice and experience",
+      qs: [
+        ["Who do young people usually go to for advice?", "These days, I think many young people go to their friends first, and increasingly to the internet or social media. Parents are still important for serious matters, but teenagers often prefer to talk to people their own age."],
+        ["Is advice from older people always useful?", "Not always. Older people have valuable experience, but the world changes, so some of their advice, for example about jobs or technology, may be out of date. I think the best approach is to listen carefully and then decide what applies to your own situation."],
+        ["Why do some people find it difficult to accept advice?", "Sometimes it's pride, because accepting advice can feel like admitting that you were wrong. Other people simply prefer to learn from their own mistakes. And if the advice is given in a critical way, people naturally become defensive."],
+        ["Do you think professional advisers, such as career counsellors, are necessary?", "I think they can be very helpful. A good career counsellor knows about options and opportunities that most families wouldn't be aware of, and they can be more objective than parents, who sometimes have strong opinions about what their children should do."],
+      ],
+    },
+  }),
+
+  "general-5": build("general-5", {
+    examiner: "en-GB-MaisieNeural",
+    p1: [
+      {
+        topic: "pets",
+        qs: [
+          ["Do you have a pet?", "Yes, we have a cat called Pamuk, which means cotton, because she's completely white. She's about six years old and very lazy, but everyone in the family loves her."],
+          ["What kind of pets are popular in your country?", "Cats are probably the most popular, especially in cities. Lots of people also keep dogs, and in some neighbourhoods everyone helps to feed the street cats, which is quite a nice tradition."],
+          ["Would you like to have a different pet in the future?", "I'd like to have a dog one day, but only when I have a house with a garden. I don't think it's fair to keep a big dog in a small flat."],
+        ],
+      },
+      {
+        topic: "the sea",
+        qs: [
+          ["Do you live near the sea?", "Yes, I'm lucky. I live about ten minutes' walk from the coast, so I can see the sea from the top of my street."],
+          ["What do you like doing by the sea?", "In summer I love swimming, of course, but my favourite thing is just sitting by the water in the evening with a cup of tea, watching the boats."],
+          ["Did you often go to the beach when you were a child?", "Every summer. My family used to rent a small house by the sea for a few weeks, and I spent almost every day swimming and building sandcastles with my cousins."],
+        ],
+      },
+    ],
+    p2: {
+      topic: "Describe a journey you remember well.",
+      describe: "a journey you remember well",
+      points: ["where you went", "how you travelled", "who you went with", "and explain why you remember this journey well"],
+      sample: "A journey I remember really well is a train trip I took with my best friend after we finished high school. We decided to travel from our city to the east of the country by overnight train, which took almost twenty-four hours. Neither of us had ever done such a long journey without our families, so it felt like a real adventure. We had a small sleeping compartment with two narrow beds, and we'd packed far too much food, mostly sandwiches and fruit that our mothers had insisted on. What made the journey special was the scenery. In the morning, we woke up to see huge mountains covered in snow, even though it was early summer, and then we passed through long valleys with tiny villages and rivers. We spent hours just looking out of the window and talking about our plans for the future. We also met an elderly couple in the next compartment who told us stories about the region and gave us advice on what to see. I think I remember it so clearly because it was the first time I felt really independent, and because I realised how big and varied my own country is. We still talk about that trip whenever we meet.",
+      followUp: ["Do you prefer travelling by train or by plane?", "For long distances I usually fly, because it's much faster. But I enjoy trains more, because you can see the landscape and move around."],
+    },
+    p3: {
+      theme: "travel and transport",
+      qs: [
+        ["Why do many people prefer to travel by car rather than public transport?", "Mainly because it's more convenient. You can leave when you want and go directly to your destination, and you don't have to carry your luggage. In places where public transport is unreliable or doesn't reach smaller towns, a car can be almost essential."],
+        ["How could governments encourage people to use public transport more?", "The most important thing is to make it reliable, frequent and affordable. Some cities have also introduced free public transport for certain groups, like students, and others charge drivers to enter the city centre, which seems to work."],
+        ["Do you think people will travel less in the future because of the environment?", "Some people may choose to fly less, but I'm not sure travel will decrease overall, because more people around the world can afford to travel. Perhaps the bigger change will be cleaner forms of transport, such as electric trains and buses."],
+        ["What are the benefits of travelling to other countries?", "Travelling helps you understand other cultures and can make you more open-minded. You also learn practical skills, like solving problems in an unfamiliar place, and it can make you appreciate your own country more when you come home."],
+      ],
+    },
+  }),
+
+  "general-6": build("general-6", {
+    examiner: "en-GB-RyanNeural",
+    p1: [
+      {
+        topic: "hobbies",
+        qs: [
+          ["Do you have a hobby?", "Yes, I really enjoy cooking, especially dishes from other countries. At the weekend I often try a new recipe, and my friends are usually happy to be my testers."],
+          ["How did you become interested in it?", "I started during my first year at university, when I lived alone and got tired of eating fast food. I watched a lot of cooking videos, and gradually it became something I really enjoyed."],
+          ["Is there a hobby you would like to try in the future?", "I'd like to try rock climbing. A friend of mine goes to an indoor climbing centre, and it looks both challenging and fun."],
+        ],
+      },
+      {
+        topic: "evenings",
+        qs: [
+          ["What do you usually do in the evenings?", "On weekdays I'm usually quite tired after work, so I cook dinner, chat with my family and maybe watch something on television. I try to go to bed before midnight."],
+          ["Do you prefer to stay at home or go out in the evening?", "During the week I prefer to stay in, but on Friday and Saturday evenings I like to go out, usually to a restaurant or to see live music."],
+          ["Are evenings in your country different from evenings in other countries?", "I think so. People here tend to have dinner quite late, and in summer the streets are full of families and friends walking and eating outside until late at night."],
+        ],
+      },
+    ],
+    p2: {
+      topic: "Describe a gift you gave to someone.",
+      describe: "a gift you gave to someone",
+      points: ["what the gift was", "who you gave it to", "why you chose it", "and explain how the person felt about the gift"],
+      sample: "I'd like to describe a gift I gave my mother for her sixtieth birthday last year. I wanted to give her something personal rather than just buying something from a shop, so I decided to make a photo album of her life. It took me about two months. First, I secretly collected old photographs from relatives, including some from when she was a little girl that she hadn't seen for decades. Then I scanned them, arranged them in order and designed a printed book, with short notes under each picture. I also asked her friends and family members to write a few lines about a favourite memory of her, and I included those on special pages. I chose this gift because my mother has always been the person who keeps the family together, and I felt she deserved something that showed how much she means to everyone. When she opened it at her birthday dinner, she was completely speechless at first, and then she started crying, in a good way. She spent the rest of the evening turning the pages and telling us stories about each photo. She still keeps it on the table in the living room and shows it to every visitor, which makes me very happy.",
+      followUp: ["Do you prefer giving gifts or receiving them?", "I think I prefer giving them, especially when I've found something that really suits the person. Seeing their reaction is often better than getting a present myself."],
+    },
+    p3: {
+      theme: "gifts and celebrations",
+      qs: [
+        ["Do people in your country spend too much money on gifts?", "Some people do, especially for weddings and big celebrations, where there can be social pressure to give expensive gifts. But many people are now choosing more modest or practical presents, partly because of the cost of living."],
+        ["Is it better to give money or a gift?", "It depends on the situation. Money is practical, especially for young couples or students, because they can buy what they really need. But a gift shows that you've thought about the person, so for close friends and family I think a gift is more meaningful."],
+        ["Why do companies give gifts to their customers?", "Mostly to build loyalty and to make customers feel valued. A small gift, like a free sample or a calendar, keeps the company's name in people's minds and encourages them to come back."],
+        ["Have the ways people celebrate special occasions changed in recent years?", "Yes, quite a lot. Social media has made some celebrations more public and more about photographs. At the same time, some people are choosing smaller, more personal celebrations, or experiences like trips instead of big parties."],
+      ],
+    },
+  }),
+
+  "general-7": build("general-7", {
+    examiner: "en-GB-SoniaNeural",
+    p1: [
+      {
+        topic: "plants and gardens",
+        qs: [
+          ["Do you have any plants at home?", "Yes, I have quite a few on my balcony, mostly herbs like basil and mint, which I use in cooking. I also have a big plant in the living room that I've had for years."],
+          ["Did your family have a garden when you were growing up?", "My grandparents did. They had a small garden with fruit trees and tomatoes, and I loved helping them pick things in summer, although I mostly ate the fruit."],
+          ["Do you think it is important for cities to have green spaces?", "Definitely. Parks and trees make cities cooler in summer and cleaner, and they give people a place to relax and exercise. I think living near green spaces makes people happier."],
+        ],
+      },
+      {
+        topic: "phone calls",
+        qs: [
+          ["Do you prefer to make phone calls or send messages?", "Usually messages, because I can reply when it suits me. But for anything important or complicated, I'd rather call, because it's quicker to explain."],
+          ["Who do you call most often?", "Probably my mother. We speak almost every day, even if it's only for a few minutes, just to check how everyone is."],
+          ["Do you think people make fewer phone calls than in the past?", "Yes, I'm sure they do, especially young people. Many of my friends find phone calls a bit stressful and prefer voice messages, which seems strange to older people."],
+        ],
+      },
+    ],
+    p2: {
+      topic: "Describe a time when you learned something from a mistake.",
+      describe: "a time when you learned something from a mistake",
+      points: ["what the mistake was", "when it happened", "what the result of the mistake was", "and explain what you learned from it"],
+      sample: "I'd like to talk about a mistake I made in my first job, about three years ago. I was working as an assistant in a small travel agency, and one of my tasks was to book hotels for customers. One day, a family asked me to book a hotel for their holiday, and because I was busy and trying to work quickly, I booked the right hotel but for the wrong month. I didn't check the booking confirmation carefully, so nobody noticed until a few days before they were due to travel, when the father phoned to ask about the details. By then, the hotel was fully booked for their dates. I felt terrible. I told my manager immediately, and we spent the whole afternoon phoning other hotels until we found a similar one nearby, which was actually slightly more expensive. The agency paid the difference, and I apologised to the family, who were very understanding in the end. What I learned was the importance of checking my work, however busy I am. Now I always read every confirmation twice, and I use a checklist for important tasks. I also learned that it's better to admit a mistake quickly, because my manager appreciated my honesty, and it meant we had time to solve the problem.",
+      followUp: ["Do you think it is important to admit your mistakes?", "Yes, very important. Hiding a mistake usually makes the situation worse, and people tend to trust you more if you're honest."],
+    },
+    p3: {
+      theme: "learning from mistakes",
+      qs: [
+        ["Do you think children should be allowed to make mistakes?", "Yes, within reason. If parents protect children from every mistake, they never learn how to solve problems themselves. Of course, adults need to step in when there's real danger, but small mistakes are an important part of growing up."],
+        ["Why are some people afraid of making mistakes?", "I think it often comes from school or family, where mistakes were criticised rather than seen as part of learning. Social media may also make people more anxious, because they feel everyone is watching and judging them."],
+        ["Should employers be tolerant of mistakes made by their staff?", "To some extent. If staff are afraid of being punished for every error, they may hide problems, which is dangerous. But repeated or careless mistakes obviously need to be dealt with, so a balance is needed."],
+        ["Can whole societies learn from mistakes in the past?", "I think they can, although not always as well as they should. Disasters and crises often lead to new laws and safety rules, for example after major accidents. Studying history is one way of making sure the same mistakes aren't repeated."],
+      ],
+    },
+  }),
+
+  "general-8": build("general-8", {
+    examiner: "en-GB-ThomasNeural",
+    p1: [
+      {
+        topic: "cafés",
+        qs: [
+          ["Do you often go to cafés?", "Yes, probably two or three times a week. I sometimes go to work there on my laptop, and at weekends I meet friends for breakfast."],
+          ["What makes a café a good place to spend time?", "For me, comfortable seats and a relaxed atmosphere are the most important things. Good coffee helps, of course, but I don't like cafés where the music is too loud."],
+          ["Are there more cafés in your town than in the past?", "Many more. Ten years ago there were mainly traditional tea houses, but now there are modern coffee shops on almost every street, especially near universities."],
+        ],
+      },
+      {
+        topic: "the countryside",
+        qs: [
+          ["Do you often visit the countryside?", "Not as often as I'd like. I live in a big city, so I usually go to the countryside only a few times a year, mostly to visit relatives in their village."],
+          ["What do you enjoy doing in the countryside?", "I love walking, breathing the fresh air and seeing the stars at night, which you can't really see in the city. Eating fresh food from local farms is another highlight."],
+          ["Would you like to live in the countryside in the future?", "Maybe when I'm older. At the moment I think I'd miss the opportunities and the social life of the city, but I can imagine moving to a quiet village after I retire."],
+        ],
+      },
+    ],
+    p2: {
+      topic: "Describe a community event you took part in.",
+      describe: "a community event you took part in",
+      points: ["what the event was", "where and when it took place", "what you did at the event", "and explain how you felt about taking part"],
+      sample: "I'd like to talk about a beach clean-up that I took part in last autumn. It was organised by a local environmental group in my town, and they advertised it on social media and with posters in shops. It took place on a Sunday morning on a beach about twenty minutes from my home, which is very popular in summer but gets quite dirty by the end of the season. About eighty people came, from small children with their parents to retired people, which I thought was lovely. The organisers gave everyone gloves, bags and a sheet where we recorded the types of rubbish we found, because the information is sent to scientists who study pollution. I worked with a group of people I'd never met before, and we spent about three hours walking along the beach and collecting everything from plastic bottles and bags to fishing nets and even an old shoe. By the end, we had filled more than a hundred bags. Afterwards, a local café provided free tea and cakes for all the volunteers. I felt really good about taking part. It was satisfying to see the beach looking clean, and I met some interesting people, a few of whom I'm still in touch with. It also made me much more careful about the plastic I use.",
+      followUp: ["Would you take part in an event like this again?", "Definitely. In fact, I've already signed up for the next one in the spring, and I've persuaded two of my friends to come with me."],
+    },
+    p3: {
+      theme: "community life",
+      qs: [
+        ["Why do some people not take part in community activities?", "Often it's simply a lack of time, because people work long hours and have family responsibilities. Some people also don't know what's happening in their area, or they feel shy about joining a group of strangers."],
+        ["How can local governments encourage people to get involved in their community?", "They could support local groups with funding and free spaces to meet, and advertise events more widely. Organising regular events like street festivals or markets also helps neighbours get to know each other."],
+        ["Is a sense of community weaker in cities than in villages?", "In general, I think it is. In villages, people often know each other's families for generations, whereas in cities people move more often and may not even know their neighbours. But cities can have strong communities too, based on shared interests rather than location."],
+        ["What role does technology play in bringing communities together?", "It can be very positive. Neighbourhood groups on messaging apps help people share information, lend things and organise events. The risk is that online contact replaces face-to-face meetings, so I think it works best when it leads people to meet in person."],
       ],
     },
   }),
