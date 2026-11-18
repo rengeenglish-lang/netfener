@@ -49,7 +49,7 @@ export default async function IeltsLibraryPage() {
                     </span>
                   </div>
                   <ul className="mt-4 divide-y divide-[color:var(--border)] rounded-xl border border-[color:var(--border)]">
-                    {ORDER.map((id) => {
+                    {ORDER.filter((id) => !test || test.modules.some((m) => m.id === id)).map((id) => {
                       const Icon = ICONS[id];
                       const meta = MODULE_META[id];
                       const mod = test?.modules.find((m) => m.id === id);
