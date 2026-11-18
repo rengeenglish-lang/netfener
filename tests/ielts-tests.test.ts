@@ -48,6 +48,14 @@ for (const t of IELTS_TESTS) {
     });
   }
 
+  test(`${t.id}: has Reading and Writing modules`, () => {
+    assert.ok(t.modules.some((m) => m.id === "reading"), "has Reading");
+    const writing = t.modules.find((m) => m.id === "writing");
+    assert.ok(writing && writing.id === "writing" && writing.tasks.length === 2, "has two Writing tasks");
+  });
+
+  // Reading-and-Writing tests (Academic 7+, General 5+) have no Speaking module.
+  if (t.modules.some((m) => m.id === "speaking"))
   test(`${t.id} speaking: three parts, a cue card in Part 2, a sample answer and an examiner clip for every line`, () => {
     const speaking = t.modules.find((m) => m.id === "speaking");
     assert.ok(speaking && speaking.id === "speaking", "has a Speaking module");
