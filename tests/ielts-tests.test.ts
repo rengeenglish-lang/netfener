@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { IELTS_TESTS, questionCount } from "../content/ielts-tests/registry";
+import { SPEAKING_AUDIO_PENDING } from "../content/ielts-tests/speaking";
 import { speakingBand, isBand, baseAudioType } from "../lib/ielts-speaking";
 import type { QuestionGroup } from "../content/ielts-tests/types";
 
@@ -54,8 +55,6 @@ for (const t of IELTS_TESTS) {
     assert.ok(writing && writing.id === "writing" && writing.tasks.length === 2, "has two Writing tasks");
   });
 
-  // Reading-and-Writing tests (Academic 7+, General 5+) have no Speaking module.
-  if (t.modules.some((m) => m.id === "speaking"))
   test(`${t.id} speaking: three parts, a cue card in Part 2, a sample answer and an examiner clip for every line`, () => {
     const speaking = t.modules.find((m) => m.id === "speaking");
     assert.ok(speaking && speaking.id === "speaking", "has a Speaking module");
@@ -68,7 +67,12 @@ for (const t of IELTS_TESTS) {
     const manifest = JSON.parse(readFileSync(join(ROOT, "content/ielts-tests/audio-manifest.json"), "utf8"));
     const clips = [speaking.outroAudio, ...speaking.parts.flatMap((p) => [p.introAudio, ...p.prompts.map((q) => q.audio)])];
     assert.equal(new Set(clips).size, clips.length, "clip paths are unique");
-    for (const clip of clips) assert.ok(manifest[clip] && existsSync(join(ROOT, "public", clip)), `${clip} is built`);
+    if (SPEAKING_AUDIO_PENDING.has(t.id)) {
+      // Not built yet: the runner falls back to the browser's voice. Built clips mean the id should leave the list.
+      assert.ok(clips.every((clip) => !manifest[clip]), "audio is built: remove this test from SPEAKING_AUDIO_PENDING");
+    } else {
+      for (const clip of clips) assert.ok(manifest[clip] && existsSync(join(ROOT, "public", clip)), `${clip} is built`);
+    }
     for (const q of speaking.parts.flatMap((p) => p.prompts)) assert.ok(q.sample.split(/\s+/).length >= 20, `sample answer for "${q.text}"`);
   });
 }
