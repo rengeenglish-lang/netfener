@@ -5,6 +5,9 @@ import { ACADEMIC_4 } from "./academic-4";
 import { ACADEMIC_5 } from "./academic-5";
 import { ACADEMIC_6 } from "./academic-6";
 import { ACADEMIC_7 } from "./academic-7";
+import { ACADEMIC_8 } from "./academic-8";
+import { ACADEMIC_9 } from "./academic-9";
+import { ACADEMIC_10 } from "./academic-10";
 import { GENERAL_1 } from "./general-1";
 import { GENERAL_2 } from "./general-2";
 import { GENERAL_3 } from "./general-3";
@@ -15,11 +18,11 @@ import type { IeltsModuleId, IeltsTest, IeltsTrack } from "./types";
 /** Each test with its Speaking module (kept in speaking.ts) added after Writing. */
 const withSpeaking = (t: IeltsTest): IeltsTest => (SPEAKING[t.id] ? { ...t, modules: [...t.modules, SPEAKING[t.id]] } : t);
 
-export const IELTS_TESTS: IeltsTest[] = [ACADEMIC_1, ACADEMIC_2, ACADEMIC_3, ACADEMIC_4, ACADEMIC_5, ACADEMIC_6, ACADEMIC_7, GENERAL_1, GENERAL_2, GENERAL_3, GENERAL_4].map(withSpeaking);
+export const IELTS_TESTS: IeltsTest[] = [ACADEMIC_1, ACADEMIC_2, ACADEMIC_3, ACADEMIC_4, ACADEMIC_5, ACADEMIC_6, ACADEMIC_7, ACADEMIC_8, ACADEMIC_9, ACADEMIC_10, GENERAL_1, GENERAL_2, GENERAL_3, GENERAL_4].map(withSpeaking);
 
 /** Library slots: released tests are open, the rest are shown as coming soon. */
 export const IELTS_LIBRARY: { track: IeltsTrack; name: string; slots: number }[] = [
-  { track: "academic", name: "Academic", slots: 7 },
+  { track: "academic", name: "Academic", slots: 10 },
   { track: "general", name: "General Training", slots: 4 },
 ];
 

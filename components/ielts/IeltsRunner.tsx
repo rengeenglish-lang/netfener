@@ -566,14 +566,20 @@ function Group({ group, answers, setAnswer, current, setCurrent }: GroupProps) {
 }
 
 function BarChart({ chart }: { chart: NonNullable<WritingTask["chart"]> }) {
-  const max = Math.max(...chart.rows.flatMap((r) => r.values)) * 1.15;
+  const top = Math.max(...chart.rows.flatMap((r) => r.values));
+  // A "nice" gridline step (1, 2 or 5 × 10ⁿ) giving about four lines up to the tallest bar.
+  const raw = top / 4;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 5, 10].map((m) => m * mag).find((x) => x >= raw) ?? raw;
+  const ticks = Array.from({ length: Math.ceil(top / step) + 1 }, (_, i) => +(i * step).toFixed(6));
+  const max = Math.max(ticks[ticks.length - 1], top * 1.05);
   const W = 420, H = 230, pad = 34, bw = 26;
   const slot = (W - pad * 2) / chart.rows.length;
   return (
     <figure className="mt-6 rounded-xl border border-[color:var(--border)] bg-white p-4 text-slate-800">
       <figcaption className="text-center text-sm font-extrabold">{chart.title}</figcaption>
       <svg viewBox={`0 0 ${W} ${H}`} className="mt-2 w-full" role="img" aria-label={`${chart.title}: ${chart.rows.map((r) => `${r.label} ${r.values[0]}${chart.unit} in ${chart.series[0]}, ${r.values[1]}${chart.unit} in ${chart.series[1]}`).join("; ")}`}>
-        {[0, 5, 10, 15].map((t) => {
+        {ticks.map((t) => {
           const y = H - pad - (t / max) * (H - pad * 2);
           return (
             <g key={t}>
