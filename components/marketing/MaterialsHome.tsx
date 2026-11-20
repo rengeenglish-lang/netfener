@@ -8,7 +8,8 @@ import { PLATFORM_EXAMS } from "@/lib/platform";
 import { findNetfenerEdition } from "@/lib/netfener-ebook-editions";
 import { ebookFreePromoEndLabel, isEbookFreePromoActive } from "@/lib/netfener-ebook-promo";
 import { lessonDate, lessonTime } from "@/lib/availability";
-import { StudySample } from "./StudySample";
+import { ExamMockShowcase } from "./ExamMockShowcase";
+import { mockCounts } from "@/lib/mock-counts";
 import { HomeFaq } from "@/components/marketing/HomeFaq";
 import { SiteReviewsSection } from "@/components/site-reviews/SiteReviewsSection";
 import type { PublicReview } from "@/components/site-reviews/SiteReviewCard";
@@ -146,8 +147,8 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
       <div className={`${styles.section} ${styles.practice}`}>
         <div>
           <p className={styles.eyebrow}>Önce deneyimle</p>
-          <h2 id="practice-title" className={styles.heading}>Bir soruyla başla.<br />Nasıl <span className={styles.accent}>öğrendiğini</span> keşfet.</h2>
-          <p className={styles.copy}>Örnek soruyu hemen çöz, açıklamasını incele. Konu anlatımları ve sınav pratiğiyle çalışmana devam et.</p>
+          <h2 id="practice-title" className={styles.heading}>Sınav ekranını gör.<br />Gerçek <span className={styles.accent}>denemeyle</span> çalış.</h2>
+          <p className={styles.copy}>Her sınavın deneme ekranı, gerçek sınavın düzenini izler: süre, soru gezintisi ve cevap kâğıdı. Her sınav için kaç tam deneme olduğunu da buradan gör.</p>
           <ol className={styles.steps}>
             <li className={styles.step}><span>1</span><div><h3>Konuyu öğren</h3><p>Her sınavın ilk konu anlatımı ücretsiz.</p></div></li>
             <li className={styles.step}><span>2</span><div><h3>Pratikle pekiştir</h3><p>Sorulara ve Speaking simülasyonlarına ücretsiz üyelikle eriş.</p></div></li>
@@ -158,7 +159,7 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
             <Link href={memberHref("/dashboard/speaking-practice", isSignedIn)} className="secondary-button">Speaking pratiği</Link>
           </div>
         </div>
-        <StudySample />
+        <ExamMockShowcase counts={mockCounts()} />
       </div>
     </section>
 
