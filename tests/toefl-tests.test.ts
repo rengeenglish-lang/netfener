@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { TOEFL_TESTS, practiceBand, stageItems, toeflSpeakingModule, wordGaps } from "../content/toefl-tests/registry";
+import { TOEFL_AUDIO_PENDING, TOEFL_TESTS, practiceBand, stageItems, toeflSpeakingModule, wordGaps } from "../content/toefl-tests/registry";
 import type { AdaptiveSection, Choice, ListeningTask, ReadingTask } from "../content/toefl-tests/types";
 
 const ROOT = join(import.meta.dirname, "..");
@@ -43,8 +43,8 @@ for (const t of TOEFL_TESTS) {
     }
   });
 
-  test(`${t.id} listening: 16 items in Stage 1, 12 on either route, every recording built`, () => {
-    const l: AdaptiveSection<ListeningTask> = t.listening;
+  if (t.listening) test(`${t.id} listening: 16 items in Stage 1, 12 on either route, every recording built`, () => {
+    const l: AdaptiveSection<ListeningTask> = t.listening!;
     assert.equal(stageItems(l.stage1), 16);
     assert.equal(stageItems(l.easier), 12);
     assert.equal(stageItems(l.harder), 12);
@@ -80,7 +80,8 @@ for (const t of TOEFL_TESTS) {
     assert.ok(lengths[6] > lengths[0], "sentences get longer");
     const m = toeflSpeakingModule(t);
     const clips = [m.outroAudio, ...m.parts.flatMap((p) => [p.introAudio, ...p.prompts.map((q) => q.audio)])];
-    for (const c of clips) assert.ok(built(c), `${c} is built`);
+    if (TOEFL_AUDIO_PENDING.has(t.id)) assert.ok(clips.every((c) => !manifest[c]), "clips are built: remove this test from TOEFL_AUDIO_PENDING");
+    else for (const c of clips) assert.ok(built(c), `${c} is built`);
   });
 }
 

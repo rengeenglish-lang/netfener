@@ -134,6 +134,7 @@ function jobs(): Job[] {
   }
   for (const test of TOEFL_TESTS) {
     const l = test.listening;
+    if (l)
     for (const [stage, tasks] of [["Stage 1", l.stage1.tasks], ["Stage 2 easier", l.easier.tasks], ["Stage 2 harder", l.harder.tasks]] as const) {
       tasks.forEach((t, i) => {
         const label = `${test.id} Listening ${stage} #${i + 1}`;

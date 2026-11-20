@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ToeflTestPage({ params }: Props) {
   const { testId, section } = await params;
   const test = findToeflTest(testId);
-  if (!test || !isSection(section)) notFound();
+  if (!test || !isSection(section) || (section === "listening" && !test.listening)) notFound();
   const library = "/toefl/testler";
   const { user, gate } = await practiceTestAccess();
   const lock = gate(test.no);
@@ -44,6 +44,6 @@ export default async function ToeflTestPage({ params }: Props) {
     );
   }
   const data =
-    section === "reading" ? { id: "reading" as const, data: test.reading } : section === "listening" ? { id: "listening" as const, data: test.listening } : { id: "writing" as const, data: test.writing };
+    section === "reading" ? { id: "reading" as const, data: test.reading } : section === "listening" ? { id: "listening" as const, data: test.listening! } : { id: "writing" as const, data: test.writing };
   return <ToeflRunner testTitle={test.title} section={data} libraryHref={library} />;
 }
