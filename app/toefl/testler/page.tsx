@@ -4,7 +4,7 @@ import { BookOpen, Clock, Headphones, Lock, Mic2, Monitor, PenLine, Route, type 
 import { PageHero } from "@/components/ui/PageHero";
 import { practiceTestAccess } from "@/server/services/practice-test-access.service";
 import { PRACTICE_PLANS_HREF, isFreePracticeTest } from "@/lib/practice-test-access";
-import { SECTION_META, SECTION_ORDER, TOEFL_SLOTS, TOEFL_TESTS, sectionItems, toeflTestHref } from "@/content/toefl-tests/registry";
+import { SECTION_META, SECTION_ORDER, TOEFL_SLOTS, TOEFL_TESTS, sectionItems, testSections, toeflTestHref } from "@/content/toefl-tests/registry";
 import type { ToeflSectionId } from "@/content/toefl-tests/types";
 
 export const metadata: Metadata = {
@@ -52,10 +52,12 @@ export default async function ToeflLibraryPage() {
                 {SECTION_ORDER.map((id) => {
                   const Icon = ICONS[id];
                   const meta = SECTION_META[id];
-                  const detail = !test
-                    ? `${meta.minutes} dk`
+                  // Listening placeholder: the test is released, its recordings are still being prepared.
+                  const pending = Boolean(test) && !testSections(test!).includes(id);
+                  const detail = !test || pending
+                    ? pending ? "Kayıtlar hazırlanıyor" : `${meta.minutes} dk`
                     : id === "reading" || id === "listening"
-                      ? `${meta.minutes} dk · ${sectionItems(test[id])} soru · 2 aşama`
+                      ? `${meta.minutes} dk · ${sectionItems(test[id]!)} soru · 2 aşama`
                       : id === "writing"
                         ? `${meta.minutes} dk · ${test.writing.build.length + 2} görev`
                         : `${meta.minutes} dk · ${test.speaking.repeat.sentences.length + test.speaking.interview.questions.length} görev`;
@@ -68,7 +70,9 @@ export default async function ToeflLibraryPage() {
                           <p className="text-xs text-[color:var(--muted)]">{detail}</p>
                         </div>
                       </div>
-                      {test ? (
+                      {pending ? (
+                        <span className="rounded-full border border-[color:var(--border)] px-3 py-1 text-xs font-bold text-[color:var(--muted)]">Yakında</span>
+                      ) : test ? (
                         lock === "open" ? (
                           <Link href={toeflTestHref(test.id, id)} className="primary-button !px-4 !py-1.5 text-sm">Başla</Link>
                         ) : (

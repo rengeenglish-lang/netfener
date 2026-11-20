@@ -10,6 +10,11 @@ import { TOEFL_7 } from "./toefl-7";
 import { TOEFL_8 } from "./toefl-8";
 import { TOEFL_9 } from "./toefl-9";
 import { TOEFL_10 } from "./toefl-10";
+import { TOEFL_11 } from "./toefl-11";
+import { TOEFL_12 } from "./toefl-12";
+import { TOEFL_13 } from "./toefl-13";
+import { TOEFL_14 } from "./toefl-14";
+import { TOEFL_15 } from "./toefl-15";
 
 /** Fills in the audio path of every listening item from its position in the test. */
 function withAudio(test: ToeflTest): ToeflTest {
@@ -19,13 +24,23 @@ function withAudio(test: ToeflTest): ToeflTest {
     tasks: s.tasks.map((t, i) => ({ ...t, audio: `${dir}/${key}-${String(i + 1).padStart(2, "0")}.mp3` })),
   });
   const l = test.listening;
+  if (!l) return test;
   return { ...test, listening: { ...l, stage1: stage("s1", l.stage1), easier: stage("s2e", l.easier), harder: stage("s2h", l.harder) } };
 }
 
-export const TOEFL_TESTS: ToeflTest[] = [TOEFL_1, TOEFL_2, TOEFL_3, TOEFL_4, TOEFL_5, TOEFL_6, TOEFL_7, TOEFL_8, TOEFL_9, TOEFL_10].map(withAudio);
+export const TOEFL_TESTS: ToeflTest[] = [TOEFL_1, TOEFL_2, TOEFL_3, TOEFL_4, TOEFL_5, TOEFL_6, TOEFL_7, TOEFL_8, TOEFL_9, TOEFL_10, TOEFL_11, TOEFL_12, TOEFL_13, TOEFL_14, TOEFL_15].map(withAudio);
 
-/** Ten slots in the library; tests not yet released are shown as coming soon. */
-export const TOEFL_SLOTS = 10;
+/** Library slots: every released test, rounded up to a row of ten; the rest are shown as coming soon. */
+export const TOEFL_SLOTS = Math.max(10, Math.ceil(TOEFL_TESTS.length / 10) * 10);
+
+/**
+ * Tests whose Speaking clips have not been built yet (Azure Speech unavailable): the speaking screen
+ * reads each line with the browser's voice meanwhile. Remove an id once scripts/build-ielts-audio.mts has run.
+ */
+export const TOEFL_AUDIO_PENDING = new Set<string>(["toefl-11", "toefl-12", "toefl-13", "toefl-14", "toefl-15"]);
+
+/** The sections a test actually has, in exam order. */
+export const testSections = (test: ToeflTest) => SECTION_ORDER.filter((id) => id !== "listening" || Boolean(test.listening));
 
 export const SECTION_META: Record<ToeflSectionId, { name: string; minutes: number; tasks: string }> = {
   reading: { name: "Reading", minutes: 30, tasks: "Complete the Words · Read in Daily Life · Academic Passage" },

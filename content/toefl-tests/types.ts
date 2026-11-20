@@ -92,7 +92,8 @@ export type ToeflTest = {
   no: number;
   title: string;
   reading: AdaptiveSection<ReadingTask>;
-  listening: AdaptiveSection<ListeningTask>;
+  /** Left out of tests released while their recordings cannot be built yet; added later. */
+  listening?: AdaptiveSection<ListeningTask>;
   writing: WritingSection;
   speaking: SpeakingSection;
 };
