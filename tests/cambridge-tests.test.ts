@@ -18,7 +18,7 @@ test("library ids are unique and test numbers run 1..n within each level", () =>
   assert.equal(new Set(CAMBRIDGE_TESTS.map((t) => t.id)).size, CAMBRIDGE_TESTS.length);
   for (const lv of LEVELS) {
     const nos = CAMBRIDGE_TESTS.filter((t) => t.level === lv.id).map((t) => t.no).sort((a, b) => a - b);
-    assert.ok(nos.length >= 1 && nos.length <= CAMBRIDGE_SLOTS, lv.id);
+    assert.ok(nos.length >= 1 && nos.length <= CAMBRIDGE_SLOTS[lv.id], lv.id);
     nos.forEach((n, i) => assert.equal(n, i + 1, `${lv.id} test numbers`));
   }
 });
@@ -111,7 +111,10 @@ function checkTask(t: Task, tag: string) {
 
 for (const t of CAMBRIDGE_TESTS) {
   test(`${t.id}: papers follow the real exam layout and every task is well formed`, () => {
-    assert.deepEqual(Object.fromEntries(t.papers.map((p) => [p.id, p.parts.length])), PARTS[t.level]);
+    const expected = { ...PARTS[t.level] };
+    // Starters Listening is recorded later for tests 6+; Reading & Writing ships first.
+    if (t.level === "starters" && !t.papers.some((p) => p.id === "listening")) delete expected.listening;
+    assert.deepEqual(Object.fromEntries(t.papers.map((p) => [p.id, p.parts.length])), expected);
     for (const paper of t.papers) {
       assert.ok(paper.minutes > 0);
       paper.parts.forEach((part, k) => checkTask(part.task, `${t.id} ${paper.id} part ${k + 1}`));
