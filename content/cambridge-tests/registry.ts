@@ -24,11 +24,19 @@ import { MOVERS_5 } from "./movers-5";
 import { FLYERS_5 } from "./flyers-5";
 import { KEY_5 } from "./key-5";
 import { PRELIMINARY_5 } from "./preliminary-5";
+import { STARTERS_6 } from "./starters-6";
+import { STARTERS_7 } from "./starters-7";
+import { STARTERS_8 } from "./starters-8";
+import { STARTERS_9 } from "./starters-9";
+import { STARTERS_10 } from "./starters-10";
 
-export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2, STARTERS_3, MOVERS_3, FLYERS_3, KEY_3, PRELIMINARY_3, STARTERS_4, MOVERS_4, FLYERS_4, KEY_4, PRELIMINARY_4, STARTERS_5, MOVERS_5, FLYERS_5, KEY_5, PRELIMINARY_5];
+export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2, STARTERS_3, MOVERS_3, FLYERS_3, KEY_3, PRELIMINARY_3, STARTERS_4, MOVERS_4, FLYERS_4, KEY_4, PRELIMINARY_4, STARTERS_5, MOVERS_5, FLYERS_5, KEY_5, PRELIMINARY_5, STARTERS_6, STARTERS_7, STARTERS_8, STARTERS_9, STARTERS_10];
 
-/** Five tests are planned per level; slots not yet released are shown as coming soon. */
-export const CAMBRIDGE_SLOTS = 5;
+/** Planned tests per level; slots not yet released are shown as coming soon. */
+export const CAMBRIDGE_SLOTS: Record<CambridgeLevel, number> = { starters: 25, movers: 25, flyers: 25, key: 100, preliminary: 100 };
+
+/** Starters tests 6+ ship Reading & Writing first; their Listening is recorded later. */
+export const listeningPending = (t: CambridgeTest) => t.level === "starters" && !t.papers.some((p) => p.id === "listening");
 
 export const LEVELS: { id: CambridgeLevel; name: string; cefr: string; age: string; colour: string; e: string; blurb: string }[] = [
   { id: "starters", name: "Pre A1 Starters", cefr: "Pre A1", age: "7–8 yaş", colour: "#f59e0b", e: "🐣", blurb: "İlk sınav: resimlerle evet–hayır, harf harf kelime yazma ve kısa cevaplar." },

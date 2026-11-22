@@ -2,12 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpen, Clock, Headphones, PenLine, Sparkles } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
-import { CAMBRIDGE_SLOTS, CAMBRIDGE_TESTS, LEVELS, cambridgeTestHref, taskItems } from "@/content/cambridge-tests/registry";
+import { CAMBRIDGE_SLOTS, CAMBRIDGE_TESTS, LEVELS, cambridgeTestHref, listeningPending, taskItems } from "@/content/cambridge-tests/registry";
 
 export const metadata: Metadata = {
   title: "Cambridge Sınavları Test Kütüphanesi",
   description: "Pre A1 Starters, A1 Movers, A2 Flyers, A2 Key (KET) ve B1 Preliminary (PET) için renkli, resimli Reading & Writing deneme testleri: anında puan, kalkan (shield) ve Cambridge ölçeği tahmini.",
   alternates: { canonical: "/cambridge/testler" },
+};
+
+const released = (level: (typeof LEVELS)[number]["id"]) => CAMBRIDGE_TESTS.filter((t) => t.level === level).length;
+
+/** Released tests, then one "coming soon" card standing for every slot not yet published. */
+const levelSlots = (level: (typeof LEVELS)[number]["id"]) => {
+  const n = released(level);
+  return Array.from({ length: Math.min(n + 1, CAMBRIDGE_SLOTS[level]) }, (_, i) => i + 1);
 };
 
 export default function CambridgeLibraryPage() {
@@ -18,7 +26,7 @@ export default function CambridgeLibraryPage() {
         <h1 className="page-title">Cambridge sınavları test kütüphanesi</h1>
         <p className="page-copy">
           Young Learners (Starters, Movers, Flyers) ile A2 Key ve B1 Preliminary için gerçek sınav bölümlerini izleyen pratik testler. Resimli kartlar, renkli sahneler ve
-          anında geri bildirim: çocuklar doğru cevabı hemen görür, büyükler Cambridge ölçeğinde tahmini puan alır. Pre A1 Starters testlerinde Listening de var; diğer seviyelerin Listening ve Speaking bölümleri yakında eklenecek.
+          anında geri bildirim: çocuklar doğru cevabı hemen görür, büyükler Cambridge ölçeğinde tahmini puan alır. Pre A1 Starters testlerinin ilk beşinde Listening de var; diğer testlerin Listening ve Speaking bölümleri yakında eklenecek.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm font-bold">
           <span className="inline-flex items-center gap-2 rounded-2xl border border-[color:var(--border)] px-4 py-2"><Sparkles size={16} aria-hidden="true" /> Resimli görevler</span>
@@ -40,7 +48,7 @@ export default function CambridgeLibraryPage() {
             <p className="max-w-xl text-sm text-[color:var(--muted)]">{lv.blurb}</p>
           </div>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {Array.from({ length: CAMBRIDGE_SLOTS }, (_, i) => i + 1).map((no) => {
+            {levelSlots(lv.id).map((no) => {
               const test = CAMBRIDGE_TESTS.find((t) => t.level === lv.id && t.no === no);
               return (
                 <article key={no} className={`flex flex-col rounded-3xl border-2 p-5 ${test ? "bg-[color:var(--surface)]" : "opacity-60"}`} style={{ borderColor: test ? `${lv.colour}55` : "var(--border)" }}>
@@ -58,6 +66,13 @@ export default function CambridgeLibraryPage() {
                             </li>
                           );
                         })}
+                        {listeningPending(test) ? (
+                          <li className="flex flex-wrap items-center gap-x-2 text-[color:var(--muted)]">
+                            <Headphones size={15} aria-hidden="true" />
+                            <span className="font-bold">Listening</span>
+                            <span lang="tr">· Yakında</span>
+                          </li>
+                        ) : null}
                       </ul>
                       <div className="mt-4 flex flex-wrap gap-2">
                         {test.papers.map((paper) => (
@@ -68,7 +83,9 @@ export default function CambridgeLibraryPage() {
                       </div>
                     </>
                   ) : (
-                    <p className="mt-3 text-sm font-bold text-[color:var(--muted)]">Yakında</p>
+                    <p className="mt-3 text-sm font-bold text-[color:var(--muted)]">
+                      {no === released(lv.id) + 1 && CAMBRIDGE_SLOTS[lv.id] - released(lv.id) > 1 ? `Test ${no}–${CAMBRIDGE_SLOTS[lv.id]} yakında` : "Yakında"}
+                    </p>
                   )}
                 </article>
               );
