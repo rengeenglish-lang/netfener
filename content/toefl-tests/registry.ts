@@ -40,6 +40,11 @@ import { TOEFL_37 } from "./toefl-37";
 import { TOEFL_38 } from "./toefl-38";
 import { TOEFL_39 } from "./toefl-39";
 import { TOEFL_40 } from "./toefl-40";
+import { TOEFL_41 } from "./toefl-41";
+import { TOEFL_42 } from "./toefl-42";
+import { TOEFL_43 } from "./toefl-43";
+import { TOEFL_44 } from "./toefl-44";
+import { TOEFL_45 } from "./toefl-45";
 
 /** Fills in the audio path of every listening item from its position in the test. */
 function withAudio(test: ToeflTest): ToeflTest {
@@ -53,7 +58,7 @@ function withAudio(test: ToeflTest): ToeflTest {
   return { ...test, listening: { ...l, stage1: stage("s1", l.stage1), easier: stage("s2e", l.easier), harder: stage("s2h", l.harder) } };
 }
 
-export const TOEFL_TESTS: ToeflTest[] = [TOEFL_1, TOEFL_2, TOEFL_3, TOEFL_4, TOEFL_5, TOEFL_6, TOEFL_7, TOEFL_8, TOEFL_9, TOEFL_10, TOEFL_11, TOEFL_12, TOEFL_13, TOEFL_14, TOEFL_15, TOEFL_16, TOEFL_17, TOEFL_18, TOEFL_19, TOEFL_20, TOEFL_21, TOEFL_22, TOEFL_23, TOEFL_24, TOEFL_25, TOEFL_26, TOEFL_27, TOEFL_28, TOEFL_29, TOEFL_30, TOEFL_31, TOEFL_32, TOEFL_33, TOEFL_34, TOEFL_35, TOEFL_36, TOEFL_37, TOEFL_38, TOEFL_39, TOEFL_40].map(withAudio);
+export const TOEFL_TESTS: ToeflTest[] = [TOEFL_1, TOEFL_2, TOEFL_3, TOEFL_4, TOEFL_5, TOEFL_6, TOEFL_7, TOEFL_8, TOEFL_9, TOEFL_10, TOEFL_11, TOEFL_12, TOEFL_13, TOEFL_14, TOEFL_15, TOEFL_16, TOEFL_17, TOEFL_18, TOEFL_19, TOEFL_20, TOEFL_21, TOEFL_22, TOEFL_23, TOEFL_24, TOEFL_25, TOEFL_26, TOEFL_27, TOEFL_28, TOEFL_29, TOEFL_30, TOEFL_31, TOEFL_32, TOEFL_33, TOEFL_34, TOEFL_35, TOEFL_36, TOEFL_37, TOEFL_38, TOEFL_39, TOEFL_40, TOEFL_41, TOEFL_42, TOEFL_43, TOEFL_44, TOEFL_45].map(withAudio);
 
 /** Library slots: every released test, rounded up to a row of ten; the rest are shown as coming soon. */
 export const TOEFL_SLOTS = Math.max(10, Math.ceil(TOEFL_TESTS.length / 10) * 10);
@@ -62,7 +67,7 @@ export const TOEFL_SLOTS = Math.max(10, Math.ceil(TOEFL_TESTS.length / 10) * 10)
  * Tests whose Speaking clips have not been built yet (Azure Speech unavailable): the speaking screen
  * reads each line with the browser's voice meanwhile. Remove an id once scripts/build-ielts-audio.mts has run.
  */
-export const TOEFL_AUDIO_PENDING = new Set<string>(["toefl-11", "toefl-12", "toefl-13", "toefl-14", "toefl-15", "toefl-16", "toefl-17", "toefl-18", "toefl-19", "toefl-20", "toefl-21", "toefl-22", "toefl-23", "toefl-24", "toefl-25", "toefl-26", "toefl-27", "toefl-28", "toefl-29", "toefl-30", "toefl-31", "toefl-32", "toefl-33", "toefl-34", "toefl-35", "toefl-36", "toefl-37", "toefl-38", "toefl-39", "toefl-40"]);
+export const TOEFL_AUDIO_PENDING = new Set<string>(["toefl-11", "toefl-12", "toefl-13", "toefl-14", "toefl-15", "toefl-16", "toefl-17", "toefl-18", "toefl-19", "toefl-20", "toefl-21", "toefl-22", "toefl-23", "toefl-24", "toefl-25", "toefl-26", "toefl-27", "toefl-28", "toefl-29", "toefl-30", "toefl-31", "toefl-32", "toefl-33", "toefl-34", "toefl-35", "toefl-36", "toefl-37", "toefl-38", "toefl-39", "toefl-40", "toefl-41", "toefl-42", "toefl-43", "toefl-44", "toefl-45"]);
 
 /** The sections a test actually has, in exam order. */
 export const testSections = (test: ToeflTest) => SECTION_ORDER.filter((id) => id !== "listening" || Boolean(test.listening));
