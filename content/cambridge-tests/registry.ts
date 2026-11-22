@@ -29,8 +29,23 @@ import { STARTERS_7 } from "./starters-7";
 import { STARTERS_8 } from "./starters-8";
 import { STARTERS_9 } from "./starters-9";
 import { STARTERS_10 } from "./starters-10";
+import { STARTERS_11 } from "./starters-11";
+import { STARTERS_12 } from "./starters-12";
+import { STARTERS_13 } from "./starters-13";
+import { STARTERS_14 } from "./starters-14";
+import { STARTERS_15 } from "./starters-15";
+import { STARTERS_16 } from "./starters-16";
+import { STARTERS_17 } from "./starters-17";
+import { STARTERS_18 } from "./starters-18";
+import { STARTERS_19 } from "./starters-19";
+import { STARTERS_20 } from "./starters-20";
+import { STARTERS_21 } from "./starters-21";
+import { STARTERS_22 } from "./starters-22";
+import { STARTERS_23 } from "./starters-23";
+import { STARTERS_24 } from "./starters-24";
+import { STARTERS_25 } from "./starters-25";
 
-export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2, STARTERS_3, MOVERS_3, FLYERS_3, KEY_3, PRELIMINARY_3, STARTERS_4, MOVERS_4, FLYERS_4, KEY_4, PRELIMINARY_4, STARTERS_5, MOVERS_5, FLYERS_5, KEY_5, PRELIMINARY_5, STARTERS_6, STARTERS_7, STARTERS_8, STARTERS_9, STARTERS_10];
+export const CAMBRIDGE_TESTS: CambridgeTest[] = [STARTERS_1, MOVERS_1, FLYERS_1, KEY_1, PRELIMINARY_1, STARTERS_2, MOVERS_2, FLYERS_2, KEY_2, PRELIMINARY_2, STARTERS_3, MOVERS_3, FLYERS_3, KEY_3, PRELIMINARY_3, STARTERS_4, MOVERS_4, FLYERS_4, KEY_4, PRELIMINARY_4, STARTERS_5, MOVERS_5, FLYERS_5, KEY_5, PRELIMINARY_5, STARTERS_6, STARTERS_7, STARTERS_8, STARTERS_9, STARTERS_10, STARTERS_11, STARTERS_12, STARTERS_13, STARTERS_14, STARTERS_15, STARTERS_16, STARTERS_17, STARTERS_18, STARTERS_19, STARTERS_20, STARTERS_21, STARTERS_22, STARTERS_23, STARTERS_24, STARTERS_25];
 
 /** Planned tests per level; slots not yet released are shown as coming soon. */
 export const CAMBRIDGE_SLOTS: Record<CambridgeLevel, number> = { starters: 25, movers: 25, flyers: 25, key: 100, preliminary: 100 };
