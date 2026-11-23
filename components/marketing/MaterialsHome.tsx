@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BookOpen, CalendarDays, Check, Clock3, FileText, Play, Sparkles, Users } from "lucide-react";
+import { ArrowRight, BookOpen, CalendarDays, Check, Clock3, FileText, Play, Users } from "lucide-react";
 import type { listHomepageProducts, listHomepageGroups } from "@/server/services/catalog.service";
 import { formatTRY } from "@/lib/pricing";
 import { isMonthlyBilledCategory } from "@/lib/billing";
@@ -112,16 +112,10 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
             <Link href={levelTestHref} className="inline-flex min-h-12 items-center rounded-xl border border-white/30 px-6 text-sm font-bold hover:bg-white/10 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30">Ücretsiz seviye tespiti</Link>
           </div>
           <p className="mt-5 flex items-center gap-2 text-sm text-blue-100"><Check size={18}/> İlk konu her sınavda ücretsiz.</p>
+          <nav aria-label="Çalışma alanın" className="mt-8 flex flex-wrap gap-2">{PILLARS.map(({label,href,membersOnly,icon:Icon})=><Link key={label} href={membersOnly ? memberHref(href, isSignedIn) : href} title={membersOnly && !isSignedIn ? MEMBER_NOTE : undefined} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-extrabold transition hover:bg-white/15 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30"><Icon size={16} className="text-blue-300"/>{label}</Link>)}</nav>
         </div>
-        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-white/15 shadow-2xl sm:aspect-[5/4] lg:aspect-[4/5]">
-            <Image src="/images/auth/auth-welcome.webp" alt="Netfener'de birlikte çalışan, gülümseyen iki öğrenci" fill priority sizes="(min-width:1024px) 40vw, (min-width:640px) 28rem, 100vw" className="object-cover object-[center_30%]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-          </div>
-          <div className="absolute -bottom-6 -left-6 hidden w-[min(26rem,92%)] rounded-[1.5rem] border border-white/15 bg-black/40 p-5 shadow-2xl backdrop-blur-md lg:block xl:-left-12">
-          <div className="flex items-center gap-3"><span className="grid size-12 place-items-center rounded-2xl bg-blue-500"><Sparkles/></span><div><p className="text-xs font-bold uppercase tracking-widest text-blue-200">Netfener</p><p className="text-xl font-black">Çalışma alanın hazır</p></div></div>
-          <div className="mt-4 grid grid-cols-2 gap-2.5">{PILLARS.map(({label,href,membersOnly,icon:Icon})=><Link key={label} href={membersOnly ? memberHref(href, isSignedIn) : href} className="group rounded-2xl bg-white/10 p-3 transition hover:bg-white/15 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30"><Icon size={22} className="text-blue-300"/><p className="mt-3 flex items-center justify-between gap-2 text-sm font-extrabold">{label}<ArrowRight size={16} className="text-blue-200 transition group-hover:translate-x-1"/></p>{membersOnly && !isSignedIn ? <p className="mt-1 text-xs text-blue-200">{MEMBER_NOTE}</p> : null}</Link>)}</div>
-          </div>
+        <div className="relative mx-auto w-full max-w-sm sm:max-w-md lg:max-w-[34rem]">
+          <Image src="/images/home/exam-success.webp" alt="Netfener sonuç raporu: IELTS genel puan 8.0, hedef 7.5 aşıldı; TOEFL 112, YDS 92,5 ve YÖKDİL 90 puan kartları ve mezuniyet kepi" width={1200} height={1467} priority sizes="(min-width:1024px) 34rem, (min-width:640px) 28rem, 24rem" className="h-auto w-full drop-shadow-2xl" />
         </div>
       </div>
     </section>
