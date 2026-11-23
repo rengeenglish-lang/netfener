@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Headphones, RotateCcw, Shield, XCircle } from "lucide-react";
 import type { CambridgeLevel, Paper, Part, Task } from "@/content/cambridge-tests/types";
 import { normalise, scaleEstimate, shields, taskItems } from "@/content/cambridge-tests/registry";
@@ -47,6 +47,20 @@ function GapText({ paragraphs, render }: { paragraphs: string[]; render: (gap: n
           {para.split(/\{(\d+)\}/).map((chunk, j) => (j % 2 === 1 ? <Fragment key={j}>{render(Number(chunk))}</Fragment> : <Fragment key={j}>{chunk}</Fragment>))}
         </p>
       ))}
+    </div>
+  );
+}
+
+/**
+ * Exam-style two-pane layout: on wide screens the reading text and the answers sit side by side,
+ * each pinned under the test bar and scrolling on its own, so the options never leave the screen
+ * while you read. On phones the panes simply stack.
+ */
+function Split({ cols, passage, answers }: { cols: string; passage: React.ReactNode; answers: React.ReactNode }) {
+  return (
+    <div className={`grid gap-5 lg:items-start ${cols}`}>
+      <div className="cam-pane" tabIndex={0} role="region" aria-label="Text">{passage}</div>
+      <div className="cam-pane">{answers}</div>
     </div>
   );
 }
@@ -168,15 +182,20 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
       );
     case "scene-yesno":
       return (
-        <div className="space-y-5">
-          <SceneView scene={t.scene} label="Picture for this part" />
-          {t.items.map((it, i) => (
-            <div key={i} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white p-3 shadow-sm">
-              <p className="text-lg font-bold">{i + 1}. {it.text}</p>
-              <YesNo value={a(i)} onChange={(v) => set(key(p, i), v)} />
+        <Split
+          cols="lg:grid-cols-[1.2fr_1fr]"
+          passage={<SceneView scene={t.scene} label="Picture for this part" />}
+          answers={
+            <div className="space-y-3">
+              {t.items.map((it, i) => (
+                <div key={i} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white p-3 shadow-sm">
+                  <p className="text-lg font-bold">{i + 1}. {it.text}</p>
+                  <YesNo value={a(i)} onChange={(v) => set(key(p, i), v)} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          }
+        />
       );
     case "spell":
       return (
@@ -199,16 +218,10 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
       );
     case "word-bank":
       return (
-        <div className="space-y-5">
-          <div className="flex flex-wrap gap-2 rounded-3xl bg-white p-4 shadow-sm">
-            {t.bank.map((b) => (
-              <span key={b.word} className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--cam-soft)] px-3 py-1.5 text-base font-bold">
-                {b.e ? <span aria-hidden="true">{b.e}</span> : null}
-                {b.word}
-              </span>
-            ))}
-          </div>
-          <div className="rounded-3xl bg-white p-5 shadow-sm">
+        <Split
+          cols="lg:grid-cols-[1.5fr_1fr]"
+          passage={
+            <div className="rounded-3xl bg-white p-5 shadow-sm">
             {t.title ? <h3 className="mb-2 text-xl font-black">{t.title}</h3> : null}
             <GapText
               paragraphs={t.text}
@@ -221,7 +234,18 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
                 </select>
               )}
             />
-          </div>
+            </div>
+          }
+          answers={
+            <div className="space-y-5">
+              <div className="flex flex-wrap gap-2 rounded-3xl bg-white p-4 shadow-sm">
+                {t.bank.map((b) => (
+                  <span key={b.word} className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--cam-soft)] px-3 py-1.5 text-base font-bold">
+                    {b.e ? <span aria-hidden="true">{b.e}</span> : null}
+                    {b.word}
+                  </span>
+                ))}
+              </div>
           {t.titleQuestion ? (
             <div className="space-y-2 rounded-3xl bg-white p-5 shadow-sm">
               <p className="text-lg font-bold">Now choose the best name for the story.</p>
@@ -230,17 +254,13 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
               ))}
             </div>
           ) : null}
-        </div>
-      );
-    case "short-answer":
-      return (
-        <div className="space-y-5">
-          {t.scene ? <SceneView scene={t.scene} label="Picture for this part" /> : null}
-          {t.text ? (
-            <div className="space-y-3 rounded-3xl bg-white p-5 text-lg leading-8 shadow-sm">
-              {t.text.map((para, k) => <p key={k}>{para}</p>)}
             </div>
-          ) : null}
+          }
+        />
+      );
+    case "short-answer": {
+      const questions = (
+        <div className="space-y-3">
           {t.items.map((it, i) => (
             <div key={i} className="flex flex-wrap items-center gap-3 rounded-2xl bg-white p-3 shadow-sm">
               {it.pic ? <PicCard pic={it.pic} i={i} size="md" /> : null}
@@ -250,6 +270,24 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
           ))}
         </div>
       );
+      if (!t.scene && !t.text) return questions;
+      return (
+        <Split
+          cols="lg:grid-cols-[1.3fr_1fr]"
+          passage={
+            <div className="space-y-5">
+              {t.scene ? <SceneView scene={t.scene} label="Picture for this part" /> : null}
+              {t.text ? (
+                <div className="space-y-3 rounded-3xl bg-white p-5 text-lg leading-8 shadow-sm">
+                  {t.text.map((para, k) => <p key={k}>{para}</p>)}
+                </div>
+              ) : null}
+            </div>
+          }
+          answers={questions}
+        />
+      );
+    }
     case "definitions":
       return (
         <div className="space-y-5">
@@ -290,15 +328,9 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
           ))}
         </div>
       );
-    case "mcq":
-      return (
+    case "mcq": {
+      const questions = (
         <div className="space-y-5">
-          {t.text ? (
-            <article className="space-y-3 rounded-3xl bg-white p-5 text-lg leading-8 shadow-sm">
-              {t.text.title ? <h3 className="text-xl font-black">{t.text.title}</h3> : null}
-              {t.text.paragraphs.map((para, k) => <p key={k}>{para}</p>)}
-            </article>
-          ) : null}
           {t.items.map((it, i) => (
             <div key={i} className="space-y-3 rounded-3xl bg-white p-4 shadow-sm">
               {it.notice ? (
@@ -320,6 +352,20 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
           ))}
         </div>
       );
+      if (!t.text) return questions;
+      return (
+        <Split
+          cols="lg:grid-cols-[1.3fr_1fr]"
+          passage={
+            <article className="space-y-3 rounded-3xl bg-white p-5 text-lg leading-8 shadow-sm">
+              {t.text.title ? <h3 className="text-xl font-black">{t.text.title}</h3> : null}
+              {t.text.paragraphs.map((para, k) => <p key={k}>{para}</p>)}
+            </article>
+          }
+          answers={questions}
+        />
+      );
+    }
     case "cloze-mc":
       return (
         <div className="rounded-3xl bg-white p-5 shadow-sm">
@@ -352,7 +398,9 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
       );
     case "matching":
       return (
-        <div className="grid gap-5 lg:grid-cols-[1.2fr_1fr]">
+        <Split
+          cols="lg:grid-cols-[1.2fr_1fr]"
+          passage={
           <div className="space-y-3">
             {t.options.map((o, k) => (
               <div key={k} className="rounded-3xl bg-white p-4 shadow-sm">
@@ -361,6 +409,8 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
               </div>
             ))}
           </div>
+          }
+          answers={
           <div className="space-y-3">
             {t.items.map((it, i) => (
               <div key={i} className="space-y-2 rounded-3xl bg-white p-4 shadow-sm">
@@ -375,12 +425,15 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
               </div>
             ))}
           </div>
-        </div>
+          }
+        />
       );
     case "gapped-text": {
       const shown = order(t.sentences.length, `${seed}-${p}-sentences`);
       return (
-        <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+        <Split
+          cols="lg:grid-cols-[1.4fr_1fr]"
+          passage={
           <div className="rounded-3xl bg-white p-5 shadow-sm">
             <h3 className="mb-2 text-xl font-black">{t.title}</h3>
             <GapText
@@ -395,17 +448,20 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
               )}
             />
           </div>
+          }
+          answers={
           <ol className="space-y-2">
             {shown.map((orig, k) => (
               <li key={orig} className="rounded-2xl bg-white p-3 shadow-sm"><span className="mr-2 font-black text-[color:var(--cam)]">{LETTERS[k]}</span>{t.sentences[orig]}</li>
             ))}
           </ol>
-        </div>
+          }
+        />
       );
     }
     case "writing": {
       const text = a("w") ?? "";
-      return (
+      const material = (
         <div className="space-y-5">
           {t.scene ? <SceneView scene={t.scene} label="Picture for this task" /> : null}
           {t.pics ? (
@@ -425,12 +481,16 @@ function PartView({ part, p, answers, set, seed }: { part: Part; p: number; answ
               {t.prompts.map((pr, k) => <li key={k}>{pr}</li>)}
             </ul>
           ) : null}
+        </div>
+      );
+      const box = (
           <div>
             <textarea className="min-h-56 w-full rounded-3xl border-2 border-slate-300 bg-white p-4 text-lg leading-8 outline-none focus:border-[color:var(--cam)]" value={text} onChange={(e) => set(key(p, "w"), e.target.value)} aria-label="Your answer" spellCheck={false} />
             <p className={`mt-1 text-sm font-bold ${words(text) >= t.minWords ? "text-emerald-600" : "text-slate-500"}`}>Words: {words(text)} / {t.minWords}+</p>
           </div>
-        </div>
       );
+      if (!t.scene && !t.pics && !t.input) return <div className="space-y-5">{material}{box}</div>;
+      return <Split cols="lg:grid-cols-[1fr_1fr]" passage={material} answers={box} />;
     }
   }
 }
@@ -484,6 +544,39 @@ export function CambridgeRunner({ testTitle, level, levelName, colour, paper, li
   const [endAt, setEndAt] = useState(0);
   const [now, setNow] = useState(() => Date.now());
   const [showSample, setShowSample] = useState<Record<number, boolean>>({});
+  const headerRef = useRef<HTMLElement>(null);
+  const partRef = useRef<HTMLDivElement>(null);
+  // The site navbar's height (this test's bar sits just under it) and where the current part's
+  // panes start on the page, so the reading and answer panes can be sized to fit the screen.
+  const [bars, setBars] = useState({ nav: 76, splitTop: 300 });
+
+  useEffect(() => {
+    if (phase !== "test") return;
+    const own = headerRef.current;
+    const part = partRef.current;
+    if (!own || !part) return;
+    const site = Array.from(document.querySelectorAll("header")).find((h) => h !== own && getComputedStyle(h).position === "sticky");
+    const measure = () => {
+      const nav = site?.offsetHeight ?? 0;
+      const splitTop = Math.round(part.getBoundingClientRect().top + window.scrollY);
+      setBars((b) => (b.nav === nav && b.splitTop === splitTop ? b : { nav, splitTop }));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(own);
+    ro.observe(document.body);
+    if (site) ro.observe(site);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [phase, idx]);
+
+  // Each part starts at the top of the page.
+  useEffect(() => {
+    if (phase === "test") window.scrollTo({ top: 0 });
+  }, [idx, phase]);
 
   useEffect(() => {
     if (phase !== "test") return;
@@ -603,8 +696,8 @@ export function CambridgeRunner({ testTitle, level, levelName, colour, paper, li
   }
 
   return (
-    <main lang="en" style={style} className="min-h-screen bg-[color:var(--cam-soft)]">
-      <header className="sticky top-0 z-10 text-white shadow" style={{ background: colour }}>
+    <main lang="en" style={{ ...style, "--cam-split-top": `${bars.splitTop}px` } as React.CSSProperties} className="min-h-screen bg-[color:var(--cam-soft)]">
+      <header ref={headerRef} className="sticky z-40 text-white shadow" style={{ background: colour, top: bars.nav }}>
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-3">
             <span className="rounded-lg bg-white/20 px-2 py-1 text-[11px] font-black tracking-wider">NETFENER</span>
@@ -637,7 +730,9 @@ export function CambridgeRunner({ testTitle, level, levelName, colour, paper, li
             <span className="text-sm font-bold text-slate-500">Listen twice.</span>
           </div>
         ) : null}
-        <PartView part={part} p={idx} answers={answers} set={set} seed={testTitle} />
+        <div ref={partRef}>
+          <PartView key={idx} part={part} p={idx} answers={answers} set={set} seed={testTitle} />
+        </div>
         <div className="flex justify-between pt-4">
           <button type="button" disabled={idx === 0} onClick={() => setIdx(idx - 1)} className="inline-flex items-center gap-2 rounded-full border-2 border-slate-300 bg-white px-5 py-2.5 font-black disabled:opacity-40"><ArrowLeft size={18} aria-hidden="true" /> Back</button>
           {idx < paper.parts.length - 1 ? (

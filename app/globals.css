@@ -1532,3 +1532,15 @@ a {
 @media (prefers-reduced-motion: reduce) {
   :is(a.panel, a.dashboard-panel, .poster-card):hover { transform: none; }
 }
+
+/* Cambridge practice tests: on wide screens the reading text and the answers sit side by side, each
+   sized to fit the screen under the test bar and scrolling on its own (as in the computer-based exam),
+   with Back/Next still in view. --cam-split-top is measured by the runner. */
+@media (min-width: 1024px) {
+  .cam-pane {
+    max-height: max(360px, calc(100dvh - var(--cam-split-top, 300px) - 5.5rem));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding: 2px 6px 2px 2px;
+  }
+}
