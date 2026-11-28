@@ -30,11 +30,13 @@ export default async function LexiconSetPage({ params }: { params: Promise<{ lev
       </div>
       <div className="mt-6">
         <FlashcardDeck
+          key={`${code}-${n}`}
           level={code}
           words={words.map(({ id, word, pos, tr, exampleEn, exampleTr, tip }) => ({ id, word, pos, tr, exampleEn, exampleTr, tip }))}
           initialStates={states}
           testHref={`${base}/${n}/test`}
           levelHref={base}
+          nextSetHref={n < setCount(code) ? `${base}/${n + 1}` : null}
         />
       </div>
     </main>
