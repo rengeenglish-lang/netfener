@@ -57,6 +57,9 @@ jobs:
       EMAIL_FROM: test@example.test
       AUTH_TRUST_HOST: 'true'
       NETFENER_E2E_CHANNEL: chrome
+      # book-access.spec.ts walks the free e-book campaign flow; keep that campaign open in CI
+      # so the test does not break when the real campaign's end date passes.
+      EBOOK_FREE_PROMO_ENDS_AT: '2099-12-31T23:59:59+03:00'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
