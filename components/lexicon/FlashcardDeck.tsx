@@ -35,7 +35,7 @@ function speak(text: string) {
  * Flashcards for one set: drag or use the arrows to slide between cards, tap to flip for the
  * meaning and usage, mark "Biliyorum" / "Tekrar çalışacağım", and keep a personal note per word.
  */
-export function FlashcardDeck({ level, words, initialStates, testHref, levelHref }: { level: string; words: DeckWord[]; initialStates: Record<string, { status: Status; note: string | null }>; testHref: string; levelHref: string }) {
+export function FlashcardDeck({ level, words, initialStates, testHref, levelHref, nextSetHref = null }: { level: string; words: DeckWord[]; initialStates: Record<string, { status: Status; note: string | null }>; testHref: string; levelHref: string; nextSetHref?: string | null }) {
   const [statuses, setStatuses] = useState<Record<string, Status>>(() => Object.fromEntries(words.map((w) => [w.id, initialStates[w.id]?.status ?? null])));
   const [notes, setNotes] = useState<Record<string, string>>(() => Object.fromEntries(words.map((w) => [w.id, initialStates[w.id]?.note ?? ""])));
   const [onlyLearning, setOnlyLearning] = useState(false);
@@ -224,6 +224,11 @@ export function FlashcardDeck({ level, words, initialStates, testHref, levelHref
           <p className="mt-2 text-white/75">{known} kelimeyi biliyorum dedin, {learning} kelimeyi tekrar listene aldın.</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Link href={testHref} className="primary-button"><ListChecks size={18} aria-hidden="true" /> Teste başla</Link>
+            {nextSetHref ? (
+              <Link href={nextSetHref} className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-xl bg-white px-5 text-sm font-bold text-[color:var(--night)] hover:bg-white/90">
+                Sonraki set <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            ) : null}
             {learning ? (
               <button type="button" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/30 px-5 text-sm font-bold hover:bg-white/10" onClick={() => { setOnlyLearning(true); setIndex(0); setEnter("lex-in-right"); }}>
                 Tekrar listesini çalış ({learning})
