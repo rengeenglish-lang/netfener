@@ -10,6 +10,7 @@ import { isGoogleConfigured, resolveGoogleUser } from "@/server/auth/google";
 import { consumeBookSigninToken, sendGoogleWelcome } from "@/server/services/account-email.service";
 import { recordTermsAcceptance } from "@/server/services/consent.service";
 import { applyReferral, REFERRAL_COOKIE } from "@/server/services/referrals.service";
+import { welcomeWithFreeYear } from "@/server/services/free-year.service";
 import { cookies } from "next/headers";
 
 validateCanonicalUrl();
@@ -37,6 +38,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // A Google sign-up that started from an invite link (the code waits in a cookie).
         const ref = (await cookies()).get(REFERRAL_COOKIE)?.value;
         if (ref) await applyReferral(resolved.userId, ref).catch(() => null);
+        await welcomeWithFreeYear(resolved.userId);
         await sendGoogleWelcome(resolved.userId).catch(() => undefined);
       }
       return true;

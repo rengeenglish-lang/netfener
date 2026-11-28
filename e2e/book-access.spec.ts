@@ -19,6 +19,11 @@ test("book registration, email confirmation, first PDF, review unlock and print 
   await page.getByRole("button", { name: "Kitabım için kaydol", exact: true }).click();
   await expect(page).toHaveURL(/\/kitap-kaydini-tamamla\?book=yokdil-saglik/);
   await expect(page.getByText("e-posta gönderilemedi", { exact: false })).toHaveCount(0);
+  // One of this month's first 100 members: told their number once, then the popup stays closed.
+  const welcome = page.getByRole("dialog", { name: "Tebrikler! Başlangıç planı 1 yıl boyunca ücretsiz." });
+  await expect(welcome.getByText(/\d+\. üyesin/)).toBeVisible();
+  await welcome.getByRole("button", { name: "Harika, devam et", exact: true }).click();
+  await expect(welcome).toHaveCount(0);
   const messages = readFileSync("/tmp/netfener-test-mail.jsonl", "utf8").trim().split("\n").map(line => JSON.parse(line));
   const mail = messages.find(message => message.to.includes(email));
   expect(mail).toBeTruthy();

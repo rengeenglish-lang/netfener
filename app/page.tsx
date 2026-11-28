@@ -4,6 +4,7 @@ import { MaterialsHome } from "@/components/marketing/MaterialsHome";
 import { listHomepageProducts, listHomepageGroups } from "@/server/services/catalog.service";
 import { getHomeStats } from "@/server/services/home-stats.service";
 import { listPublishedSiteReviews } from "@/server/services/site-reviews.service";
+import { getFreeYearStatus } from "@/server/services/free-year.service";
 
 export const metadata: Metadata = {
   title: {
@@ -15,12 +16,14 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   // Only real, approved reviews are shown (featured first); three fill one row of the grid.
-  const [products, groups, reviews, session, stats] = await Promise.all([
+  const [products, groups, reviews, session, stats, freeYear] = await Promise.all([
     listHomepageProducts(),
     listHomepageGroups(),
     listPublishedSiteReviews(3),
     auth(),
     getHomeStats(),
+    // The counter is hidden, never an error page, if it cannot be read.
+    getFreeYearStatus().catch(() => null),
   ]);
   return (
     <MaterialsHome
@@ -29,6 +32,7 @@ export default async function HomePage() {
       reviews={reviews}
       isSignedIn={Boolean(session?.user)}
       stats={stats}
+      freeYear={freeYear}
     />
   );
 }

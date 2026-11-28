@@ -14,6 +14,7 @@ import { INTEREST_EXAMS, MAX_EXAM_INTERESTS } from "@/lib/exam-interests";
 import { setExamInterests } from "@/server/services/exam-interests.service";
 import { ebookFromNextPath } from "@/lib/ebook-library";
 import { rememberEbook } from "@/server/services/ebook-library.service";
+import { welcomeWithFreeYear } from "@/server/services/free-year.service";
 
 export type RegisterFormState = { status: "idle" | "error"; message?: string };
 
@@ -57,6 +58,8 @@ export async function registerAction(_prev: RegisterFormState, formData: FormDat
   const store = await cookies();
   await applyReferral(user.id, String(formData.get("ref") || store.get(REFERRAL_COOKIE)?.value || "")).catch((e) => console.error("[referral] apply failed", e));
   store.delete(REFERRAL_COOKIE);
+  // "Her ay ilk 100 üye": a free year of Başlangıç while this month's spots last.
+  await welcomeWithFreeYear(user.id);
   // Welcome + verification link. Never blocks signup; the dashboard offers a resend.
   const sent = await sendWelcomeVerification(user, book).catch(() => false);
   if (book) redirect(`/kitap-kaydini-tamamla?book=${book.slug}${sent ? "" : "&gonderim=basarisiz"}`);
