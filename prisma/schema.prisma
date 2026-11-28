@@ -395,6 +395,7 @@ model User {
   notifications           Notification[]
   reviews                 Review[]
   planSubscriptions       PlanSubscription[]
+  freeYearSpot            FreeYearSpot?
   savedExamTopics         SavedExamTopic[]
   visits                  UserVisit[]
   favorites               FavoriteProduct[]
@@ -1281,9 +1282,26 @@ model PlanSubscription {
   orderItem  OrderItem?      @relation(fields: [orderItemId], references: [id])
   perkClaims PlanPerkClaim[]
   ebookPromotionAccess EbookPromotionAccess?
+  freeYearSpot         FreeYearSpot?
 
   @@index([userId, status, expiresAt])
   @@map("plan_subscriptions")
+}
+
+/// "Her ay ilk 100 üye" campaign: one row per new member who received a free year of Başlangıç.
+/// `month` is the Istanbul calendar month ("2026-12") and `position` the member's number in it.
+model FreeYearSpot {
+  userId         String   @id
+  month          String
+  position       Int
+  subscriptionId String   @unique
+  createdAt      DateTime @default(now())
+
+  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscription PlanSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([month, position])
+  @@map("free_year_spots")
 }
 
 model PlanPerkClaim {

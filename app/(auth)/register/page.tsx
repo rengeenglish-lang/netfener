@@ -7,6 +7,7 @@ import { isGoogleConfigured } from "@/server/auth/google";
 import { ebookFromNextPath } from "@/lib/ebook-library";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 import { cookies } from "next/headers";
+import { getFreeYearStatus } from "@/server/services/free-year.service";
 import { REFERRAL_COOKIE, REFERRAL_PERCENT, isReferralCode } from "@/server/services/referrals.service";
 
 export const metadata: Metadata = { title: "Hesap Oluştur" };
@@ -17,6 +18,7 @@ const next = safeNextPath(params.next);
 const book = ebookFromNextPath(next);
 const src = parseSource(params.src) ? params.src : undefined;
 const ref = isReferralCode(params.ref?.toUpperCase()) ? params.ref!.toUpperCase() : (await cookies()).get(REFERRAL_COOKIE)?.value;
+  const freeYear = await getFreeYearStatus().catch(() => null);
   return (
     <div>
       <p className="eyebrow text-center">Öğrenme Yolculuğuna Başla</p>
@@ -25,6 +27,11 @@ const ref = isReferralCode(params.ref?.toUpperCase()) ? params.ref!.toUpperCase(
       {isReferralCode(ref) ? (
         <p className="mt-3 rounded-lg bg-emerald-50 px-4 py-2 text-center text-sm font-semibold text-emerald-800">
           Bir arkadaşın seni davet etti: üye olunca ilk siparişinde %{REFERRAL_PERCENT} indirim kazanırsın.
+        </p>
+      ) : null}
+      {freeYear && freeYear.remaining > 0 ? (
+        <p className="mt-3 rounded-lg bg-emerald-50 px-4 py-2 text-center text-sm font-semibold text-emerald-800">
+          Her ay ilk {freeYear.limit} üyeye Başlangıç planı 1 yıl ücretsiz. Bu ay <strong>{freeYear.remaining}</strong> kontenjan kaldı. Online grup dersleri dahil değildir.
         </p>
       ) : null}
       <div className="mt-6 space-y-4">

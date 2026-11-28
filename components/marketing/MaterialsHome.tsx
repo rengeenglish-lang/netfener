@@ -14,6 +14,8 @@ import { HomeFaq } from "@/components/marketing/HomeFaq";
 import { SiteReviewsSection } from "@/components/site-reviews/SiteReviewsSection";
 import type { PublicReview } from "@/components/site-reviews/SiteReviewCard";
 import { HomeStats } from "./HomeStats";
+import { FreeYearCounter } from "./FreeYearCounter";
+import type { FreeYearStatus } from "@/server/services/free-year.service";
 import { WhyNetfener } from "./WhyNetfener";
 import type { HomeStatsInput } from "@/lib/home-stats";
 import { AvailabilityHome } from "@/components/availability/AvailabilityHome";
@@ -96,7 +98,7 @@ function GroupCard({ product }: { product: HomeGroup }) {
   </article>;
 }
 
-export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn = false, stats }: { products: HomeProduct[]; groups?: HomeGroup[]; reviews?: PublicReview[]; isSignedIn?: boolean; stats?: HomeStatsInput }) {
+export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn = false, stats, freeYear }: { products: HomeProduct[]; groups?: HomeGroup[]; reviews?: PublicReview[]; isSignedIn?: boolean; stats?: HomeStatsInput; freeYear?: FreeYearStatus | null }) {
   const levelTestHref = memberHref("/seviye-tespit", isSignedIn);
   return <main id="main-content" className={styles.home}>
 
@@ -119,6 +121,8 @@ export function MaterialsHome({ products, groups = [], reviews = [], isSignedIn 
         </div>
       </div>
     </section>
+
+    {freeYear ? <div className="mx-auto w-full max-w-[1320px] px-4 py-6 sm:px-6 lg:px-8"><FreeYearCounter status={freeYear} showSignUp={!isSignedIn} /></div> : null}
 
     <div className={styles.trust} aria-label="Başlamadan önce">
       <div className={styles.trustInner}>

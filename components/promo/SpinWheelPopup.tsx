@@ -6,6 +6,7 @@ import { useEffect, useState, useTransition, type FormEvent } from "react";
 import { useCookieConsent } from "@/components/consent/cookie-consent-store";
 import { enterWheelAction, wheelStatusAction } from "@/app/actions/wheel";
 import { WHEEL_PRIZES } from "@/lib/wheel-prizes";
+import { readFreeYearCookie } from "@/lib/free-year";
 
 const SEEN_KEY = "netfener-wheel-seen";
 const SHOW_AFTER_MS = 8000;
@@ -60,7 +61,10 @@ export function SpinWheelPopup() {
     let cancelled = false;
     wheelStatusAction().then((enabled) => {
       if (cancelled || !enabled) return;
-      timer = window.setTimeout(() => setOpen(true), SHOW_AFTER_MS);
+      timer = window.setTimeout(() => {
+        // Never open on top of the "free year" sign-up popup.
+        if (!readFreeYearCookie(document.cookie)) setOpen(true);
+      }, SHOW_AFTER_MS);
     });
     return () => {
       cancelled = true;

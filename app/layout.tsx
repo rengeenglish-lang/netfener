@@ -7,6 +7,7 @@ import { LiveChatWidget } from "@/components/support/LiveChatWidget";
 import { WhatsAppButton } from "@/components/support/WhatsAppButton";
 import { CookieBanner } from "@/components/consent/CookieBanner";
 import { SpinWheelPopup } from "@/components/promo/SpinWheelPopup";
+import { FreeYearPopup } from "@/components/promo/FreeYearPopup";
 import { getSiteUrl } from "@/server/env";
 
 // Inter (variable) with Latin Extended for Turkish characters (ğ, ş, ı, İ).
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <WhatsAppButton />
         <CookieBanner />
         <SpinWheelPopup />
+        <FreeYearPopup />
       </body>
     </html>
   );
