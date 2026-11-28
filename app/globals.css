@@ -1544,3 +1544,29 @@ a {
     padding: 2px 6px 2px 2px;
   }
 }
+
+/* Verify-email banner: neon flicker, then a nudge. Flicker stays below 3 flashes a second. */
+@keyframes verify-neon-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    border-color: #f59e0b;
+    box-shadow: 0 0 4px #fbbf24, 0 0 12px rgba(251, 191, 36, 0.75), 0 0 28px rgba(245, 158, 11, 0.55), inset 0 0 8px rgba(251, 191, 36, 0.35);
+  }
+  20%, 24%, 55% {
+    border-color: #fcd34d;
+    box-shadow: none;
+  }
+}
+@keyframes verify-nudge {
+  0%, 82%, 100% { transform: translateX(0); }
+  85% { transform: translateX(-6px) rotate(-0.4deg); }
+  88% { transform: translateX(6px) rotate(0.4deg); }
+  91% { transform: translateX(-4px); }
+  94% { transform: translateX(4px); }
+  97% { transform: translateX(-2px); }
+}
+.verify-neon { border-width: 2px; animation: verify-neon-flicker 2.8s linear infinite; }
+.verify-neon.verify-nudge { animation: verify-neon-flicker 2.8s linear infinite, verify-nudge 3.5s ease-in-out infinite; }
+.verify-neon-calm { border-width: 2px; border-color: #f59e0b; box-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+@media (prefers-reduced-motion: reduce) {
+  .verify-neon, .verify-neon.verify-nudge { animation: none; border-color: #f59e0b; box-shadow: 0 0 4px #fbbf24, 0 0 16px rgba(245, 158, 11, 0.6); }
+}
